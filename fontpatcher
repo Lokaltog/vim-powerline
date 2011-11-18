@@ -1,0 +1,102 @@
+#!/usr/bin/python2
+
+"""Font patcher for Powerline.
+
+Creates separator glyphs for Powerline. Requires FontForge with Python bindings.
+
+Stores glyphs in the 2b60-2bff Unicode range ("Misc symbols and arrows").
+
+[2b80] Hard right arrow
+[2b81] Soft right arrow
+
+[2b82] Hard left arrow
+[2b83] Soft left arrow
+"""
+
+import argparse
+import os
+import sys
+
+import fontforge
+
+# Handle command-line arguments
+parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates separator glyphs in FontForge-compatible font files. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows").')
+
+parser.add_argument('fonts', metavar='font', nargs='+', help='font file to patch')
+
+args = parser.parse_args()
+
+# Patch provided fonts
+for font_path in args.fonts:
+	try:
+		font = fontforge.open(font_path)
+	except EnvironmentError:
+		sys.exit(1)
+
+	# Prepare glyph dimensions
+	height = font.ascent + font.descent
+	half_height = height / 2
+
+	top = font.ascent
+	middle = height / 2 - font.descent
+	bottom = -font.descent
+
+	sw = height / 20
+	half_sw = sw / 2
+
+	# Define outlines
+	outlines = {
+		0x2b80: [ # Hard right arrow
+			True, # Solid
+			(0           , top)    ,
+			(half_height , middle) ,
+			(0           , bottom) ,
+		],
+		0x2b81: [ # Soft right arrow
+			False, # Stroke
+			(half_sw               , top - half_sw)    ,
+			(half_height - half_sw , middle)           ,
+			(half_sw               , bottom + half_sw) ,
+		],
+		0x2b82: [ # Hard left arrow
+			True, # Solid
+			(half_height , top)    ,
+			(0           , middle) ,
+			(half_height , bottom) ,
+		],
+		0x2b83: [ # Soft left arrow
+			False, # Stroke
+			(half_height - half_sw , top - half_sw)    ,
+			(half_sw               , middle)           ,
+			(half_height - half_sw , bottom + half_sw) ,
+		],
+	}
+
+	# FIXME Not sure if this works with every font out there
+	font.encoding = 'ISO10646'
+
+	# Create glyphs
+	for location, outline in outlines.items():
+		is_solid = outline.pop(0)
+
+		glyph = font.createChar(location)
+		pen = glyph.glyphPen()
+
+		pen.moveTo(outline.pop(0))
+		for coords in outline:
+			pen.lineTo(coords)
+
+		if is_solid:
+			pen.closePath()
+		else:
+			pen.endPath()
+			glyph.stroke('circular', sw, 'round')
+
+		pen = None
+
+	if font.bitmapSizes:
+		# If this is a bitmap font, regenerate bitmaps for the changed glyphs
+		font.selection.changed()
+		font.regenBitmaps(font.bitmapSizes)
+
+	font.generate('{0[0]}-Powerline{0[1]}'.format(os.path.splitext(font_path)))
