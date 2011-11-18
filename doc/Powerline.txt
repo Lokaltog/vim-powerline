@@ -1,0 +1,23 @@
+*Powerline.txt*	Version 0.1pre.  Last change: 2011 Nov 18
+
+                                            ______
+         _________                          \    /__
+         \_____   \______  _  _____________ /   /'__' ___   ____
+          |    ___/  _ \ \/ \/ / __ \_  ___\   / |  |/   \_/ __ \
+          |   |  |  (_) \  _  /  ___/|  |  /  /__|  |  |  \  ___/
+          '___'   \____/ \/ \/ \___  |__' /___  /'__'__|  /\___ \
+                                   \/        / /        \/     \/
+                                            | /
+                                            |/
+                                            '
+
+==============================================================================
+CONTENTS                                                  *Powerline-contents*
+
+    1. Introduction ....................... |Powerline-introduction|
+
+==============================================================================
+1. Introduction                           *Powerline* *Powerline-introduction*
+
+Powerline is a utility plugin which allows you to create better-looking, more 
+functional vim statuslines.
