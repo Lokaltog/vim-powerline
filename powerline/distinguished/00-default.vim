@@ -82,12 +82,12 @@ call Pl#Statusline(
 		\
 		\ Pl#Segment(" $line %l",
 			\ Pl#HiCurrent(   Pl#FG(236, 0x303030), Pl#Attr('bold')),
-			\ Pl#HiInsert(    Pl#FG( 21, 0x0000ff), Pl#Attr('bold')),
+			\ Pl#HiInsert(    Pl#FG( 23, 0x005f5f), Pl#Attr('bold')),
 			\ Pl#HiNonCurrent(Pl#FG(250, 0xbcbcbc))
 			\ ),
 		\ Pl#Segment(":%c%V ",
 			\ Pl#HiCurrent(   Pl#FG(244, 0x808080)),
-			\ Pl#HiInsert(    Pl#FG( 21, 0x0000ff)),
+			\ Pl#HiInsert(    Pl#FG( 23, 0x005f5f)),
 			\ Pl#HiNonCurrent(Pl#FG(244, 0x808080))
 			\ )
 		\ )
