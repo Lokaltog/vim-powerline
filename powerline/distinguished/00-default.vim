@@ -53,7 +53,11 @@ call Pl#Statusline(
 		\ Pl#HiInsert(    Pl#FG(117, 0x87d7ff), Pl#BG( 24, 0x005f87))
 		\ ),
 	\
-	\ Pl#Split(),
+	\ Pl#Split(
+		\ Pl#HiCurrent(   Pl#BG(236, 0x303030)),
+		\ Pl#HiInsert(    Pl#BG( 24, 0x005f87)),
+		\ Pl#HiNonCurrent(Pl#BG(234, 0x1c1c1c))
+		\ ),
 	\
 	\ Pl#Segment("%{&fileformat} %{(&fenc == '' ? &enc : &fenc)} ",
 		\ Pl#HiCurrent(   Pl#FG(244, 0x808080), Pl#BG(236, 0x303030)),
@@ -68,21 +72,21 @@ call Pl#Statusline(
 	\ Pl#Segment(" %p%% ",
 		\ Pl#HiCurrent(   Pl#FG(250, 0xbcbcbc), Pl#BG(240, 0x585858)),
 		\ Pl#HiInsert(    Pl#FG(117, 0x87d7ff), Pl#BG( 31, 0x0087af)),
-		\ Pl#HiNonCurrent(Pl#FG(250, 0xbcbcbc), Pl#BG(240, 0x585858))
+		\ Pl#HiNonCurrent(Pl#FG(244, 0x808080), Pl#BG(234, 0x1c1c1c))
 		\ ),
 	\
 	\ Pl#SegmentGroup(
 		\ Pl#HiCurrent(   Pl#BG(252, 0xd0d0d0)),
 		\ Pl#HiInsert(    Pl#BG(117, 0x87d7ff)),
-		\ Pl#HiNonCurrent(Pl#BG(234, 0x1c1c1c)),
+		\ Pl#HiNonCurrent(Pl#BG(239, 0x4e4e4e)),
 		\
 		\ Pl#Segment(" $line %l",
 			\ Pl#HiCurrent(   Pl#FG(236, 0x303030), Pl#Attr('bold')),
 			\ Pl#HiInsert(    Pl#FG( 21, 0x0000ff), Pl#Attr('bold')),
-			\ Pl#HiNonCurrent(Pl#FG(244, 0x808080))
+			\ Pl#HiNonCurrent(Pl#FG(250, 0xbcbcbc))
 			\ ),
 		\ Pl#Segment(":%c%V ",
-			\ Pl#HiCurrent(   Pl#FG(236, 0x303030)),
+			\ Pl#HiCurrent(   Pl#FG(244, 0x808080)),
 			\ Pl#HiInsert(    Pl#FG( 21, 0x0000ff)),
 			\ Pl#HiNonCurrent(Pl#FG(244, 0x808080))
 			\ )
