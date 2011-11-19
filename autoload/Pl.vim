@@ -4,8 +4,6 @@
 " Source repository: https://github.com/Lokaltog/vim-powerline
 "
 " Known issues:
-"   * When a boolean segment parameter is false, it messes up both the previous and the next segment highlighting
-"   * This bug also affects segments which are hidden in e.g. non-current windows, a possible fix for this is to create a recursive function to parse segments and segment groups
 "   * If HiNonCurrent isn't set before a SegmentGroup, vim will barf a million error messages (try removing the fugitive block from distinguished) - possible fix by setting default values for all colors
 "   * Spaces must be added manually in each segment, I haven't found a way to reliably add spaces without adding minor bugs like wrong highlighting, weird double text issues, etc.
 "   * Because %() is wrapped around a segment, text-only segments won't be rendered unless the text is wrapped in an eval block like this: %{'My static text'}
@@ -55,179 +53,14 @@
 " }}}
 " Statusline functions {{{
 	function! Pl#Statusline(...) " {{{
-		let side = s:LEFT_SIDE
 		let statuslines = { 'current': '', 'insert': '', 'noncurrent': '' }
-		let matches = { 'bufname': [], 'filetype': [] }
 
-		" Prepare segment array for traversing by removing empty segments
-		let args = []
-		for item in a:000
-			if empty(item[0])
-				" If the current segment for some reason is false/empty (e.g. if
-				" one of the segment conditions is false), skip the entire segment
-				continue
-			endif
+		for type in keys(statuslines)
+			let matches = []
 
-			call add(args, item)
-		endfor
+			let [segment, hi_curr, matches] = s:GroupHandler(type, a:000, s:LEFT_SIDE, [])
 
-		for i in range(0, len(args) - 1)
-			unlet! a_prev a_curr a_next
-
-			" Prepare some resources (fetch previous, current and next segment)
-			let a_prev = (i == 0) ? s:EMPTY : get(args, i - 1)
-			let a_curr = get(args, i)
-			let a_next = (i == (len(args) - 1)) ? s:EMPTY : get(args, i + 1)
-
-			" Loop through the different statusline types
-			for type in keys(statuslines)
-				let add_divider = 1
-
-				" We don't want to add dividers right before or right after the split
-				if (a_next[0] == 'segment_split' || a_prev[0] == 'segment_split')
-					let add_divider = 0
-				endif
-
-				if a_curr[0] == 'segment' " {{{
-					" Check if we have highlighting for this type
-					if ! has_key(a_curr[2], 'hi_'. type)
-						" We don't, skip this segment for this type
-						continue
-					endif
-
-					" Use soft divider w/ current hi group by default
-					let divider_color = a_curr[2]['hi_'. type]
-					let divider_type = s:SOFT_DIVIDER
-
-					" Check if we should use a hard divider {{{
-						" Fetch current highlighting colors
-						let hi_curr = s:hi_groups[a_curr[2]['hi_'. type]]
-
-						if side == s:LEFT_SIDE
-							" Compare curr/next highlighting
-							let hi_cmp = exists('a_next[2]') && has_key(a_next[2], 'hi_'. type) ? s:hi_groups[a_next[2]['hi_'. type]] : []
-						else
-							" Compare curr/prev highlighting
-							let hi_cmp = exists('a_prev[2]') && has_key(a_prev[2], 'hi_'. type) ? s:hi_groups[a_prev[2]['hi_'. type]] : []
-						endif
-
-						if ! empty(hi_cmp)
-							" Compare the highlighting groups
-							"
-							" If the background color for GUI and term is equal, use soft divider with the current segment's highlighting
-							" If not, use hard divider with a new highlighting group
-							if hi_curr['bg'] != hi_cmp['bg']
-								let divider_type = s:HARD_DIVIDER
-
-								" Create new highlighting group
-								" Use FG = CURRENT BG, BG = CMP BG
-								let divider_color = s:GetHi('hi_'. type, [
-									\ Pl#FG(hi_curr['bg']['cterm'], hi_curr['bg']['gui']),
-									\ Pl#BG(hi_cmp['bg']['cterm'],  hi_cmp['bg']['gui'])
-								\ ])
-							endif
-						endif
-
-						unlet hi_curr hi_cmp
-					" }}}
-
-					" Prepare segment
-					let segment = a_curr[1]
-
-					" Add highlighting
-					let segment = '%#'. a_curr[2]['hi_'. type] .'#'. segment .''
-
-					if add_divider
-						let segment = s:AddDivider(segment, side, divider_color, divider_type)
-					endif
-
-					let segment = '%('. segment .'%)'
-					" }}}
-				elseif a_curr[0] == 'segment_group' " {{{
-					" Loop through the segment group
-					let segment = ''
-					let segment_hi = {'hi_current': '', 'hi_insert': '', 'hi_noncurrent': ''}
-
-					" Prepare group segment array for traversing by removing empty segments
-					let group_args = []
-					for item in a_curr[1]
-						if empty(item[0])
-							" If the current segment for some reason is false/empty (e.g. if
-							" one of the segment conditions is false), skip the entire segment
-							continue
-						endif
-
-						call add(group_args, item)
-					endfor
-
-					for arg in group_args
-						if arg[0] == 'segment'
-							" Handle segment HL group/text
-							let segment .= '%#'. arg[2]['hi_'. type] .'#%('. arg[1] .'%)'
-						else
-							let segment_hi[arg[0]] = arg[1]
-						endif
-					endfor
-
-					" Use soft divider w/ current hi group by default
-					let divider_color = segment_hi['hi_'. type]
-					let divider_type = s:SOFT_DIVIDER
-
-					" Check if we should use a hard divider {{{
-						" Fetch current highlighting colors
-						let hi_curr = s:hi_groups[segment_hi['hi_'. type]]
-
-						if side == s:LEFT_SIDE
-							" Compare curr/next highlighting
-							let hi_cmp = exists('a_next[2]') && has_key(a_next[2], 'hi_'. type) ? s:hi_groups[a_next[2]['hi_'. type]] : []
-						else
-							" Compare curr/prev highlighting
-							let hi_cmp = exists('a_prev[2]') && has_key(a_prev[2], 'hi_'. type) ? s:hi_groups[a_prev[2]['hi_'. type]] : []
-						endif
-
-						if ! empty(hi_cmp)
-							" Compare the highlighting groups
-							"
-							" If the background color for GUI and term is equal, use soft divider with the current segment's highlighting
-							" If not, use hard divider with a new highlighting group
-							if hi_curr['bg'] != hi_cmp['bg']
-								let divider_type = s:HARD_DIVIDER
-
-								" Create new highlighting group
-								" Use FG = CURRENT BG, BG = CMP BG
-								let divider_color = s:GetHi('hi_'. type, [
-									\ Pl#FG(hi_curr['bg']['cterm'], hi_curr['bg']['gui']),
-									\ Pl#BG(hi_cmp['bg']['cterm'],  hi_cmp['bg']['gui'])
-								\ ])
-							endif
-						endif
-
-						unlet hi_curr hi_cmp
-					" }}}
-
-					if add_divider
-						let segment = s:AddDivider(segment, side, divider_color, divider_type)
-					endif
-					" }}}
-				elseif a_curr[0] == 'segment_split' " {{{
-					" Change divider side
-					let side = s:RIGHT_SIDE
-
-					" Add segment text
-					let segment = a_curr[1]
-					" }}}
-				elseif a_curr[0] == 'match' " {{{
-					" Handle match parameters
-					" These should simply be added to the return array and be handled in s:Powerline()
-					call add(matches[a_curr[1]], a_curr[2])
-
-					continue
-					" }}}
-				endif
-
-				" Append segment to statusline
-				let statuslines[type] .= segment
-			endfor
+			let statuslines[type] = segment
 		endfor
 
 		call add(s:statuslines, {
@@ -235,11 +68,8 @@
 			\ 'modes': statuslines
 		\ })
 	endfunction " }}}
-	function! Pl#MatchBufname(re) " {{{
-		return ['match', 'bufname', a:re]
-	endfunction " }}}
-	function! Pl#MatchFiletype(re) " {{{
-		return ['match', 'filetype', a:re]
+	function! Pl#Match(expr, re) " {{{
+		return ['match', a:expr, a:re]
 	endfunction " }}}
 	function! Pl#Segment(text, ...) " {{{
 		let text = a:text
@@ -277,11 +107,34 @@
 		return ['segment', text, hi]
 	endfunction " }}}
 	function! Pl#SegmentGroup(...) " {{{
-		" Return the plain segment group, this will be dealt with in Pl#Statusline
-		return ['segment_group', a:000]
+		let segments = []
+		let hi = {}
+
+		" Handle arguments (colors and segments)
+		for arg in a:000
+			if arg[0] == 'segment' || arg[0] == 'segment_group'
+				" Add segment
+				call add(segments, arg)
+			elseif arg != s:EMPTY
+				" Add highlighting
+				let hi[arg[0]] = arg[1]
+			endif
+		endfor
+
+		return ['segment_group', segments, hi]
 	endfunction " }}}
-	function! Pl#Split() " {{{
-		return ['segment_split', '%=']
+	function! Pl#Split(...) " {{{
+		let hi = {}
+
+		" Handle arguments (colors)
+		for arg in a:000
+			if arg != s:EMPTY
+				" Add highlighting
+				let hi[arg[0]] = arg[1]
+			endif
+		endfor
+
+		return ['segment_split', '%=', hi]
 	endfunction " }}}
 	function! Pl#FG(cterm, gui) " {{{
 		let color = { 'cterm': a:cterm, 'gui': a:gui }
@@ -316,6 +169,159 @@
 	endfunction " }}}
 " }}}
 " Internal functions {{{
+	function! s:GroupHandler(type, args, side, matches, ...) " {{{
+		" Recursive function for handling segment groups
+		let side = a:side
+		let ret = ''
+		let args = []
+		let level = a:0 ? a:1 : 0
+		let matches = a:matches
+
+		let hi_group = 'hi_'. a:type
+
+		" Remove empty and invalid segments from argument array
+		for i in range(0, len(a:args) - 1)
+			let item = a:args[i]
+
+			if empty(item[0])
+				" If the current segment for some reason is false/empty (e.g. if
+				" one of the segment conditions is false), skip the entire segment
+				continue
+			endif
+
+			if item[0] == 'segment' && ! has_key(item[2], hi_group)
+				" If this segment is missing highlighting for this type,
+				" skip the entire segment (e.g. if HiNonCurrent is missing)
+				continue
+			endif
+
+			call add(args, item)
+		endfor
+
+		for i in range(0, len(args) - 1)
+			unlet! a_prev a_curr a_next
+
+			" Prepare some resources (fetch previous, current and next segment)
+			let a_prev = (i == 0) ? s:EMPTY : get(args, i - 1)
+			let a_curr = get(args, i)
+			let a_next = (i == (len(args) - 1)) ? s:EMPTY : get(args, i + 1)
+
+			let add_divider = 1
+
+			" If we're in a segment group (level > 0), don't add dividers
+			if level && a_next[0] != 'segment_group' && a_prev[0] != 'segment_group'
+				let add_divider = 0
+			endif
+
+			" Handle the different argument types
+			if a_curr[0] == 'segment' " {{{
+				" Use soft divider w/ current hi group by default
+				let divider_color = a_curr[2][hi_group]
+				let divider_type = s:SOFT_DIVIDER
+
+				" Check if we should use a hard divider {{{
+					" Fetch current highlighting colors
+					unlet! hi_curr hi_cmp
+
+					let hi_curr = s:hi_groups[a_curr[2][hi_group]]
+
+					if side == s:LEFT_SIDE
+						" Compare curr/next highlighting
+						let hi_cmp = exists('a_next[2]') && has_key(a_next[2], hi_group) ? s:hi_groups[a_next[2][hi_group]] : []
+					else
+						" Compare curr/prev highlighting
+						let hi_cmp = exists('a_prev[2]') && has_key(a_prev[2], hi_group) ? s:hi_groups[a_prev[2][hi_group]] : []
+					endif
+
+					if ! empty(hi_cmp)
+						" Compare the highlighting groups
+						"
+						" If the background color for GUI and term is equal, use soft divider with the current segment's highlighting
+						" If not, use hard divider with a new highlighting group
+						"
+						" Note that if the previous/next segment is the split, a hard divider is always used
+						if hi_curr['bg'] != hi_cmp['bg'] || (a_next[0] == 'segment_split' || a_prev[0] == 'segment_split')
+							let divider_type = s:HARD_DIVIDER
+
+							" Create new highlighting group
+							" Use FG = CURRENT BG, BG = CMP BG
+							let divider_color = s:GetHi(hi_group, [
+								\ Pl#FG(hi_curr['bg']['cterm'], hi_curr['bg']['gui']),
+								\ Pl#BG(hi_cmp['bg']['cterm'],  hi_cmp['bg']['gui'])
+							\ ])
+						endif
+					endif
+				" }}}
+
+				" Prepare segment
+				let segment = a_curr[1]
+
+				" Add highlighting
+				let segment = '%#'. a_curr[2][hi_group] .'#'. segment
+
+				if add_divider
+					let segment = s:AddDivider(segment, side, divider_color, divider_type)
+				endif
+
+				let segment = '%('. segment .'%)'
+				" }}}
+			elseif a_curr[0] == 'segment_group' " {{{
+				unlet! hi_curr hi_cmp
+
+				let [segment, hi_curr, matches] = s:GroupHandler(a:type, a_curr[1], side, matches, level + 1)
+
+				if side == s:LEFT_SIDE
+					" Compare curr/next highlighting
+					let hi_cmp = exists('a_next[2]') && has_key(a_next[2], hi_group) ? s:hi_groups[a_next[2][hi_group]] : []
+				else
+					" Compare curr/prev highlighting
+					let hi_cmp = exists('a_prev[2]') && has_key(a_prev[2], hi_group) ? s:hi_groups[a_prev[2][hi_group]] : []
+				endif
+
+				if ! empty(hi_cmp)
+					" Compare the highlighting groups
+					"
+					" If the background color for GUI and term is equal, use soft divider with the current segment's highlighting
+					" If not, use hard divider with a new highlighting group
+					"
+					" Note that if the previous/next segment is the split, a hard divider is always used
+					if hi_curr['bg'] != hi_cmp['bg'] || (a_next[0] == 'segment_split' || a_prev[0] == 'segment_split')
+						let divider_type = s:HARD_DIVIDER
+
+						" Create new highlighting group
+						" Use FG = CURRENT BG, BG = CMP BG
+						let divider_color = s:GetHi(hi_group, [
+							\ Pl#FG(hi_curr['bg']['cterm'], hi_curr['bg']['gui']),
+							\ Pl#BG(hi_cmp['bg']['cterm'],  hi_cmp['bg']['gui'])
+						\ ])
+					endif
+				endif
+
+				if add_divider
+					let segment = s:AddDivider(segment, side, divider_color, divider_type)
+				endif
+				" }}}
+			elseif a_curr[0] == 'segment_split' " {{{
+				" Change divider side
+				let side = s:RIGHT_SIDE
+
+				" Add segment text
+				let segment = a_curr[1]
+				" }}}
+			elseif a_curr[0] == 'match' " {{{
+				" Handle match parameters
+				call add(matches, [a_curr[1], a_curr[2]])
+
+				continue
+				" }}}
+			endif
+
+			" Append segment to statusline
+			let ret .= segment
+		endfor
+
+		return [ret, hi_curr, matches]
+	endfunction " }}}
 	function! s:GetHi(type, args) " {{{
 		let hi = { 'fg': [], 'bg': [], 'attr': [] }
 
@@ -356,15 +362,13 @@
 
 		" Calculate checksum for this highlighting group
 		" We do this to get a safe and shorter but still unique group name
-		let key = printf('%02x%06x%02x%06x%s'
+		let hi_group = printf('Pl%02x%06x%02x%06x%s'
 			\ , fg['cterm']
 			\ , fg['gui']
 			\ , bg['cterm']
 			\ , bg['gui']
 			\ , substitute(attr, '\v([a-zA-Z])[a-zA-Z]*,?', '\1', 'g')
 			\ )
-
-		let hi_group = 'Pl'. key
 
 		if ! hlexists(hi_group) || ! has_key(s:hi_groups, hi_group)
 			" Create the highlighting group
@@ -434,23 +438,16 @@
 		for statusline in s:statuslines
 			let valid = 1
 
-			for re in statusline['match']['bufname']
-				" Check if the statusline matches the buffer name
-				if match(bufname('%'), '\v'.re) == -1
-					let valid = 0
+			" Validate matches
+			if len(statusline['match'])
+				for [eval, re] in statusline['match']
+					if match(eval(eval), '\v'. re) == -1
+						let valid = 0
 
-					break
-				endif
-			endfor
-
-			for re in statusline['match']['filetype']
-				" Check if the statusline matches the filetype
-				if match(&ft, '\v'.re) == -1
-					let valid = 0
-
-					break
-				endif
-			endfor
+						break
+					endif
+				endfor
+			endif
 
 			if valid
 				let &l:statusline = statusline['modes'][a:mode]
