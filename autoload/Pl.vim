@@ -202,15 +202,23 @@
 			unlet! a_prev a_curr a_next
 
 			" Prepare some resources (fetch previous, current and next segment)
-			let a_prev = (i == 0) ? s:EMPTY : get(args, i - 1)
-			let a_curr = get(args, i)
-			let a_next = (i == (len(args) - 1)) ? s:EMPTY : get(args, i + 1)
+			let a_prev = (i == 0) ? s:EMPTY : copy(get(args, i - 1))
+			let a_curr = copy(get(args, i))
+			let a_next = (i == (len(args) - 1)) ? s:EMPTY : copy(get(args, i + 1))
 
 			let add_divider = 1
 
 			" If we're in a segment group (level > 0), don't add dividers
 			if level && a_next[0] != 'segment_group' && a_prev[0] != 'segment_group'
 				let add_divider = 0
+			endif
+
+			" Render segment groups as segments, and handle them as segments in the next if block
+			if a_curr[0] == 'segment_group'
+				let [segment, hi_curr, matches] = s:GroupHandler(a:type, a_curr[1], side, matches, level + 1)
+
+				let a_curr[0] = 'segment'
+				let a_curr[1] = segment
 			endif
 
 			" Handle the different argument types
@@ -264,42 +272,6 @@
 				endif
 
 				let segment = '%('. segment .'%)'
-				" }}}
-			elseif a_curr[0] == 'segment_group' " {{{
-				unlet! hi_curr hi_cmp
-
-				let [segment, hi_curr, matches] = s:GroupHandler(a:type, a_curr[1], side, matches, level + 1)
-
-				if side == s:LEFT_SIDE
-					" Compare curr/next highlighting
-					let hi_cmp = exists('a_next[2]') && has_key(a_next[2], hi_group) ? s:hi_groups[a_next[2][hi_group]] : []
-				else
-					" Compare curr/prev highlighting
-					let hi_cmp = exists('a_prev[2]') && has_key(a_prev[2], hi_group) ? s:hi_groups[a_prev[2][hi_group]] : []
-				endif
-
-				if ! empty(hi_cmp)
-					" Compare the highlighting groups
-					"
-					" If the background color for GUI and term is equal, use soft divider with the current segment's highlighting
-					" If not, use hard divider with a new highlighting group
-					"
-					" Note that if the previous/next segment is the split, a hard divider is always used
-					if hi_curr['bg'] != hi_cmp['bg'] || (a_next[0] == 'segment_split' || a_prev[0] == 'segment_split')
-						let divider_type = s:HARD_DIVIDER
-
-						" Create new highlighting group
-						" Use FG = CURRENT BG, BG = CMP BG
-						let divider_color = s:GetHi(hi_group, [
-							\ Pl#FG(hi_curr['bg']['cterm'], hi_curr['bg']['gui']),
-							\ Pl#BG(hi_cmp['bg']['cterm'],  hi_cmp['bg']['gui'])
-						\ ])
-					endif
-				endif
-
-				if add_divider
-					let segment = s:AddDivider(segment, side, divider_color, divider_type)
-				endif
 				" }}}
 			elseif a_curr[0] == 'segment_split' " {{{
 				" Change divider side
