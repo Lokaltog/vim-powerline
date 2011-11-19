@@ -14,6 +14,7 @@
 	call Pl#InitOptions({
 	\   'theme'    : 'distinguished'
 	\ , 'dividers' : 'compatible'
+	\ , 'cachefile': '/tmp/Powerline.cache'
 	\ })
 " }}}
 " Load statuslines {{{

@@ -40,6 +40,7 @@
 " Script variables {{{
 	let s:hi_groups = {}
 	let s:hi_current_group = {}
+	let s:hi_cmds = []
 	let s:statuslines = []
 " }}}
 " Configuration functions {{{
@@ -53,19 +54,19 @@
 " }}}
 " Statusline functions {{{
 	function! Pl#Statusline(...) " {{{
-		let statuslines = { 'current': '', 'insert': '', 'noncurrent': '' }
+		let modes = { 'current': '', 'insert': '', 'noncurrent': '' }
 
-		for type in keys(statuslines)
+		for mode in keys(modes)
 			let matches = []
 
-			let [segment, hi_curr, matches] = s:GroupHandler(type, a:000, s:LEFT_SIDE, [])
+			let [segment, hi_curr, matches] = s:GroupHandler(mode, a:000, s:LEFT_SIDE, [])
 
-			let statuslines[type] = segment
+			let modes[mode] = segment
 		endfor
 
 		call add(s:statuslines, {
-			\ 'match': matches,
-			\ 'modes': statuslines
+			\ 'matches': matches,
+			\ 'modes': modes
 		\ })
 	endfunction " }}}
 	function! Pl#Match(expr, re) " {{{
@@ -325,9 +326,9 @@
 		endif
 
 		" Return the finished highlighting group name
-		return s:GetHiGroup(hi)
+		return s:CreateHiGroup(hi)
 	endfunction " }}}
-	function! s:GetHiGroup(hi) " {{{
+	function! s:CreateHiGroup(hi) " {{{
 		let fg   = a:hi['fg']
 		let bg   = a:hi['bg']
 		let attr = a:hi['attr']
@@ -344,7 +345,7 @@
 
 		if ! hlexists(hi_group) || ! has_key(s:hi_groups, hi_group)
 			" Create the highlighting group
-			exec printf('hi %s ctermfg=%03d ctermbg=%03d cterm=%s guifg=#%06x guibg=#%06x gui=%s'
+			let hi_cmd = printf('hi %s ctermfg=%03d ctermbg=%03d cterm=%s guifg=#%06x guibg=#%06x gui=%s'
 				\ , hi_group
 				\ , fg['cterm']
 				\ , bg['cterm']
@@ -353,6 +354,11 @@
 				\ , bg['gui']
 				\ , attr
 				\ )
+
+			exec hi_cmd
+
+			" Add command to hi_cmds array for caching
+			call add(s:hi_cmds, hi_cmd)
 
 			" Store the raw highlighting information in a global script variable
 			" This will be used in s:GetHiCurrent()
@@ -397,12 +403,51 @@
 		return arg
 	endfunction " }}}
 " }}}
-" Initialize script {{{
-	function! Pl#Load()
-		for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1))
-			exec 'source' path
-		endfor
-	endfunction
+" Script initialization {{{
+	function! Pl#LoadCached() " {{{
+		if filereadable(g:Powerline_cachefile)
+			exec 'source' g:Powerline_cachefile
+
+			" Create highlighting groups
+			for hi_cmd in g:Powerline_hi_cmds
+				exec hi_cmd
+			endfor
+
+			" Assign statuslines
+			let s:statuslines = g:Powerline_statuslines
+
+			unlet g:Powerline_statuslines g:Powerline_hi_cmds
+
+			return 1
+		endif
+
+		return 0
+	endfunction " }}}
+	function! Pl#Load(...) " {{{
+		if a:0 && a:1 == 1
+			" Force cache reloading by deleting cache file
+			call delete(g:Powerline_cachefile)
+		endif
+
+		if ! Pl#LoadCached()
+			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1))
+				exec 'source' path
+			endfor
+
+			" Prepare colors and statuslines for caching
+			let cache = [
+				\ 'let g:Powerline_hi_cmds = '. string(s:hi_cmds),
+				\ 'let g:Powerline_statuslines = '. string(s:statuslines)
+			\ ]
+
+			if empty(g:Powerline_cachefile)
+				" Don't cache anything if g:Powerline_cachefile is empty
+				return
+			endif
+
+			call writefile(cache, g:Powerline_cachefile)
+		endif
+	endfunction " }}}
 " }}}
 " Create autocommands {{{
 	function! s:Powerline(mode) " {{{
@@ -411,8 +456,8 @@
 			let valid = 1
 
 			" Validate matches
-			if len(statusline['match'])
-				for [eval, re] in statusline['match']
+			if len(statusline['matches'])
+				for [eval, re] in statusline['matches']
 					if match(eval(eval), '\v'. re) == -1
 						let valid = 0
 
