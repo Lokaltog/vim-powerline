@@ -43,15 +43,6 @@
 	let s:hi_cmds = []
 	let s:statuslines = []
 " }}}
-" Configuration functions {{{
-	function! Pl#InitOptions(options) " {{{
-		for [key, value] in items(a:options)
-			if ! exists('g:Powerline_' . key)
-				exec printf('let g:Powerline_%s = %s', key, string(value))
-			endif
-		endfor
-	endfunction " }}}
-" }}}
 " Statusline functions {{{
 	function! Pl#Statusline(...) " {{{
 		let modes = { 'current': '', 'insert': '', 'noncurrent': '' }
@@ -450,7 +441,7 @@
 	endfunction " }}}
 " }}}
 " Create autocommands {{{
-	function! s:Powerline(mode) " {{{
+	function! Pl#Powerline(mode) " {{{
 		" Update the local statusline
 		for statusline in s:statuslines
 			let valid = 1
@@ -471,21 +462,4 @@
 			endif
 		endfor
 	endfunction " }}}
-	augroup Powerline
-		autocmd!
-
-		" Re-initialize when changing color scheme
-		" Most colorschemes run 'hi clear', so we need to recreate the colors
-		au ColorScheme *
-			\ call Pl#Load()
-
-		au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave *
-			\ call s:Powerline('current')
-
-		au BufLeave,BufWinLeave,WinLeave,CmdwinLeave *
-			\ call s:Powerline('noncurrent')
-
-		au InsertEnter,CursorHoldI *
-			\ call s:Powerline('insert')
-	augroup END
 " }}}
