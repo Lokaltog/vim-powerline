@@ -2,11 +2,6 @@
 "
 " Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
 " Source repository: https://github.com/Lokaltog/vim-powerline
-"
-" Known issues:
-"   * If HiNonCurrent isn't set before a SegmentGroup, vim will barf a million error messages (try removing the fugitive block from distinguished) - possible fix by setting default values for all colors
-"   * Spaces must be added manually in each segment, I haven't found a way to reliably add spaces without adding minor bugs like wrong highlighting, weird double text issues, etc.
-"   * Because %() is wrapped around a segment, text-only segments won't be rendered unless the text is wrapped in an eval block like this: %{'My static text'}
 
 " Script resources {{{
 	let s:dividers = {

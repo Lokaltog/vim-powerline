@@ -15,9 +15,150 @@
 CONTENTS                                                  *Powerline-contents*
 
     1. Introduction ....................... |Powerline-introduction|
+    2. Usage .............................. |Powerline-usage|
+    3. Requirements ....................... |Powerline-requirements|
+       3.1 Recommended settings ........... |Powerline-recommended-settings|
+    4. Configuration ...................... |Powerline-configuration|
+       4.1 Powerline_cachefile ............ |Powerline_cachefile|
+       4.2 Powerline_dividers ............. |Powerline_dividers|
+       4.3 Powerline_theme ................ |Powerline_theme|
+    5. Fonts .............................. |Powerline-fonts|
+    6. Customization ...................... |Powerline-customization|
+       6.1 Basics ......................... |Powerline-cust-basics|
+       6.2 Functions ...................... |Powerline-cust-functions|
+           6.2.1 Pl#Statusline ............ |Pl#Statusline|
+           6.2.2 Pl#Match ................. |Pl#Match|
+           6.2.3 Pl#Segment ............... |Pl#Segment|
+           6.2.4 Pl#SegmentGroup .......... |Pl#SegmentGroup|
+           6.2.5 Pl#Split ................. |Pl#Split|
+           6.2.6 Pl#FG .................... |Pl#FG|
+           6.2.7 Pl#BG .................... |Pl#BG|
+           6.2.8 Pl#Attr .................. |Pl#Attr|
+           6.2.9 Pl#HiCurrent ............. |Pl#HiCurrent|
+           6.2.10 Pl#HiInsert ............. |Pl#HiInsert|
+           6.2.11 Pl#HiNonCurrent ......... |Pl#HiNonCurrent|
+    7. License ............................ |Powerline-license|
+    8. Known issues ....................... |Powerline-known-issues|
+    9. Contributing ....................... |Powerline-contributing|
 
 ==============================================================================
 1. Introduction                           *Powerline* *Powerline-introduction*
 
 Powerline is a utility plugin which allows you to create better-looking, more 
 functional vim statuslines.
+
+==============================================================================
+2. Usage                                                     *Powerline-usage*
+
+Powerline is automatically enabled when it's installed, either by unzipping 
+the provided archive or by adding it as a Pathogen/Vundle bundle.
+
+==============================================================================
+3. Requirements                                       *Powerline-requirements*
+
+Powerline has been developed and tested in vim 7.3, but it should run without 
+any problems in vim 7.2. The default configuration requires a Unix-like system 
+to work properly.
+
+Vi-compatbile mode must be disabled.
+
+------------------------------------------------------------------------------
+3.1 Recommended settings                      *Powerline-recommended-settings*
+
+The following configuration options should be set in your |vimrc|: >
+
+    set nocompatible " Disable vi-compatibility
+    set laststatus=2 " Always show the statusline
+
+==============================================================================
+4. Configuration                                     *Powerline-configuration*
+
+Powerline will work fine without any user configuration, but default behavior 
+can be overridden by setting configuration variables globally in your |vimrc| 
+file.
+
+------------------------------------------------------------------------------
+4.1 Powerline_cachefile                                  *Powerline_cachefile*
+
+------------------------------------------------------------------------------
+4.2 Powerline_dividers                                    *Powerline_dividers*
+
+------------------------------------------------------------------------------
+4.3 Powerline_theme                                          *Powerline_theme*
+
+==============================================================================
+5. Fonts                                                     *Powerline-fonts*
+
+==============================================================================
+6. Customization                                     *Powerline-customization*
+
+------------------------------------------------------------------------------
+6.1 Basics                                             *Powerline-cust-basics*
+
+------------------------------------------------------------------------------
+6.2 Functions                                       *Powerline-cust-functions*
+
+------------------------------------------------------------------------------
+6.2.1 Pl#Statusline                                            *Pl#Statusline*
+
+------------------------------------------------------------------------------
+6.2.2 Pl#Match                                                      *Pl#Match*
+
+------------------------------------------------------------------------------
+6.2.3 Pl#Segment                                                  *Pl#Segment*
+
+------------------------------------------------------------------------------
+6.2.4 Pl#SegmentGroup                                        *Pl#SegmentGroup*
+
+------------------------------------------------------------------------------
+6.2.5 Pl#Split                                                      *Pl#Split*
+
+------------------------------------------------------------------------------
+6.2.6 Pl#FG                                                            *Pl#FG*
+
+------------------------------------------------------------------------------
+6.2.7 Pl#BG                                                            *Pl#BG*
+
+------------------------------------------------------------------------------
+6.2.8 Pl#Attr                                                        *Pl#Attr*
+
+------------------------------------------------------------------------------
+6.2.9 Pl#HiCurrent                                              *Pl#HiCurrent*
+
+------------------------------------------------------------------------------
+6.2.10 Pl#HiInsert                                               *Pl#HiInsert*
+
+------------------------------------------------------------------------------
+6.2.11 Pl#HiNonCurrent                                       *Pl#HiNonCurrent*
+
+==============================================================================
+7. License                                                 *Powerline-license*
+
+Creative Commons Attribution-ShareAlike 3.0 Unported
+
+http://creativecommons.org/licenses/by-sa/3.0/
+
+==============================================================================
+8. Known issues                                         *Powerline-known-bugs*
+
+- If HiNonCurrent isn't set before a SegmentGroup, vim will show a bunch of 
+  error messages.
+- Spaces must be added manually in each segment. Unfortunately, I haven't 
+  found a reliable way of automatically padding segments without triggering 
+  rendering issues (wrong highlighting, double text, etc.)
+- Because %() is wrapped around each segment, text-only segments won't be 
+  rendered unless the text is wrapped in eval blocks like this: %{'My static 
+  text'}
+
+==============================================================================
+9. Contributing                                       *Powerline-contributing*
+
+If you experience any bugs or have feature requests, please open an issue on
+GitHub. Fork the source repository on GitHub and send a pull request if you
+have any code improvements.
+
+Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
+Source repository: https://github.com/Lokaltog/vim-powerline
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:
