@@ -427,6 +427,14 @@
 			call delete(g:Powerline_cachefile)
 		endif
 
+		" Load main statusline file
+		let main_path = globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1)
+		if ! empty(main_path) && filereadable(main_path)
+			exec 'source' main_path
+		endif
+
+		" Load cached statuslines
+		" Reload and cache statuslines if no cached statuslines exist
 		if ! Pl#LoadCached()
 			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1))
 				exec 'source' path
