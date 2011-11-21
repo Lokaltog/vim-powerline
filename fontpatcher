@@ -97,6 +97,8 @@ for font_path in args.fonts:
 	if font.bitmapSizes:
 		# If this is a bitmap font, regenerate bitmaps for the changed glyphs
 		font.selection.changed()
-		font.regenBitmaps(font.bitmapSizes)
+
+		for size in font.bitmapSizes:
+			font.regenBitmaps((size, ))
 
 	font.generate('{0[0]}-Powerline{0[1]}'.format(os.path.splitext(font_path)))
