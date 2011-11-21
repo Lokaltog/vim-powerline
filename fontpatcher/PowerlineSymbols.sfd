@@ -41,7 +41,7 @@ DEI: 91125
 Encoding: UnicodeFull
 UnicodeInterp: none
 NameList: Adobe Glyph List
-DisplaySize: -36
+DisplaySize: 12
 AntiAlias: 1
 FitToEm: 1
 WinInfo: 10692 36 23
@@ -52,7 +52,7 @@ BeginChars: 1114112 9
 StartChar: uni2B80
 Encoding: 11136 11136 0
 Width: 2048
-Flags: HW
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -66,7 +66,7 @@ EndChar
 StartChar: uni2B81
 Encoding: 11137 11137 1
 Width: 2048
-Flags: HW
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -91,7 +91,7 @@ EndChar
 StartChar: uni2B82
 Encoding: 11138 11138 2
 Width: 2048
-Flags: HW
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -105,7 +105,7 @@ EndChar
 StartChar: uni2B83
 Encoding: 11139 11139 3
 Width: 2048
-Flags: HW
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -131,7 +131,8 @@ StartChar: uni2B61
 Encoding: 11105 11105 4
 Width: 2048
 VWidth: 0
-Flags: H
+HStem: 909 142.25<482 812.075>
+VStem: 294.001 187.999<1051.25 1638> 777.825 178.2<-90.998 409.002> 1252.9 178.22<138.002 638>
 LayerCount: 2
 Fore
 SplineSet
@@ -159,7 +160,8 @@ EndChar
 StartChar: uni2B60
 Encoding: 11104 11104 5
 Width: 2048
-Flags: HW
+Flags: W
+VStem: 251 432<-441.002 161.395 567 2007> 1115 288<757.925 1143>
 LayerCount: 2
 Fore
 SplineSet
@@ -184,7 +186,8 @@ StartChar: uni2B62
 Encoding: 11106 11106 6
 Width: 2048
 VWidth: 0
-Flags: HO
+HStem: 152.128 180<530 755.375> 523 180<935.375 1115.75> 873.63 163.12<755.375 1115.75> 1207 180<530 1227.5>
+VStem: 350 180<332.128 1207> 755.375 180<332.128 523> 1115.75 111.75<703 873.63>
 LayerCount: 2
 Fore
 SplineSet
@@ -216,7 +219,9 @@ StartChar: uni2B63
 Encoding: 11107 11107 7
 Width: 2048
 VWidth: 0
-Flags: HWO
+Flags: W
+HStem: 151 180<181.9 407.65> 855.626 180.004<587.65 697.527> 1205.88 180<0.0253906 697.527>
+VStem: 0.0253906 181.875<331 560.876 562.376 1035.63> 407.65 180<331 855.626> 697.527 180<1035.63 1205.88>
 LayerCount: 2
 Fore
 SplineSet
@@ -248,7 +253,8 @@ StartChar: uni2B64
 Encoding: 11108 11108 8
 Width: 2048
 VWidth: 0
-Flags: HO
+HStem: -19 320<544.884 695.116> 701 160<542.305 697.695> 1341 160<514.997 725.003>
+VStem: 300 160<861 1279.01> 780 160<861 1279.01>
 LayerCount: 2
 Fore
 SplineSet
@@ -273,4 +279,44 @@ SplineSet
 EndSplineSet
 EndChar
 EndChars
+BitmapFont: 10 9 8 2 1 
+BDFChar: 0 11136 10 0 5 -2 9
+JAC+4q#('bnDM*4
+BDFChar: 1 11137 10 0 5 -2 9
+J3Y4g#Qt89&0O5g
+BDFChar: 2 11138 10 0 5 -2 9
+"9],Q4FI'S4<+b4
+BDFChar: 3 11139 10 0 5 -2 9
+":,P]5_+AM+:ne]
+BDFChar: 4 11105 10 1 6 -1 7
+J:N1.!#-Cm'EA+5
+BDFChar: 5 11104 10 1 6 -2 9
+^qdn,bf%a#nA)iT
+BDFChar: 6 11106 10 2 5 1 6
+n:7a)Yi#K]
+BDFChar: 7 11107 10 0 3 1 6
+n.;gsT\oeM
+BDFChar: 8 11108 10 0 5 0 6
+0M"b4bku\c
+EndBitmapFont
+BitmapFont: 12 9 10 2 1 
+BDFChar: 0 11136 12 0 6 -2 11
+!!%Pbi:-O>r:od>^jlCb
+BDFChar: 1 11137 12 0 6 -3 11
+!!%O7+:ne]":,P]5_&h7
+BDFChar: 2 11138 12 0 6 -2 11
+!!!-1*'AWHr-UUH$j6P1
+BDFChar: 3 11139 12 0 6 -2 11
+!!!--&0O5gJ3Y4g#Qt,-
+BDFChar: 4 11105 12 0 5 0 8
+J:N1>!$jBP,QIfE
+BDFChar: 5 11104 12 0 8 -3 11
+z^];.Ma8juqa8j9]a8jQehuLOm^];.Mz
+BDFChar: 6 11106 12 1 6 0 8
+!-j$]R"1Qc?iU0,
+BDFChar: 7 11107 12 0 5 0 7
+p]QtGOH>Q3
+BDFChar: 8 11108 12 1 6 0 8
+0M"`*r63C_GQ7^D
+EndBitmapFont
 EndSplineFont
