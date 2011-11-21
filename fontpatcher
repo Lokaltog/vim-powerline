@@ -2,13 +2,17 @@
 
 """Font patcher for Powerline.
 
-Creates separator glyphs for Powerline. Requires FontForge with Python bindings.
+Creates dividers and symbols for use with Powerline. Requires FontForge with Python bindings.
 
 Stores glyphs in the 2b60-2bff Unicode range ("Misc symbols and arrows").
 
+[2b60] Branch symbol
+[2b61] LN (line) symbol
+[2b62] FT symbol 1
+[2b63] FT symbol 2
+[2b64] Padlock (closed) symbol
 [2b80] Hard right arrow
 [2b81] Soft right arrow
-
 [2b82] Hard left arrow
 [2b83] Soft left arrow
 """
@@ -18,13 +22,17 @@ import os
 import sys
 
 import fontforge
+import psMat
 
 # Handle command-line arguments
-parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates separator glyphs in FontForge-compatible font files. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows").')
+parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates dividers and symbols in FontForge-compatible font files. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows").')
 
 parser.add_argument('fonts', metavar='font', nargs='+', help='font file to patch')
 
 args = parser.parse_args()
+
+# Open symbol font
+symbols = fontforge.open('{0}/PowerlineSymbols.sfd'.format(sys.path[0]))
 
 # Patch provided fonts
 for font_path in args.fonts:
@@ -52,70 +60,34 @@ for font_path in args.fonts:
 		if ymin < dim['ymin']: dim['ymin'] = ymin
 		if ymax > dim['ymax']: dim['ymax'] = ymax
 
-	# Use the bounding box dimensions for font ascent/descent
-	ascent = dim['ymax']
-	descent = -dim['ymin']
+	# Target bounding box
+	dest_width = dim['xmax'] + (-dim['xmin'])
+	dest_height = dim['ymax'] + (-dim['ymin'])
 
-	# Prepare glyph dimensions
-	height = ascent + descent
-	half_height = height / 2
+	# Dimensions from PowerlineSymbols
+	source_width = 1272
+	source_height = 2545
 
-	top = ascent
-	middle = height / 2 - descent
-	bottom = -descent
-
-	sw = height / 20
-	half_sw = sw / 2
-
-	# Define outlines
-	outlines = {
-		0x2b80: [ # Hard right arrow
-			True, # Solid
-			(0           , top)    ,
-			(half_height , middle) ,
-			(0           , bottom) ,
-		],
-		0x2b81: [ # Soft right arrow
-			False, # Stroke
-			(half_sw               , top - half_sw)    ,
-			(half_height - half_sw , middle)           ,
-			(half_sw               , bottom + half_sw) ,
-		],
-		0x2b82: [ # Hard left arrow
-			True, # Solid
-			(half_height , top)    ,
-			(0           , middle) ,
-			(half_height , bottom) ,
-		],
-		0x2b83: [ # Soft left arrow
-			False, # Stroke
-			(half_height - half_sw , top - half_sw)    ,
-			(half_sw               , middle)           ,
-			(half_height - half_sw , bottom + half_sw) ,
-		],
-	}
+	# Create scale matrix
+	scale_matrix = psMat.scale(dest_width / source_width, dest_height / source_height)
 
 	# FIXME Not sure if this works with every font out there
 	font.encoding = 'ISO10646'
 
-	# Create glyphs
-	for location, outline in outlines.items():
-		is_solid = outline.pop(0)
+	# Create glyphs from symbol font
+	for glyph in symbols.glyphs():
+		location = glyph.unicode
 
-		glyph = font.createChar(location)
-		pen = glyph.glyphPen()
+		# Select and copy symbol
+		symbols.selection.select(location)
+		symbols.copy()
 
-		pen.moveTo(outline.pop(0))
-		for coords in outline:
-			pen.lineTo(coords)
+		# Select and paste symbol
+		font.selection.select(location)
+		font.paste()
 
-		if is_solid:
-			pen.closePath()
-		else:
-			pen.endPath()
-			glyph.stroke('circular', sw, 'round')
-
-		pen = None
+		# Scale symbol to fit new font
+		font.transform(scale_matrix)
 
 	if font.bitmapSizes:
 		# If this is a bitmap font, regenerate bitmaps for the changed glyphs

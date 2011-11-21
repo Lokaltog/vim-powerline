@@ -1,0 +1,183 @@
+SplineFontDB: 3.0
+FontName: PowerlineSymbols
+FullName: PowerlineSymbols
+FamilyName: PowerlineSymbols
+Weight: Medium
+Copyright: 
+UComments: "2011-11-21: Created." 
+Version: 001.000
+ItalicAngle: 0
+UnderlinePosition: -202
+UnderlineWidth: 100
+Ascent: 1638
+Descent: 410
+LayerCount: 2
+Layer: 0 0 "Back"  1
+Layer: 1 0 "Fore"  0
+NeedsXUIDChange: 1
+XUID: [1021 211 26716215 11021609]
+FSType: 0
+OS2Version: 0
+OS2_WeightWidthSlopeOnly: 0
+OS2_UseTypoMetrics: 1
+CreationTime: 1321867751
+ModificationTime: 1321871288
+OS2TypoAscent: 0
+OS2TypoAOffset: 1
+OS2TypoDescent: 0
+OS2TypoDOffset: 1
+OS2TypoLinegap: 184
+OS2WinAscent: 0
+OS2WinAOffset: 1
+OS2WinDescent: 0
+OS2WinDOffset: 1
+HheadAscent: 0
+HheadAOffset: 1
+HheadDescent: 0
+HheadDOffset: 1
+OS2Vendor: 'PfEd'
+MarkAttachClasses: 1
+DEI: 91125
+Encoding: UnicodeFull
+UnicodeInterp: none
+NameList: Adobe Glyph List
+DisplaySize: -36
+AntiAlias: 1
+FitToEm: 1
+WinInfo: 10764 36 23
+BeginPrivate: 0
+EndPrivate
+BeginChars: 1114112 6
+
+StartChar: uni2B80
+Encoding: 11136 11136 0
+Width: 2048
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+0 2048 m 1
+ 1272 776 l 1
+ 0 -497 l 1
+ 0 2048 l 1
+EndSplineSet
+EndChar
+
+StartChar: uni2B81
+Encoding: 11137 11137 1
+Width: 2048
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+20 2030.5 m 0
+ 32.6667 2042.17 47.8333 2047.83 65.5 2047.5 c 0
+ 83.1667 2047.17 98 2040.67 110 2028 c 2
+ 1255 819 l 2
+ 1267 806.333 1272.67 791.5 1272 774.5 c 0
+ 1271.31 757.5 1265.65 743.333 1255 732 c 2
+ 110 -477 l 2
+ 98 -489.667 83.1667 -496.167 65.5 -496.5 c 0
+ 47.8333 -496.833 32.6667 -491.167 20 -479.5 c 0
+ 7.33333 -467.833 0.833333 -453 0.5 -435 c 0
+ 0.166667 -417 5.66667 -402 17 -390 c 2
+ 1121 776 l 1
+ 17 1941 l 2
+ 5.66667 1953 0.166667 1968 0.5 1986 c 0
+ 0.833333 2004 7.33333 2018.83 20 2030.5 c 0
+EndSplineSet
+EndChar
+
+StartChar: uni2B82
+Encoding: 11138 11138 2
+Width: 2048
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+1272 2048 m 1
+ 0 776 l 1
+ 1272 -497 l 1
+ 1272 2048 l 1
+EndSplineSet
+EndChar
+
+StartChar: uni2B83
+Encoding: 11139 11139 3
+Width: 2048
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+1253 2030.5 m 0
+ 1265.67 2018.83 1272.17 2004 1272.5 1986 c 0
+ 1272.83 1968 1267 1953 1255 1941 c 2
+ 151 776 l 1
+ 1255 -390 l 2
+ 1267 -402 1272.83 -417 1272.5 -435 c 0
+ 1272.17 -453 1265.67 -467.833 1253 -479.5 c 0
+ 1240.32 -491.163 1225.16 -496.83 1207.5 -496.5 c 0
+ 1189.83 -496.167 1175 -489.667 1163 -477 c 2
+ 17 732 l 2
+ 6.33333 743.333 0.833333 757.5 0.5 774.5 c 0
+ 0.166667 791.5 5.66667 806.333 17 819 c 2
+ 1163 2028 l 2
+ 1175 2040.67 1189.83 2047.17 1207.5 2047.5 c 0
+ 1225.17 2047.77 1240.33 2042.1 1253 2030.5 c 0
+EndSplineSet
+EndChar
+
+StartChar: uni2B61
+Encoding: 11105 11105 4
+Width: 2048
+VWidth: 0
+Flags: H
+LayerCount: 2
+Fore
+SplineSet
+294.001 1638 m 5
+ 482 1638 l 5
+ 482 1051.25 l 5
+ 812.075 1051.25 l 5
+ 812.075 909 l 5
+ 294.001 909 l 5
+ 294.001 1638 l 5
+777.825 638 m 5
+ 987.776 638 l 5
+ 1252.9 138.002 l 5
+ 1252.9 638 l 5
+ 1431.12 638 l 5
+ 1431.12 -90.998 l 5
+ 1221.17 -90.998 l 5
+ 956.025 409.002 l 5
+ 956.025 -90.998 l 5
+ 777.825 -90.998 l 5
+ 777.825 638 l 5
+EndSplineSet
+EndChar
+
+StartChar: uni2B60
+Encoding: 11104 11104 5
+Width: 2048
+Flags: HWO
+LayerCount: 2
+Fore
+SplineSet
+230 2048 m 1
+ 710 2048 l 1
+ 710 551 l 1
+ 1070 791 l 1
+ 1070 1031 l 1
+ 950 1031 l 1
+ 1190 1391 l 1
+ 1430 1031 l 1
+ 1310 1031 l 1
+ 1310 671 l 1
+ 710 191 l 1
+ 710 -469 l 1
+ 230 -469 l 1
+ 230 2048 l 1
+EndSplineSet
+EndChar
+EndChars
+EndSplineFont
