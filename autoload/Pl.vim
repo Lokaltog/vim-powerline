@@ -123,13 +123,25 @@
 
 		return ['segment_split', '%=', hi]
 	endfunction " }}}
-	function! Pl#FG(cterm, gui) " {{{
-		let color = { 'cterm': a:cterm, 'gui': a:gui }
+	function! Pl#FG(cterm, ...) " {{{
+		if a:0 && a:1
+			let gui = a:1
+		else
+			let gui = PlColors#cterm2gui(a:cterm)
+		endif
+
+		let color = { 'cterm': a:cterm, 'gui': gui }
 
 		return ['fg', color]
 	endfunction " }}}
-	function! Pl#BG(cterm, gui) " {{{
-		let color = { 'cterm': a:cterm, 'gui': a:gui }
+	function! Pl#BG(cterm, ...) " {{{
+		if a:0 && a:1
+			let gui = a:1
+		else
+			let gui = PlColors#cterm2gui(a:cterm)
+		endif
+
+		let color = { 'cterm': a:cterm, 'gui': gui }
 
 		return ['bg', color]
 	endfunction " }}}
