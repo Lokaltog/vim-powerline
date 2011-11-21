@@ -33,13 +33,36 @@ for font_path in args.fonts:
 	except EnvironmentError:
 		sys.exit(1)
 
+	dim = {
+		'xmin': 0,
+		'ymin': 0,
+		'xmax': 0,
+		'ymax': 0,
+	}
+
+	# Find the biggest possible bounding box from the glyphs in 0x00-0xff
+	for glyph in range(0x00, 0xff):
+		try:
+			(xmin, ymin, xmax, ymax) = font[glyph].boundingBox()
+		except TypeError:
+			continue
+
+		if xmin < dim['xmin']: dim['xmin'] = xmin
+		if xmax > dim['xmax']: dim['xmax'] = xmax
+		if ymin < dim['ymin']: dim['ymin'] = ymin
+		if ymax > dim['ymax']: dim['ymax'] = ymax
+
+	# Use the bounding box dimensions for font ascent/descent
+	ascent = dim['ymax']
+	descent = -dim['ymin']
+
 	# Prepare glyph dimensions
-	height = font.ascent + font.descent
+	height = ascent + descent
 	half_height = height / 2
 
-	top = font.ascent
-	middle = height / 2 - font.descent
-	bottom = -font.descent
+	top = ascent
+	middle = height / 2 - descent
+	bottom = -descent
 
 	sw = height / 20
 	half_sw = sw / 2
