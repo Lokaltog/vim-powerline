@@ -41,7 +41,7 @@ DEI: 91125
 Encoding: UnicodeFull
 UnicodeInterp: none
 NameList: Adobe Glyph List
-DisplaySize: 12
+DisplaySize: 10
 AntiAlias: 1
 FitToEm: 1
 WinInfo: 10692 36 23
@@ -279,27 +279,27 @@ SplineSet
 EndSplineSet
 EndChar
 EndChars
-BitmapFont: 10 9 8 2 1 
-BDFChar: 0 11136 10 0 5 -2 9
-JAC+4q#('bnDM*4
-BDFChar: 1 11137 10 0 5 -2 9
-J3Y4g#Qt89&0O5g
-BDFChar: 2 11138 10 0 5 -2 9
-"9],Q4FI'S4<+b4
-BDFChar: 3 11139 10 0 5 -2 9
-":,P]5_+AM+:ne]
-BDFChar: 4 11105 10 1 6 -1 7
-J:N1.!#-Cm'EA+5
-BDFChar: 5 11104 10 1 6 -2 9
-^qdn,bf%a#nA)iT
-BDFChar: 6 11106 10 2 5 1 6
-n:7a)Yi#K]
-BDFChar: 7 11107 10 0 3 1 6
-n.;gsT\oeM
+BitmapFont: 10 10 8 2 1 
+BDFChar: 0 11136 10 0 4 -2 7
+JAC+4q"X@:^jlCb
+BDFChar: 1 11137 10 0 4 -2 7
+J3Y4g#RCta5_&h7
+BDFChar: 2 11138 10 1 5 -2 7
+#T,OGq"T(n(^L*A
+BDFChar: 3 11139 10 1 5 -2 7
+#S8+DJ:Km-&-r79
+BDFChar: 4 11105 10 1 4 -1 7
+J:N1>!0GR3O8o7\
+BDFChar: 5 11104 10 0 5 -2 7
+^rY<PaN2`d^q]pM
+BDFChar: 6 11106 10 1 5 -1 6
+G^u0KJ=)F+
+BDFChar: 7 11107 10 0 5 -1 6
+p]QtGOH>Q3
 BDFChar: 8 11108 10 0 5 0 6
 0M"b4bku\c
 EndBitmapFont
-BitmapFont: 12 9 10 2 1 
+BitmapFont: 12 10 10 2 1 
 BDFChar: 0 11136 12 0 6 -2 11
 !!%Pbi:-O>r:od>^jlCb
 BDFChar: 1 11137 12 0 6 -3 11
@@ -316,7 +316,7 @@ BDFChar: 6 11106 12 1 6 0 8
 !-j$]R"1Qc?iU0,
 BDFChar: 7 11107 12 0 5 0 7
 p]QtGOH>Q3
-BDFChar: 8 11108 12 1 6 0 8
+BDFChar: 8 11108 12 0 5 0 8
 0M"`*r63C_GQ7^D
 EndBitmapFont
 EndSplineFont
