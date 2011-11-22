@@ -4,23 +4,24 @@
 " Source repository: https://github.com/Lokaltog/vim-powerline
 
 " Script resources {{{
-	let s:dividers = {
-		\   'default'   : [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
-		\ , 'compatible': [       '', [0x2502],       '', [0x2502] ]
-	\ }
-
 	let s:symbols = {
-		\ 'default': {
-			\   'branch': [0x2b60]
-			\ , 'ro'    : [0x2b64]
-			\ , 'ft'    : [0x2b62, 0x2b63]
-			\ , 'line'  : [0x2b61]
-		\ },
 		\ 'compatible': {
-			\   'branch': 'BR:'
-			\ , 'ro'    : 'RO'
-			\ , 'ft'    : 'FT'
-			\ , 'line'  : 'LN'
+			\   'dividers': [ '', [0x2502], '', [0x2502] ]
+			\ , 'symbols' : {
+				\   'branch': 'BR:'
+				\ , 'ro'    : 'RO'
+				\ , 'ft'    : 'FT'
+				\ , 'line'  : 'LN'
+			\ }
+		\ },
+		\ 'fancy': {
+			\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
+			\ , 'symbols' : {
+				\   'branch'  : [0x2b60]
+				\ , 'ro'      : [0x2b64]
+				\ , 'ft'      : [0x2b62, 0x2b63]
+				\ , 'line'    : [0x2b61]
+			\ }
 		\ }
 	\ }
 
@@ -83,11 +84,11 @@
 		endfor
 
 		" Search/replace symbols
-		for [key, symbol] in items(s:symbols[g:Powerline_dividers])
+		for [key, symbol] in items(s:symbols[g:Powerline_symbols].symbols)
 			let text = substitute(
 				\ text,
 				\ '\v\$('. key .')',
-				\ '\=s:ParseChars(s:symbols[g:Powerline_dividers][submatch(1)])',
+				\ '\=s:ParseChars(s:symbols[g:Powerline_symbols].symbols[submatch(1)])',
 				\ 'g')
 		endfor
 
@@ -371,7 +372,7 @@
 		let divider_type = a:1
 
 		" Fetch and parse divider symbol
-		let divider_raw = copy(s:dividers[g:Powerline_dividers][a:side + divider_type])
+		let divider_raw = copy(s:symbols[g:Powerline_symbols].dividers[a:side + divider_type])
 		let divider = s:ParseChars(divider_raw)
 
 		if a:side == s:LEFT_SIDE

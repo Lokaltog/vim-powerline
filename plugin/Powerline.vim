@@ -20,7 +20,7 @@
 	endfunction " }}}
 	call s:InitOptions({
 	\   'theme'    : 'distinguished'
-	\ , 'dividers' : 'compatible'
+	\ , 'symbols'  : 'compatible'
 	\ , 'cachefile': '/tmp/Powerline.cache'
 	\ })
 " }}}
