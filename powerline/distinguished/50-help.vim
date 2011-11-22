@@ -19,7 +19,7 @@ call Pl#Statusline(
 		\ Pl#HiNonCurrent(Pl#BG(234, 0x1c1c1c))
 		\ ),
 	\
-	\ Pl#Segment(" %p%% ",
+	\ Pl#Segment(" %4(%p%%%) ",
 		\ Pl#HiCurrent(   Pl#FG(250, 0xbcbcbc), Pl#BG(240, 0x585858)),
 		\ Pl#HiInsert(    Pl#FG(117, 0x87d7ff), Pl#BG( 31, 0x0087af)),
 		\ Pl#HiNonCurrent(Pl#FG(244, 0x808080), Pl#BG(234, 0x1c1c1c))
