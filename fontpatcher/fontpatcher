@@ -25,14 +25,19 @@ import fontforge
 import psMat
 
 # Handle command-line arguments
-parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates dividers and symbols in FontForge-compatible font files. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows").')
+parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates dividers and symbols in FontForge-compatible font files. Requires FontForge with Python bindings. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows"). Stores the patched font as a new, renamed font file by default.')
 
-parser.add_argument('fonts', metavar='font', nargs='+', help='font file to patch')
+parser.add_argument('fonts', help='font file to patch', metavar='font', nargs='+')
+parser.add_argument('--no-rename', help='don\'t add " for Powerline" to the font name', default=True, action='store_false', dest='rename')
+parser.add_argument('--symbol-font', help='font file with symbols', metavar='font', dest='symbol_font', default='{0}/PowerlineSymbols.sfd'.format(sys.path[0]))
 
 args = parser.parse_args()
 
 # Open symbol font
-symbols = fontforge.open('{0}/PowerlineSymbols.sfd'.format(sys.path[0]))
+try:
+	symbols = fontforge.open(args.symbol_font)
+except EnvironmentError:
+	sys.exit(1)
 
 # Patch provided fonts
 for font_path in args.fonts:
@@ -40,6 +45,12 @@ for font_path in args.fonts:
 		font = fontforge.open(font_path)
 	except EnvironmentError:
 		sys.exit(1)
+
+	# Rename font
+	if args.rename:
+		font.familyname += ' for Powerline'
+		font.fullname += ' for Powerline'
+		font.fontname += 'ForPowerline'
 
 	dim = {
 		'xmin': 0,
@@ -71,8 +82,11 @@ for font_path in args.fonts:
 	# Create scale matrix
 	scale_matrix = psMat.scale(dest_width / source_width, dest_height / source_height)
 
-	# FIXME Not sure if this works with every font out there
+	# Update the font encoding to ensure that the Unicode glyphs are available
 	font.encoding = 'ISO10646'
+
+	# Fetch this property before adding outlines
+	onlybitmaps = font.onlybitmaps
 
 	# Create glyphs from symbol font
 	for glyph in symbols.glyphs():
@@ -89,8 +103,8 @@ for font_path in args.fonts:
 		# Scale symbol to fit new font
 		font.transform(scale_matrix)
 
-	if font.bitmapSizes:
-		# If this is a bitmap font, regenerate bitmaps for the changed glyphs
+	if font.bitmapSizes and not onlybitmaps:
+		# If this is an outline font with bitmaps, regenerate bitmaps for the changed glyphs
 		font.selection.changed()
 
 		for size in font.bitmapSizes:
