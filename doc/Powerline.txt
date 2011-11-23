@@ -1,4 +1,4 @@
-*Powerline.txt*	Version 0.1pre.  Last change: 2011 Nov 18
+*Powerline.txt*	For Vim version 7.3.	Last change: 2011 Nov 23
 
                                             ______
          _________                          \    /__
@@ -105,10 +105,11 @@ are currently two available options: "compatible" and "fancy".
 
 Symbols can be inserted into statuslines by using the following variables:
 
-    $branch: Inserts a branch symbol
-    $ro: Inserts a read-only symbol
-    $ft: Inserts a filetype symbol
-    $line: Inserts a line number symbol
+    VARIABLE       DESCRIPTION ~
+    $branch        Inserts a branch symbol
+    $ro            Inserts a read-only symbol
+    $ft            Inserts a filetype symbol
+    $line          Inserts a line number symbol
 
 Default: "compatible"
 
@@ -118,9 +119,9 @@ option for the changes to take effect.
 ------------------------------------------------------------------------------
 4.2.1 Compatible symbols                        *Powerline-symbols-compatible*
 
-These symbols will work in any configuration, and does not require a special 
-font to work. It will replace the fancy icons with plain text, and the pointy 
-dividers by straight lines.
+These symbols will work in any configuration, and do not require a special 
+font to work. This option will replace the fancy icons with plain text, and 
+the pointy dividers with straight lines.
 
 ------------------------------------------------------------------------------
 4.2.2 Fancy symbols                                  *Powerline-symbols-fancy*
@@ -146,6 +147,9 @@ option for the changes to take effect.
 ==============================================================================
 6. Customization                                     *Powerline-customization*
 
+Please see "powerline/distinguished/00-default.vim" for a complete example of 
+a statusline theme.
+
 ------------------------------------------------------------------------------
 6.1 Basics                                             *Powerline-cust-basics*
 
@@ -153,37 +157,241 @@ option for the changes to take effect.
 6.2 Functions                                       *Powerline-cust-functions*
 
 ------------------------------------------------------------------------------
-6.2.1 Pl#Statusline                                            *Pl#Statusline*
+6.2.1 Pl#Statusline({argument}[, ...])                         *Pl#Statusline*
+
+    ARGUMENT    DESCRIPTION ~
+    {argument}  [Required] The return value of any of the following functions:
+
+                - |Pl#Match|
+                - |Pl#Segment|
+                - |Pl#SegmentGroup|
+                - |Pl#Split|
+
+This is the main function which must be called for all statuslines. It accepts 
+one or more arguments which are described below.
 
 ------------------------------------------------------------------------------
-6.2.2 Pl#Match                                                      *Pl#Match*
+6.2.2 Pl#Match({expr}, {re})                                        *Pl#Match*
+
+    ARGUMENT    DESCRIPTION ~
+    {expr}      [Required] Will be |eval()|'ed, must return a string.
+
+                EXAMPLE ~
+                >
+                'bufname("%")'
+                '&ft'
+<
+    {re}        [Required] Regular expression which will be |match()|'ed
+                against "expr".
+
+Limits the current |Pl#Statusline| to specific buffers or filetypes. An 
+example is to provide a statusline for only help files.
+
+    EXAMPLE ~
+>
+    Pl#Match('&ft', 'help')
 
 ------------------------------------------------------------------------------
-6.2.3 Pl#Segment                                                  *Pl#Segment*
+6.2.3 Pl#Segment({text}[, ...])                                   *Pl#Segment*
+
+    ARGUMENT    DESCRIPTION ~
+    {text}      [Required] The segment text. Uses |statusline| syntax. It's
+                possible to include variables from |Powerline_symbols| in each 
+                segment.
+
+                EXAMPLE ~
+                >
+                '%H%W'
+                '%{&fileformat}'
+<
+    {boolean}   [Optional] If a boolean argument is false, this segment will
+                be ignored. Used to disable segments if a user doesn't have 
+                a required plugin or function.
+
+                Example: exists('g:loaded_fugitive') && g:loaded_fugitive == 1
+
+    {color}     [Optional] Color arguments decide the highlighting of this
+                segment in different modes. If a specific highlighting is 
+                missing (e.g.  |Pl#HiNonCurrent|), this segment will be 
+                disabled for that mode.
+
+Returns a segment. Segments are individual, separated "blocks" in the 
+statusline which are wrapped in divider symbols according to 
+|Powerline_symbols|.
+
+    EXAMPLE ~
+>
+	" This segment will show the current mode in current windows
+
+	\ Pl#Segment(" %{substitute(mode(), '', '^V', 'g')} ",
+		\ Pl#HiCurrent(   Pl#FG(235), Pl#BG(214), Pl#Attr('bold')),
+		\ Pl#HiInsert(    Pl#FG( 23), Pl#BG(153), Pl#Attr('bold'))
+		\ )
+
+	" This segment will show the current branch with a branch symbol in all
+	" windows, IF fugitive is loaded.
+
+	\ Pl#Segment("%{substitute(fugitive#statusline(), 
+	'GIT(\\([a-z0-9\\-_\\./:]\\+\\))', ' $branch \\1 ', 'gi')}",
+		\ exists('g:loaded_fugitive') && g:loaded_fugitive == 1,
+		\
+		\ Pl#HiCurrent(   Pl#FG(250), Pl#BG(240)),
+		\ Pl#HiInsert(    Pl#FG(117), Pl#BG( 31)),
+		\ Pl#HiNonCurrent(Pl#FG(239), Pl#BG(234))
+		\ )
 
 ------------------------------------------------------------------------------
-6.2.4 Pl#SegmentGroup                                        *Pl#SegmentGroup*
+6.2.4 Pl#SegmentGroup([...])                                 *Pl#SegmentGroup*
+
+    ARGUMENT    DESCRIPTION ~
+    {color}     [Optional] Defines the BG highlighting for this group. Only
+                |Pl#BG| colors are used.
+
+    {segment}   [Optional] Adds a segment to this group.
+
+Returns a segment group. Segment groups are collections of segments with 
+a common background color and no dividers between the segments. The segment 
+group itself is wrapped in dividers. An example for segment groups is adding 
+file flags with separate FG colors or attributes directly before or after the 
+filename (with no dividers in between).
+
+    EXAMPLE ~
+>
+	Pl#SegmentGroup(
+		\ Pl#HiCurrent(Pl#BG(240)),      <-- Gray background for the group
+		  ...
+
+		\ Pl#Segment(' %t ',             <-- Filename
+			\ Pl#HiCurrent(Pl#FG(231)),  <-- White foreground
+			  ...
+			\ ),
+
+		\ Pl#Segment('%M ',              <-- Modified flag
+			\ Pl#HiCurrent(Pl#FG(196)),  <-- Red foreground
+			  ...
+			\ )
+		\ )
 
 ------------------------------------------------------------------------------
-6.2.5 Pl#Split                                                      *Pl#Split*
+6.2.5 Pl#Split([{color}, {color...}])                               *Pl#Split*
+
+    ARGUMENT    DESCRIPTION ~
+    {color}     [Optional] Defines the highlighting for the empty space
+                between the left and right side.
+
+Splits the statusline. It's recommended that you provide highlighting for all 
+modes. Only |Pl#BG| colors are required.
+
+    EXAMPLE ~
+>
+    Pl#Split(
+		\ Pl#HiCurrent(   Pl#BG(236)),
+		\ Pl#HiInsert(    Pl#BG( 24)),
+		\ Pl#HiNonCurrent(Pl#BG(234))
+		\ )
 
 ------------------------------------------------------------------------------
-6.2.6 Pl#FG                                                            *Pl#FG*
+6.2.6 Pl#FG({cterm}[, {gui}])                                          *Pl#FG*
+
+    ARGUMENT    DESCRIPTION ~
+    {cterm}     [Required] Integer color for 256-color terminals (0-255).
+
+    {gui}       [Optional] Integer color for GUI. Must be a |Number|.  Usually
+                provided as a hex number, i.e. 0xff0000. If left out the cterm 
+                color is used in the GUI.
+
+Returns a foreground color set for use in |Pl#HiCurrent|, |Pl#HiInsert| and 
+|Pl#HiNonCurrent|.
+
+    EXAMPLE ~
+>
+    Pl#FG(21)
+    Pl#FG(247, 0x999999)
 
 ------------------------------------------------------------------------------
-6.2.7 Pl#BG                                                            *Pl#BG*
+6.2.7 Pl#BG({cterm}[, {gui}])                                          *Pl#BG*
+
+    ARGUMENT    DESCRIPTION ~
+    {cterm}     [Required] Integer color for 256-color terminals (0-255).
+
+    {gui}       [Optional] Integer color for GUI. Must be a |Number|.  Usually
+                provided as a hex number, i.e. 0xff0000. If left out the cterm 
+                color is used in the GUI.
+
+Returns a background color set for use in |Pl#HiCurrent|, |Pl#HiInsert| and 
+|Pl#HiNonCurrent|.
+
+    EXAMPLE ~
+>
+    Pl#BG(21)
+    Pl#BG(247, 0x999999)
 
 ------------------------------------------------------------------------------
-6.2.8 Pl#Attr                                                        *Pl#Attr*
+6.2.8 Pl#Attr({attr}[, {attr...}])                                   *Pl#Attr*
+
+    ARGUMENT    DESCRIPTION ~
+    {attr}      [Required] A highlighting attribute from |attr-list|.
+
+Returns an attribute set for use in |Pl#HiCurrent|, |Pl#HiInsert| and 
+|Pl#HiNonCurrent|. Requires one or more attribute arguments.
+
+    EXAMPLE ~
+>
+    Pl#Attr('bold', 'underline')
 
 ------------------------------------------------------------------------------
-6.2.9 Pl#HiCurrent                                              *Pl#HiCurrent*
+6.2.9 Pl#HiCurrent({color}[, {color}[, {attr}]])                *Pl#HiCurrent*
+
+    ARGUMENT    DESCRIPTION ~
+    {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
+    {attr}      [Optional] One |Pl#Attr| attribute set.
+
+Returns a collection of colors and attributes for the currently selected vim 
+window/split in |Normal-mode|. For use in |Pl#Segment|s, |Pl#SegmentGroup|s 
+and |Pl#Split|s.
+
+Note: If this highlighting isn't provided for a |Pl#Segment|, the segment will 
+be hidden in normal mode.
+
+    EXAMPLE ~
+>
+    Pl#HiCurrent(Pl#FG(247), Pl#BG(236), Pl#Attr('bold'))
 
 ------------------------------------------------------------------------------
-6.2.10 Pl#HiInsert                                               *Pl#HiInsert*
+6.2.10 Pl#HiInsert({color}[, {color}[, {attr}]])                 *Pl#HiInsert*
+
+    ARGUMENT    DESCRIPTION ~
+    {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
+    {attr}      [Optional] One |Pl#Attr| attribute set.
+
+Returns a collection of colors and attributes for the currently selected vim 
+window/split in |Insert-mode|. For use in |Pl#Segment|s, |Pl#SegmentGroup|s 
+and |Pl#Split|s.
+
+Note: If this highlighting isn't provided for a |Pl#Segment|, the segment will 
+be hidden in insert mode.
+
+    EXAMPLE ~
+>
+    Pl#HiInsert(Pl#FG(117), Pl#BG(24))
 
 ------------------------------------------------------------------------------
-6.2.11 Pl#HiNonCurrent                                       *Pl#HiNonCurrent*
+6.2.11 Pl#HiNonCurrent({color}[, {color}[, {attr}]])         *Pl#HiNonCurrent*
+
+    ARGUMENT    DESCRIPTION ~
+    {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
+    {attr}      [Optional] One |Pl#Attr| attribute set.
+
+Returns a collection of colors and attributes for the currently selected vim 
+window/split in non-current windows (see |hl-StatusLineNC|). For use in 
+|Pl#Segment|s, |Pl#SegmentGroup|s and |Pl#Split|s.
+
+Note: If this highlighting isn't provided for a |Pl#Segment|, the segment will 
+be hidden in non-current windows.
+
+    EXAMPLE ~
+>
+    Pl#HiNonCurrent(Pl#FG(239), Pl#BG(234))
 
 ==============================================================================
 7. License                                                 *Powerline-license*
@@ -193,7 +401,7 @@ Creative Commons Attribution-ShareAlike 3.0 Unported
 http://creativecommons.org/licenses/by-sa/3.0/
 
 ==============================================================================
-8. Known issues                                         *Powerline-known-bugs*
+8. Known issues                                       *Powerline-known-issues*
 
 - If HiNonCurrent isn't set before a SegmentGroup, vim will show a bunch of 
   error messages.
@@ -203,6 +411,9 @@ http://creativecommons.org/licenses/by-sa/3.0/
 - Because %() is wrapped around each segment, text-only segments won't be 
   rendered unless the text is wrapped in eval blocks like this: %{'My static 
   text'}
+
+Note: Also see the issue tracker at
+      https://github.com/Lokaltog/vim-powerline/issues
 
 ==============================================================================
 9. Contributing                                       *Powerline-contributing*
