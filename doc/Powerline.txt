@@ -403,11 +403,10 @@ http://creativecommons.org/licenses/by-sa/3.0/
 ==============================================================================
 8. Known issues                                       *Powerline-known-issues*
 
-- If HiNonCurrent isn't set before a SegmentGroup, vim will show a bunch of 
-  error messages.
-- Spaces must be added manually in each segment. Unfortunately, I haven't 
-  found a reliable way of automatically padding segments without triggering 
-  rendering issues (wrong highlighting, double text, etc.)
+- Spaces must be added manually in each segment. Unfortunately, 
+  I haven't found a reliable way of automatically padding segments 
+  without triggering rendering issues (wrong highlighting, double text, 
+  etc.)
 - Because %() is wrapped around each segment, text-only segments won't be 
   rendered unless the text is wrapped in eval blocks like this: %{'My static 
   text'}

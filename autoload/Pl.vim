@@ -26,6 +26,7 @@
 	\ }
 
 	let s:EMPTY = ['', 0]
+	let s:HI_FALLBACK = { 'cterm': 0, 'gui': 0x000000 }
 
 	let s:LEFT_SIDE = 0
 	let s:RIGHT_SIDE = 2
@@ -310,11 +311,11 @@
 		" Make sure that we have both FG and BG colors
 		" Falls back to the current active FG/BG color if the color isn't passed to this function
 		if ! len(hi['fg'])
-			let hi['fg'] = s:hi_current_group[a:type]['fg']
+			let hi['fg'] = has_key(s:hi_current_group, a:type) ? s:hi_current_group[a:type]['fg'] : s:HI_FALLBACK
 		endif
 
 		if ! len(hi['bg'])
-			let hi['bg'] = s:hi_current_group[a:type]['bg']
+			let hi['bg'] = has_key(s:hi_current_group, a:type) ? s:hi_current_group[a:type]['bg'] : s:HI_FALLBACK
 		endif
 
 		" Make sure that we have properly formatted attributes
