@@ -404,8 +404,8 @@
 " }}}
 " Script initialization {{{
 	function! Pl#LoadCached() " {{{
-		if filereadable(g:Powerline_cachefile)
-			exec 'source' g:Powerline_cachefile
+		if filereadable(g:Powerline_cache_file)
+			exec 'source' g:Powerline_cache_file
 
 			" Create highlighting groups
 			for hi_cmd in g:Powerline_hi_cmds
@@ -425,7 +425,7 @@
 	function! Pl#Load(...) " {{{
 		if a:0 && a:1 == 1
 			" Force cache reloading by deleting cache file
-			call delete(g:Powerline_cachefile)
+			call delete(g:Powerline_cache_file)
 		endif
 
 		" Load main statusline file
@@ -447,18 +447,17 @@
 				\ 'let g:Powerline_statuslines = '. string(s:statuslines)
 			\ ]
 
-			if empty(g:Powerline_cachefile)
-				" Don't cache anything if g:Powerline_cachefile is empty
+			if empty(g:Powerline_cache_file)
+				" Don't cache anything if g:Powerline_cache_file is empty
 				return
 			endif
 
-			call writefile(cache, g:Powerline_cachefile)
+			call writefile(cache, g:Powerline_cache_file)
 		endif
 	endfunction " }}}
 " }}}
-" Create autocommands {{{
+" Statusline updater {{{
 	function! Pl#Powerline(mode) " {{{
-		" Update the local statusline
 		for statusline in s:statuslines
 			let valid = 1
 
@@ -474,6 +473,7 @@
 			endif
 
 			if valid
+				" Update window-local statusline
 				let &l:statusline = statusline['modes'][a:mode]
 			endif
 		endfor

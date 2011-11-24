@@ -19,9 +19,9 @@
 		endfor
 	endfunction " }}}
 	call s:InitOptions({
-	\   'theme'    : 'distinguished'
-	\ , 'symbols'  : 'compatible'
-	\ , 'cachefile': '/tmp/Powerline.cache'
+	\   'theme'        : 'distinguished'
+	\ , 'symbols'      : 'compatible'
+	\ , 'cache_file'   : '/tmp/Powerline.cache'
 	\ })
 " }}}
 " Autocommands {{{
