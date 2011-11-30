@@ -129,7 +129,7 @@
 		if a:0 && a:1
 			let gui = a:1
 		else
-			let gui = PlColors#cterm2gui(a:cterm)
+			let gui = Pl#Colors#cterm2gui(a:cterm)
 		endif
 
 		let color = { 'cterm': a:cterm, 'gui': gui }
@@ -140,7 +140,7 @@
 		if a:0 && a:1
 			let gui = a:1
 		else
-			let gui = PlColors#cterm2gui(a:cterm)
+			let gui = Pl#Colors#cterm2gui(a:cterm)
 		endif
 
 		let color = { 'cterm': a:cterm, 'gui': gui }

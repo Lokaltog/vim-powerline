@@ -42,7 +42,7 @@ let s:cterm2gui = {
 	\ 250: 0xbcbcbc, 251: 0xc6c6c6, 252: 0xd0d0d0, 253: 0xdadada, 254: 0xe4e4e4, 255: 0xeeeeee
 \ }
 " }}}
-function! PlColors#cterm2gui(cterm) " {{{
+function! Pl#Colors#cterm2gui(cterm) " {{{
 	if ! has_key(s:cterm2gui, a:cterm)
 		return 0xff0000
 	endif
