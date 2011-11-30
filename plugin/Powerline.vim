@@ -28,18 +28,14 @@
 	augroup Powerline
 		autocmd!
 
-		" Initialize when opening vim and re-initialize when changing color scheme
-		" Most colorschemes run 'hi clear', so we need to recreate the colors
-		au ColorScheme,VimEnter *
-			\ call Pl#Load() | call Pl#Powerline('current')
+		" Reload statuslines when changing color scheme
+		au ColorScheme *
+			\ call Pl#Load()
 
-		au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave *
-			\ call Pl#Powerline('current')
+		au BufEnter,WinEnter *
+			\ call Pl#UpdateStatusline(1)
 
-		au BufLeave,BufWinLeave,WinLeave,CmdwinLeave *
-			\ call Pl#Powerline('noncurrent')
-
-		au InsertEnter,CursorHoldI *
-			\ call Pl#Powerline('insert')
+		au BufLeave,WinLeave *
+			\ call Pl#UpdateStatusline(0)
 	augroup END
 " }}}

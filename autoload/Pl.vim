@@ -469,7 +469,26 @@
 	endfunction " }}}
 " }}}
 " Statusline updater {{{
-	function! Pl#Powerline(mode) " {{{
+	function! Pl#GetStatusline(statuslines, current) " {{{
+		let current_mode = mode()
+		let current_window = a:current
+
+		if current_window && current_mode == 'i'
+			let statusline_mode = 'insert'
+		elseif current_window
+			let statusline_mode = 'current'
+		else
+			let statusline_mode = 'noncurrent'
+		endif
+
+		return a:statuslines[statusline_mode]
+	endfunction " }}}
+	function! Pl#UpdateStatusline(current) " {{{
+		if empty(s:statuslines)
+			" Load statuslines if they aren't loaded yet
+			call Pl#Load()
+		endif
+
 		for statusline in s:statuslines
 			let valid = 1
 
@@ -486,7 +505,7 @@
 
 			if valid
 				" Update window-local statusline
-				let &l:statusline = statusline['modes'][a:mode]
+				let &l:statusline = '%!Pl#GetStatusline('. string(statusline['modes']) .','. a:current .')'
 			endif
 		endfor
 	endfunction " }}}
