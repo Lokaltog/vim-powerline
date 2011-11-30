@@ -68,7 +68,7 @@ call Pl#Statusline(
 		\ Pl#HiInsert(    Pl#FG( 75), Pl#BG( 24)),
 		\ ),
 	\
-	\ Pl#Segment(" %4(%p%%%) ",
+	\ Pl#Segment(" %3p%% ",
 		\ Pl#HiCurrent(   Pl#FG(250), Pl#BG(240)),
 		\ Pl#HiInsert(    Pl#FG(117), Pl#BG( 31)),
 		\ Pl#HiNonCurrent(Pl#FG(241), Pl#BG(234))
@@ -79,12 +79,12 @@ call Pl#Statusline(
 		\ Pl#HiInsert(    Pl#BG(117)),
 		\ Pl#HiNonCurrent(Pl#BG(235)),
 		\
-		\ Pl#Segment(" %5($line %l%)",
+		\ Pl#Segment(" $line %3l",
 			\ Pl#HiCurrent(   Pl#FG(236), Pl#Attr('bold')),
 			\ Pl#HiInsert(    Pl#FG( 23), Pl#Attr('bold')),
 			\ Pl#HiNonCurrent(Pl#FG(245))
 			\ ),
-		\ Pl#Segment(":%3(%c%) ",
+		\ Pl#Segment(":%-2c ",
 			\ Pl#HiCurrent(   Pl#FG(244)),
 			\ Pl#HiInsert(    Pl#FG( 23)),
 			\ Pl#HiNonCurrent(Pl#FG(241))
