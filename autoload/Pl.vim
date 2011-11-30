@@ -343,7 +343,7 @@
 			\ , substitute(attr, '\v([a-zA-Z])[a-zA-Z]*,?', '\1', 'g')
 			\ )
 
-		if ! hlexists(hi_group) || ! has_key(s:hi_groups, hi_group)
+		if ! s:HlExists(hi_group) || ! has_key(s:hi_groups, hi_group)
 			" Create the highlighting group
 			let hi_cmd = printf('hi %s ctermfg=%03d ctermbg=%03d cterm=%s guifg=#%06x guibg=#%06x gui=%s'
 				\ , hi_group
@@ -367,6 +367,17 @@
 
 		" Return only the highlighting group name
 		return hi_group
+	endfunction " }}}
+	function! s:HlExists(hl) " {{{
+		if ! hlexists(a:hl)
+			return 0
+		endif
+
+		redir => hlstatus
+		silent exec 'hi' a:hl
+		redir END
+
+		return (hlstatus !~ 'cleared')
 	endfunction " }}}
 	function! s:AddDivider(text, side, color, ...) " {{{
 		" Adds divider symbol to text
