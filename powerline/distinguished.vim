@@ -31,3 +31,11 @@ endfunction " }}}
 function! Stl_GetCurrentFunction() " {{{
 	return cfi#format(' %s', '')
 endfunction " }}}
+function! Stl_GetCommandTLine() " {{{
+	let line = getline('.')
+
+	" Trim whitespace from current line
+	let line = substitute(line, '\v^\>\s+|\s+$', '', 'g')
+
+	return line
+endfunction " }}}
