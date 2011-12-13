@@ -441,7 +441,8 @@
 		endif
 
 		" Load main statusline file
-		let main_path = globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1)
+		" If &rtp contains more than one matching files, take the first one
+		let main_path = split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1))[0]
 		if ! empty(main_path) && filereadable(main_path)
 			exec 'source' main_path
 		endif
