@@ -39,3 +39,15 @@ function! Stl_GetCommandTLine() " {{{
 
 	return line
 endfunction " }}}
+function! Stl_GetManPage() " {{{
+	let matches = matchlist(getline(1), '\v^([a-zA-Z_\.\-]+)\((\d+)\)')
+
+	if ! len(matches)
+		return 'n/a'
+	endif
+
+	let file = tolower(matches[1])
+	let num = matches[2]
+
+	return file
+endfunction " }}}
