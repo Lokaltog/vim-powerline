@@ -1,7 +1,7 @@
 call Pl#Statusline(
 	\ Pl#Match('&ft', 'help'),
 	\
-	\ Pl#Segment(' %{"HELP"} ',
+	\ Pl#Segment(' %{"Help"} ',
 		\ Pl#HiCurrent(   Pl#FG(231), Pl#BG(240), Pl#Attr('bold')),
 		\ Pl#HiInsert(    Pl#FG(231), Pl#BG( 31), Pl#Attr('bold')),
 		\ Pl#HiNonCurrent(Pl#FG(244), Pl#BG(234), Pl#Attr('bold'))
