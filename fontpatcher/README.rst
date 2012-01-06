@@ -53,27 +53,27 @@ need to close all running terminals for the font to be updated.
 Glyph table
 -----------
 
-All the glyphs are stored in the U+2B60--U+2BFF range ("Misc symbols and 
-arrows").
+All the glyphs are stored in the ``U+2B60``-``U+2BFF`` range ("Misc symbols 
+and arrows").
 
 +------------+-------------------+
 | Code point | Description       |
 +============+===================+
-| U+2B60     | Branch symbol     |
+| ``U+2B60`` | Branch symbol     |
 +------------+-------------------+
-| U+2B61     | LN (line) symbol  |
+| ``U+2B61`` | LN (line) symbol  |
 +------------+-------------------+
-| U+2B62     | FT symbol, part 1 |
+| ``U+2B62`` | FT symbol, part 1 |
 +------------+-------------------+
-| U+2B63     | FT symbol, part 2 |
+| ``U+2B63`` | FT symbol, part 2 |
 +------------+-------------------+
-| U+2B64     | Padlock (closed)  |
+| ``U+2B64`` | Padlock (closed)  |
 +------------+-------------------+
-| U+2B80     | Hard right arrow  |
+| ``U+2B80`` | Hard right arrow  |
 +------------+-------------------+
-| U+2B81     | Soft right arrow  |
+| ``U+2B81`` | Soft right arrow  |
 +------------+-------------------+
-| U+2B82     | Hard left arrow   |
+| ``U+2B82`` | Hard left arrow   |
 +------------+-------------------+
-| U+2B83     | Soft left arrow   |
+| ``U+2B83`` | Soft left arrow   |
 +------------+-------------------+
