@@ -32,7 +32,7 @@
 		au ColorScheme *
 			\ call Pl#Load()
 
-		au BufEnter,WinEnter,FileType *
+		au BufEnter,WinEnter,FileType,BufUnload *
 			\ call Pl#UpdateStatusline(1)
 
 		au BufLeave,WinLeave *
