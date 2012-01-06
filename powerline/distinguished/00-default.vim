@@ -46,7 +46,7 @@ call Pl#Statusline(
 		\ ),
 	\
 	\ Pl#Segment("%<%{Stl_GetCurrentFunction()}",
-		\ exists('g:has_cfi') && g:has_cfi == 1,
+		\ exists('g:cfi_disable') && g:cfi_disable == 0,
 		\
 		\ Pl#HiCurrent(   Pl#FG(247), Pl#BG(236)),
 		\ Pl#HiInsert(    Pl#FG(117), Pl#BG( 24))
