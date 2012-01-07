@@ -31,10 +31,15 @@ font is available in your font path::
 
     # Copy the font file into ~/.fonts
     # This is not needed if the original font already is in this folder
-    cp MyFontFile-Powerline.ttf ~/.fonts
+    cp MyFontFile-Powerline.otf ~/.fonts
 
     # Update font cache
     sudo fc-cache -vf
+
+**Note:** If the font is a pure bitmap font (e.g. a PCF font) it will be 
+stored in the BDF format. This is usually not a problem, and you may convert 
+the font back to the PCF format using ``bdftopcf`` if you want to. All other 
+fonts will be stored in the OTF format regardless of the original format.
 
 After this is done you'll need to update your vim configuration to use the 
 new font. You'll also need to add this configuration option to your 
