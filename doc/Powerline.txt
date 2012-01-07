@@ -62,6 +62,8 @@ Powerline has been developed and tested in vim 7.3, but it should run without
 any problems in vim 7.2. The default configuration requires a Unix-like system 
 to work properly.
 
+The plugin only works with vim running in an 88/256-color terminal or gvim.
+
 Vi-compatbile mode must be disabled.
 
 ------------------------------------------------------------------------------
@@ -71,6 +73,11 @@ The following configuration options should be set in your |vimrc|: >
 
     set nocompatible " Disable vi-compatibility
     set laststatus=2 " Always show the statusline
+
+Note: If you're using an 88/256-color terminal but still don't see the colored 
+statusline, you may have to set the following option as well: >
+
+    set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
 
 ==============================================================================
 4. Configuration                                     *Powerline-configuration*
