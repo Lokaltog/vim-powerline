@@ -110,4 +110,12 @@ for font_path in args.fonts:
 		for size in font.bitmapSizes:
 			font.regenBitmaps((size, ))
 
-	font.generate('{0[0]}-Powerline{0[1]}'.format(os.path.splitext(font_path)))
+	output_name = os.path.split(font_path)[1].split('.')[0]
+
+	if onlybitmaps:
+		# Generate BDF font
+		font.generate('{0}-Powerline.bdf'.format(output_name, bitmap_type='bdf'))
+	else:
+		# Generate OTF font
+		font.generate('{0}-Powerline.otf'.format(output_name))
+
