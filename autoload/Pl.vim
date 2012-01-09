@@ -417,7 +417,7 @@
 " Script initialization {{{
 	function! Pl#LoadCached() " {{{
 		if filereadable(g:Powerline_cache_file)
-			exec 'source' g:Powerline_cache_file
+			exec 'source' escape(g:Powerline_cache_file, ' \')
 
 			" Create highlighting groups
 			for hi_cmd in g:Powerline_hi_cmds
@@ -444,14 +444,14 @@
 		" If &rtp contains more than one matching files, take the first one
 		let main_path = split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1))[0]
 		if ! empty(main_path) && filereadable(main_path)
-			exec 'source' main_path
+			exec 'source' escape(main_path, ' \')
 		endif
 
 		" Load cached statuslines
 		" Reload and cache statuslines if no cached statuslines exist
 		if ! Pl#LoadCached()
 			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1))
-				exec 'source' path
+				exec 'source' escape(path, ' \')
 			endfor
 
 			" Prepare colors and statuslines for caching
