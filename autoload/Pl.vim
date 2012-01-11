@@ -14,6 +14,15 @@
 				\ , 'line'  : 'LN'
 			\ }
 		\ },
+		\ 'unicode': {
+			\   'dividers': [ [0x25b6], [0x276f], [0x25c0], [0x276e]  ]
+			\ , 'symbols' : {
+				\   'branch'  : [0x26a1]
+				\ , 'ro'      : [0x2613]
+				\ , 'ft'      : [0x2691]
+				\ , 'line'    : [0x204b]
+			\ },
+		\ },
 		\ 'fancy': {
 			\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
 			\ , 'symbols' : {
