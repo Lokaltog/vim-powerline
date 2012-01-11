@@ -108,7 +108,12 @@ Default: "/tmp/Powerline.cache"
 4.2 Powerline_symbols                                      *Powerline_symbols*
 
 This option defines which set of symbols and dividers you want to use. There 
-are currently two available options: "compatible" and "fancy".
+are currently three available options: "compatible", "unicode" and "fancy".
+
+    TYPE           DESCRIPTION ~
+    compatible     Doesn't use any special characters.
+    unicode        Simulates icons and arrows using similar unicode glyphs.
+    fancy          Custom icons and arrows. Requires a patched font.
 
 Symbols can be inserted into statuslines by using the following variables:
 
