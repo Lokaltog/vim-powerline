@@ -64,7 +64,7 @@ to work properly.
 
 The plugin only works with vim running in an 88/256-color terminal or gvim.
 
-Vi-compatbile mode must be disabled.
+Vi-compatible mode must be disabled.
 
 ------------------------------------------------------------------------------
 3.1 Recommended settings                      *Powerline-recommended-settings*
