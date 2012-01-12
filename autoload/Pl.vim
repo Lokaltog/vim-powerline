@@ -451,7 +451,7 @@
 
 		" Load main statusline file
 		" If &rtp contains more than one matching files, take the first one
-		let main_path = split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1))[0]
+		let main_path = split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1), '\n')[0]
 		if ! empty(main_path) && filereadable(main_path)
 			exec 'source' escape(main_path, ' \')
 		endif
@@ -459,7 +459,7 @@
 		" Load cached statuslines
 		" Reload and cache statuslines if no cached statuslines exist
 		if ! Pl#LoadCached()
-			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1))
+			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1), '\n')
 				exec 'source' escape(path, ' \')
 			endfor
 
