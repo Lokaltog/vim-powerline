@@ -12,6 +12,11 @@ function! Stl_GetBranch(branch_symbol) " {{{
 
 	return ret
 endfunction " }}}
+function! Stl_GetVirtualenv(branch_symbol) " {{{
+	let ret = VirtualEnvStatusline()
+	"let ret = substitute(ret, 'GIT(\([a-z0-9\-_\./:]\+\))', ' '. a:branch_symbol .' \1 ', 'gi')
+	return ret
+endfunction " }}}
 function! Stl_GetSyntaxErrors(line_symbol) " {{{
 	if ! exists('g:syntastic_stl_format')
 		" Syntastic hasn't been loaded yet
