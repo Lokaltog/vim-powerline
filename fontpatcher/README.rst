@@ -14,47 +14,6 @@ Patched fonts are renamed by default (" for Powerline" is added to the font
 name) so they don't conflict with existing fonts. Use the ``--no-rename`` 
 option to disable font renaming.
 
-**Note for Mac users:** The FontForge package in Homebrew isn't compiled 
-with Python bindings, and will not work. I haven't been able to find a good 
-solution for Mac users, please let me know if you've been able to install 
-FontForge with Python bindings and how you did it and I'll update this 
-README.
-
-Font patching guide
--------------------
-
-First of all you'll need to patch your font file and ensure that the patched 
-font is available in your font path::
-
-    # Patch the font file
-    ./fontpatcher MyFontFile.ttf
-
-    # Copy the font file into ~/.fonts
-    # This is not needed if the original font already is in this folder
-    cp MyFontFile-Powerline.otf ~/.fonts
-
-    # Update font cache
-    sudo fc-cache -vf
-
-**Note:** If the font is a pure bitmap font (e.g. a PCF font) it will be 
-stored in the BDF format. This is usually not a problem, and you may convert 
-the font back to the PCF format using ``bdftopcf`` if you want to. All other 
-fonts will be stored in the OTF format regardless of the original format.
-
-After this is done you'll need to update your vim configuration to use the 
-new font. You'll also need to add this configuration option to your 
-``.vimrc`` file::
-
-    let g:Powerline_symbols = 'fancy'
-
-You may also need to remove the Powerline cache file for the setting to take 
-effect. The cache file is located in ``/tmp/Powerline.cache`` by default::
-
-    rm /tmp/Powerline.cache
-
-**Note:** If you use vim in rxvt-unicode in the client/daemon mode, you'll 
-need to close all running terminals for the font to be updated.
-
 Glyph table
 -----------
 
@@ -82,3 +41,107 @@ and arrows").
 +------------+-------------------+
 | ``U+2B83`` | Soft left arrow   |
 +------------+-------------------+
+
+===================
+Font patching guide
+===================
+
+Linux
+-----
+
+1. Install fontforge with Python bindings. For Ubuntu users the required 
+   package is ``python-fontforge``, for Arch Linux users the required 
+   package is ``fontforge``. It should be something similar for other 
+   distros.
+
+2. Run the font patcher::
+
+       $ /path/to/fontpatcher MyFontFile.ttf
+
+3. Copy the font file into ``~/.fonts`` (or another X font directory)::
+
+       $ cp MyFontFile-Powerline.otf ~/.fonts
+
+   **Note:** If the font is a pure bitmap font (e.g. a PCF font) it will be 
+   stored in the BDF format. This is usually not a problem, and you may 
+   convert the font back to the PCF format using ``bdftopcf`` if you want 
+   to. All other fonts will be stored in the OTF format regardless of the 
+   original format.
+
+4. Update your font cache::
+
+       $ sudo fc-cache -vf
+
+   **Note:** If you use vim in rxvt-unicode in the client/daemon mode, you 
+   may need to close all running terminals as well for the font to be 
+   updated.
+
+5. **For gvim users:** Update the GUI font in your ``vimrc`` file::
+
+       set guifont=MyFont\ for\ Powerline
+
+   **For terminal users:** Update your terminal configuration to use the 
+   patched font.
+
+6. Update your ``vimrc`` configuration to use the new symbols::
+
+       let g:Powerline_symbols = 'fancy'
+
+7. Make sure that the cache file is deleted::
+
+       $ rm /tmp/Powerline.cache
+
+8. Start vim and enjoy your new statusline!
+
+OS X
+----
+
+1. Check if you have a FontForge version with Python support by running 
+   ``fontforge -version``. You should see something like this::
+
+       $ fontforge -version
+       Copyright (c) 2000-2011 by George Williams.
+       Executable based on sources from 13:48 GMT 22-Feb-2011-D.
+       Library based on sources from 13:48 GMT 22-Feb-2011.
+       fontforge 20110222
+       libfontforge 20110222
+
+   Make sure that the executable version number doesn't have ``NoPython`` in 
+   it. If everything looks OK, skip ahead to step 4.
+
+2. If you have FontForge but with ``NoPython`` in the version number, please 
+   try to update to a later version::
+
+       $ brew uninstall fontforge
+       $ brew update
+       $ brew install --use-gcc fontforge
+
+3. If you don't have FontForge, install it with Homebrew::
+
+       $ brew update
+       $ brew install --use-gcc fontforge
+
+4. Patch your fonts by passing the ``fontpatcher`` script as a parameter to 
+   FontForge::
+
+       $ fontforge -script /path/to/fontpatcher MyFontFile.ttf
+
+5. Install the font by double-clicking the font file in Finder and click 
+   "Install this font" from the preview window.
+
+6. **For gvim users:** Update the GUI font in your ``vimrc`` file::
+
+       set guifont=MyFont\ for\ Powerline
+
+   **For terminal users:** Update your terminal configuration to use the 
+   patched font.
+
+7. Update your ``vimrc`` configuration to use the new symbols::
+
+       let g:Powerline_symbols = 'fancy'
+
+8. Make sure that the cache file is deleted::
+
+       $ rm /tmp/Powerline.cache
+
+9. Start vim and enjoy your new statusline!
