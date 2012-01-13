@@ -15,11 +15,6 @@ call Pl#Statusline(
 			\ Pl#HiInsert(    Pl#FG(196)),
 			\ Pl#HiNonCurrent(Pl#FG( 88))
 			\ ),
-		\ Pl#Segment(" %M ",
-			\ Pl#HiCurrent(   Pl#FG(15), Pl#BG(13), Pl#Attr('bold')),
-			\ Pl#HiInsert(    Pl#FG(15), Pl#BG(13), Pl#Attr('bold')),
-			\ Pl#HiNonCurrent(Pl#FG(15), Pl#BG(13), Pl#Attr('bold'))
-			\ ),
 		\ Pl#Segment(" %t ",
 			\ Pl#HiCurrent(   Pl#FG(7), Pl#BG(0), Pl#Attr('bold')),
 			\ Pl#HiInsert(    Pl#FG(7), Pl#BG(0), Pl#Attr('bold')),
@@ -48,12 +43,12 @@ call Pl#Statusline(
 	\ Pl#Split(
 		\ Pl#HiCurrent(   Pl#BG(5)),
 		\ Pl#HiInsert(    Pl#BG(9)),
-		\ Pl#HiNonCurrent(Pl#BG(0))
+		\ Pl#HiNonCurrent(Pl#BG(10))
 		\ ),
 	\
 	\ Pl#Segment(" %{strlen(&ft) ? &ft : 'n/a'} ",
-		\ Pl#HiCurrent(   Pl#FG(246)),
-		\ Pl#HiInsert(    Pl#FG( 75)),
+		\ Pl#HiCurrent(   Pl#FG(15)),
+		\ Pl#HiInsert(    Pl#FG(15)),
 		\ ),
 	\
 	\ Pl#Segment(" %3p%% ",
@@ -61,20 +56,13 @@ call Pl#Statusline(
 		\ Pl#HiInsert(    Pl#FG(7), Pl#BG(0)),
 		\ Pl#HiNonCurrent(Pl#FG(14), Pl#BG(0))
 		\ ),
-	\
-	\ Pl#SegmentGroup(
-		\ Pl#HiCurrent(   Pl#BG(15)),
-		\ Pl#HiInsert(    Pl#BG(15)),
-		\ Pl#HiNonCurrent(Pl#BG(7)),
-		\
-		\ Pl#Segment(" $line %3l",
-			\ Pl#HiCurrent(   Pl#FG(0), Pl#Attr('bold')),
-			\ Pl#HiInsert(    Pl#FG(0), Pl#Attr('bold')),
-			\ Pl#HiNonCurrent(Pl#FG(10))
-			\ ),
-		\ Pl#Segment(":%-2c ",
-			\ Pl#HiCurrent(   Pl#FG(0)),
-			\ Pl#HiInsert(    Pl#FG(0))
-			\ )
-		\ )
+   \ Pl#Segment(":%-2c ",
+      \ Pl#HiCurrent(   Pl#FG(0)),
+      \ Pl#HiInsert(    Pl#FG(0))
+      \ ),
+   \ Pl#Segment("  %M  ",
+      \ Pl#HiCurrent(   Pl#FG(15), Pl#BG(1), Pl#Attr('bold')),
+      \ Pl#HiInsert(    Pl#FG(15), Pl#BG(1), Pl#Attr('bold')),
+      \ Pl#HiNonCurrent(Pl#FG(15), Pl#BG(1), Pl#Attr('bold'))
+      \ ),
 	\ )
