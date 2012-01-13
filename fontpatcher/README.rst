@@ -116,6 +116,9 @@ OS X
        $ brew update
        $ brew install --use-gcc fontforge
 
+   **Note:** You may have to use ``--use-clang`` instead of ``--use-gcc`` 
+   when compiling FontForge.
+
 3. If you don't have FontForge, install it with Homebrew::
 
        $ brew update
