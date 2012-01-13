@@ -13,19 +13,20 @@ Powerline is a utility plugin which allows you to create better-looking,
 more functional vim statuslines. See the screenshots below for 
 a demonstration of the plugin's capabilities.
 
-Please see ``doc/Powerline.txt`` for instructions on how to enable and 
-configure the plugin.
+It's recommended that you install the plugin using Pathogen_ or Vundle_.  
+After the plugin is installed update your help tags and see ``:help 
+Powerline`` for instructions on how to enable and configure the plugin.
 
 **Note:** You need a patched font to be able to use the symbols in the 
 statusbar. An experimental Python/fontforge-based font patcher is included 
-in ``fontpatcher/fontpatcher``.
+in the ``fontpatcher`` directory. See ``fontpatcher/README.rst`` for usage 
+instructions.
+
+.. _Pathogen: https://github.com/tpope/vim-pathogen
+.. _Vundle: https://github.com/gmarik/vundle
 
 Screenshots
 -----------
-
-The screenshot album is also available on imgur_.
-
-.. _Imgur: http://imgur.com/a/RRp4c
 
 **Normal mode**
 
