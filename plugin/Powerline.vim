@@ -21,7 +21,7 @@
 	call s:InitOptions({
 	\   'theme'        : 'distinguished'
 	\ , 'symbols'      : 'compatible'
-	\ , 'cache_file'   : '/tmp/Powerline.cache'
+	\ , 'cache_file'   : (exists('$TEMP') && ! empty($TEMP) ? $TEMP : '/tmp') . '/Powerline.cache'
 	\ })
 " }}}
 " Autocommands {{{
