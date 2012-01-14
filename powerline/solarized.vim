@@ -2,6 +2,7 @@ function! Stl_GetMode() " {{{
 	let ret = mode()
 
 	let ret = substitute(ret, '', '^V', 'g')
+	let ret = substitute(ret, 'i', 'INS', 'g')
 
 	return ret
 endfunction " }}}
