@@ -188,6 +188,7 @@
 		let matches = a:matches
 
 		let hi_group = 'hi_'. a:type
+		let hi_curr = {}
 
 		" Remove empty and invalid segments from argument array
 		for i in range(0, len(a:args) - 1)
@@ -301,6 +302,11 @@
 			" Append segment to statusline
 			let ret .= segment
 		endfor
+
+		" Return an empty statusline if we're missing all highlighting for this mode
+		if empty(hi_curr)
+			let ret = ''
+		endif
 
 		return [ret, hi_curr, matches]
 	endfunction " }}}
