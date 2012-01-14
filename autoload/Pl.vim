@@ -43,6 +43,9 @@
 
 	let s:HARD_DIVIDER = 0
 	let s:SOFT_DIVIDER = 1
+
+	" Cache revision, this must be incremented whenever the cache format is changed
+	let s:CACHE_REVISION = 1
 " }}}
 " Script variables {{{
 	let s:hi_groups = {}
@@ -450,6 +453,16 @@
 		if filereadable(g:Powerline_cache_file)
 			exec 'source' escape(g:Powerline_cache_file, ' \')
 
+			if ! exists('g:Powerline_cache_revision') || g:Powerline_cache_revision != s:CACHE_REVISION
+				" Cache revision differs, force statusline reloading
+				unlet! g:Powerline_cache_revision
+				     \ g:Powerline_match_statuslines
+				     \ g:Powerline_stored_statuslines
+				     \ g:Powerline_hi_cmds
+
+				return 0
+			endif
+
 			" Create highlighting groups
 			for hi_cmd in g:Powerline_hi_cmds
 				exec hi_cmd
@@ -459,9 +472,10 @@
 			let s:match_statuslines  = g:Powerline_match_statuslines
 			let s:stored_statuslines = g:Powerline_stored_statuslines
 
-			unlet g:Powerline_match_statuslines
-			    \ g:Powerline_stored_statuslines
-			    \ g:Powerline_hi_cmds
+			unlet! g:Powerline_cache_revision
+			     \ g:Powerline_match_statuslines
+			     \ g:Powerline_stored_statuslines
+			     \ g:Powerline_hi_cmds
 
 			return 1
 		endif
@@ -490,6 +504,7 @@
 
 			" Prepare colors and statuslines for caching
 			let cache = [
+				\ 'let g:Powerline_cache_revision = '. string(s:CACHE_REVISION),
 				\ 'let g:Powerline_hi_cmds = '. string(s:hi_cmds),
 				\ 'let g:Powerline_match_statuslines  = '. string(s:match_statuslines),
 				\ 'let g:Powerline_stored_statuslines = '. string(s:stored_statuslines)

@@ -98,10 +98,10 @@ It's possible to disable the cache file by setting this option to an empty
 string (i.e. ""). This is especially useful if you're creating a new 
 Powerline.
 
-Note: The default cache location is in /tmp, which is usually emptied when 
-rebooting. This causes the cache file to be regenerated the first time vim is 
-run after bootup, and may cause a slight delay. You may put the cache file in 
-a permanent location (e.g. in ~/.vim) if you want to avoid this.
+Note: The default cache location for Linux/OS X users is in /tmp, which is 
+emptied when rebooting. This causes the cache file to be regenerated the first 
+time vim is run after bootup, and may cause a slight delay. You may put the 
+cache file in a permanent location (e.g. in ~/.vim) if you want to avoid this.
 
 Default: "/tmp/Powerline.cache"
 
