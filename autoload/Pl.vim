@@ -36,22 +36,28 @@
 
 	let s:EMPTY = ['', 0]
 	let s:HI_FALLBACK = { 'cterm': 0, 'gui': 0x000000 }
+	let s:MODES = { 'current': '', 'insert': '', 'noncurrent': '' }
 
 	let s:LEFT_SIDE = 0
 	let s:RIGHT_SIDE = 2
 
 	let s:HARD_DIVIDER = 0
 	let s:SOFT_DIVIDER = 1
+
+	" Cache revision, this must be incremented whenever the cache format is changed
+	let s:CACHE_REVISION = 1
 " }}}
 " Script variables {{{
 	let s:hi_groups = {}
 	let s:hi_current_group = {}
 	let s:hi_cmds = []
-	let s:statuslines = []
+
+	let s:match_statuslines = []
+	let s:stored_statuslines = {}
 " }}}
 " Statusline functions {{{
 	function! Pl#Statusline(...) " {{{
-		let modes = { 'current': '', 'insert': '', 'noncurrent': '' }
+		let modes = copy(s:MODES)
 
 		for mode in keys(modes)
 			let matches = []
@@ -61,10 +67,23 @@
 			let modes[mode] = segment
 		endfor
 
-		call add(s:statuslines, {
+		call add(s:match_statuslines, {
 			\ 'matches': matches,
 			\ 'modes': modes
 		\ })
+	endfunction " }}}
+	function! Pl#StoreStatusline(key, ...) " {{{
+		let modes = copy(s:MODES)
+
+		for mode in keys(modes)
+			let matches = []
+
+			let [segment, hi_curr, matches] = s:GroupHandler(mode, a:000, s:LEFT_SIDE, [])
+
+			let modes[mode] = segment
+		endfor
+
+		let s:stored_statuslines[a:key] = modes
 	endfunction " }}}
 	function! Pl#Match(expr, re) " {{{
 		return ['match', a:expr, a:re]
@@ -188,6 +207,7 @@
 		let matches = a:matches
 
 		let hi_group = 'hi_'. a:type
+		let hi_curr = {}
 
 		" Remove empty and invalid segments from argument array
 		for i in range(0, len(a:args) - 1)
@@ -301,6 +321,11 @@
 			" Append segment to statusline
 			let ret .= segment
 		endfor
+
+		" Return an empty statusline if we're missing all highlighting for this mode
+		if empty(hi_curr)
+			let ret = ''
+		endif
 
 		return [ret, hi_curr, matches]
 	endfunction " }}}
@@ -428,15 +453,29 @@
 		if filereadable(g:Powerline_cache_file)
 			exec 'source' escape(g:Powerline_cache_file, ' \')
 
+			if ! exists('g:Powerline_cache_revision') || g:Powerline_cache_revision != s:CACHE_REVISION
+				" Cache revision differs, force statusline reloading
+				unlet! g:Powerline_cache_revision
+				     \ g:Powerline_match_statuslines
+				     \ g:Powerline_stored_statuslines
+				     \ g:Powerline_hi_cmds
+
+				return 0
+			endif
+
 			" Create highlighting groups
 			for hi_cmd in g:Powerline_hi_cmds
 				exec hi_cmd
 			endfor
 
 			" Assign statuslines
-			let s:statuslines = g:Powerline_statuslines
+			let s:match_statuslines  = g:Powerline_match_statuslines
+			let s:stored_statuslines = g:Powerline_stored_statuslines
 
-			unlet g:Powerline_statuslines g:Powerline_hi_cmds
+			unlet! g:Powerline_cache_revision
+			     \ g:Powerline_match_statuslines
+			     \ g:Powerline_stored_statuslines
+			     \ g:Powerline_hi_cmds
 
 			return 1
 		endif
@@ -465,8 +504,10 @@
 
 			" Prepare colors and statuslines for caching
 			let cache = [
+				\ 'let g:Powerline_cache_revision = '. string(s:CACHE_REVISION),
 				\ 'let g:Powerline_hi_cmds = '. string(s:hi_cmds),
-				\ 'let g:Powerline_statuslines = '. string(s:statuslines)
+				\ 'let g:Powerline_match_statuslines  = '. string(s:match_statuslines),
+				\ 'let g:Powerline_stored_statuslines = '. string(s:stored_statuslines)
 			\ ]
 
 			if empty(g:Powerline_cache_file)
@@ -493,13 +534,16 @@
 
 		return a:statuslines[statusline_mode]
 	endfunction " }}}
+	function! Pl#GetStoredStatusline(key) " {{{
+		return s:stored_statuslines[a:key]
+	endfunction " }}}
 	function! Pl#UpdateStatusline(current) " {{{
-		if empty(s:statuslines)
+		if empty(s:match_statuslines)
 			" Load statuslines if they aren't loaded yet
 			call Pl#Load()
 		endif
 
-		for statusline in s:statuslines
+		for statusline in s:match_statuslines
 			let valid = 1
 
 			" Validate matches

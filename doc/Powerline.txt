@@ -29,16 +29,17 @@ CONTENTS                                                  *Powerline-contents*
        6.1 Basics ......................... |Powerline-cust-basics|
        6.2 Functions ...................... |Powerline-cust-functions|
            6.2.1 Pl#Statusline ............ |Pl#Statusline|
-           6.2.2 Pl#Match ................. |Pl#Match|
-           6.2.3 Pl#Segment ............... |Pl#Segment|
-           6.2.4 Pl#SegmentGroup .......... |Pl#SegmentGroup|
-           6.2.5 Pl#Split ................. |Pl#Split|
-           6.2.6 Pl#FG .................... |Pl#FG|
-           6.2.7 Pl#BG .................... |Pl#BG|
-           6.2.8 Pl#Attr .................. |Pl#Attr|
-           6.2.9 Pl#HiCurrent ............. |Pl#HiCurrent|
-           6.2.10 Pl#HiInsert ............. |Pl#HiInsert|
-           6.2.11 Pl#HiNonCurrent ......... |Pl#HiNonCurrent|
+           6.2.2 Pl#StoreStatusline ....... |Pl#StoreStatusline|
+           6.2.3 Pl#Match ................. |Pl#Match|
+           6.2.4 Pl#Segment ............... |Pl#Segment|
+           6.2.5 Pl#SegmentGroup .......... |Pl#SegmentGroup|
+           6.2.6 Pl#Split ................. |Pl#Split|
+           6.2.7 Pl#FG .................... |Pl#FG|
+           6.2.8 Pl#BG .................... |Pl#BG|
+           6.2.9 Pl#Attr .................. |Pl#Attr|
+           6.2.10 Pl#HiCurrent ............ |Pl#HiCurrent|
+           6.2.11 Pl#HiInsert ............. |Pl#HiInsert|
+           6.2.12 Pl#HiNonCurrent ......... |Pl#HiNonCurrent|
     7. License ............................ |Powerline-license|
     8. Known issues ....................... |Powerline-known-issues|
     9. Contributing ....................... |Powerline-contributing|
@@ -97,10 +98,10 @@ It's possible to disable the cache file by setting this option to an empty
 string (i.e. ""). This is especially useful if you're creating a new 
 Powerline.
 
-Note: The default cache location is in /tmp, which is usually emptied when 
-rebooting. This causes the cache file to be regenerated the first time vim is 
-run after bootup, and may cause a slight delay. You may put the cache file in 
-a permanent location (e.g. in ~/.vim) if you want to avoid this.
+Note: The default cache location for Linux/OS X users is in /tmp, which is 
+emptied when rebooting. This causes the cache file to be regenerated the first 
+time vim is run after bootup, and may cause a slight delay. You may put the 
+cache file in a permanent location (e.g. in ~/.vim) if you want to avoid this.
 
 Default: "/tmp/Powerline.cache"
 
@@ -183,7 +184,28 @@ This is the main function which must be called for all statuslines. It accepts
 one or more arguments which are described below.
 
 ------------------------------------------------------------------------------
-6.2.2 Pl#Match({expr}, {re})                                        *Pl#Match*
+6.2.2 Pl#StoreStatusline({key}, {argument}[, ...])        *Pl#StoreStatusline*
+
+    ARGUMENT    DESCRIPTION ~
+    {key}       [Required] A unique key for referring to this statusline
+    {argument}  [Required] The return value of any of the following functions:
+
+                - |Pl#Segment|
+                - |Pl#SegmentGroup|
+                - |Pl#Split|
+
+This function works like |Pl#Statusline|, but with one important difference: 
+It stores and caches the statusline by a key and does NOT automatically apply 
+it to any buffer or window. The statusline can be retrieved by calling 
+Pl#GetStoredStatusline({key}).
+
+This function can be used for statuslines for plugins that ignore autocmds and 
+have their own callback functions for setting statuslines (e.g. Ctrl-P).
+
+Note: This function doesn't accept |Pl#Match| arguments.
+
+------------------------------------------------------------------------------
+6.2.3 Pl#Match({expr}, {re})                                        *Pl#Match*
 
     ARGUMENT    DESCRIPTION ~
     {expr}      [Required] Will be |eval()|'ed, must return a string.
@@ -204,7 +226,7 @@ example is to provide a statusline for only help files.
     Pl#Match('&ft', 'help')
 
 ------------------------------------------------------------------------------
-6.2.3 Pl#Segment({text}[, ...])                                   *Pl#Segment*
+6.2.4 Pl#Segment({text}[, ...])                                   *Pl#Segment*
 
     ARGUMENT    DESCRIPTION ~
     {text}      [Required] The segment text. Uses |statusline| syntax. It's
@@ -253,7 +275,7 @@ statusline which are wrapped in divider symbols according to
 		\ )
 
 ------------------------------------------------------------------------------
-6.2.4 Pl#SegmentGroup([...])                                 *Pl#SegmentGroup*
+6.2.5 Pl#SegmentGroup([...])                                 *Pl#SegmentGroup*
 
     ARGUMENT    DESCRIPTION ~
     {color}     [Optional] Defines the BG highlighting for this group. Only
@@ -285,7 +307,7 @@ filename (with no dividers in between).
 		\ )
 
 ------------------------------------------------------------------------------
-6.2.5 Pl#Split([{color}, {color...}])                               *Pl#Split*
+6.2.6 Pl#Split([{color}, {color...}])                               *Pl#Split*
 
     ARGUMENT    DESCRIPTION ~
     {color}     [Optional] Defines the highlighting for the empty space
@@ -303,7 +325,7 @@ modes. Only |Pl#BG| colors are required.
 		\ )
 
 ------------------------------------------------------------------------------
-6.2.6 Pl#FG({cterm}[, {gui}])                                          *Pl#FG*
+6.2.7 Pl#FG({cterm}[, {gui}])                                          *Pl#FG*
 
     ARGUMENT    DESCRIPTION ~
     {cterm}     [Required] Integer color for 256-color terminals (0-255).
@@ -321,7 +343,7 @@ Returns a foreground color set for use in |Pl#HiCurrent|, |Pl#HiInsert| and
     Pl#FG(247, 0x999999)
 
 ------------------------------------------------------------------------------
-6.2.7 Pl#BG({cterm}[, {gui}])                                          *Pl#BG*
+6.2.8 Pl#BG({cterm}[, {gui}])                                          *Pl#BG*
 
     ARGUMENT    DESCRIPTION ~
     {cterm}     [Required] Integer color for 256-color terminals (0-255).
@@ -339,7 +361,7 @@ Returns a background color set for use in |Pl#HiCurrent|, |Pl#HiInsert| and
     Pl#BG(247, 0x999999)
 
 ------------------------------------------------------------------------------
-6.2.8 Pl#Attr({attr}[, {attr...}])                                   *Pl#Attr*
+6.2.9 Pl#Attr({attr}[, {attr...}])                                   *Pl#Attr*
 
     ARGUMENT    DESCRIPTION ~
     {attr}      [Required] A highlighting attribute from |attr-list|.
@@ -352,7 +374,7 @@ Returns an attribute set for use in |Pl#HiCurrent|, |Pl#HiInsert| and
     Pl#Attr('bold', 'underline')
 
 ------------------------------------------------------------------------------
-6.2.9 Pl#HiCurrent({color}[, {color}[, {attr}]])                *Pl#HiCurrent*
+6.2.10 Pl#HiCurrent({color}[, {color}[, {attr}]])               *Pl#HiCurrent*
 
     ARGUMENT    DESCRIPTION ~
     {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
@@ -370,7 +392,7 @@ be hidden in normal mode.
     Pl#HiCurrent(Pl#FG(247), Pl#BG(236), Pl#Attr('bold'))
 
 ------------------------------------------------------------------------------
-6.2.10 Pl#HiInsert({color}[, {color}[, {attr}]])                 *Pl#HiInsert*
+6.2.11 Pl#HiInsert({color}[, {color}[, {attr}]])                 *Pl#HiInsert*
 
     ARGUMENT    DESCRIPTION ~
     {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
@@ -388,7 +410,7 @@ be hidden in insert mode.
     Pl#HiInsert(Pl#FG(117), Pl#BG(24))
 
 ------------------------------------------------------------------------------
-6.2.11 Pl#HiNonCurrent({color}[, {color}[, {attr}]])         *Pl#HiNonCurrent*
+6.2.12 Pl#HiNonCurrent({color}[, {color}[, {attr}]])         *Pl#HiNonCurrent*
 
     ARGUMENT    DESCRIPTION ~
     {color}     [Required] One or more |Pl#FG| or |Pl#BG| color sets.
