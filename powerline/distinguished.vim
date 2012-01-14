@@ -51,3 +51,47 @@ function! Stl_GetManPage() " {{{
 
 	return file
 endfunction " }}}
+" Handle Ctrl-P statuslines {{{
+if exists('g:loaded_ctrlp') && g:loaded_ctrlp
+	let g:ctrlp_status_func = {
+		\ 'main': 'CtrlP_Statusline_Main',
+		\ 'prog': 'CtrlP_Statusline_Prog'
+		\ }
+
+	function! CtrlP_Statusline_Main(...) " {{{
+		let stl = Pl#GetStoredStatusline('ctrlp_main')['current']
+
+		let regex = a:3 ? '  RE ' : ''
+		let marked = strpart(a:7, 2, len(a:7) - 3)
+
+		let substitutes = {
+			\ 'focus'  : a:1,
+			\ 'byfname': a:2,
+			\ 'regex'  : regex,
+			\ 'prev'   : a:4,
+			\ 'item'   : a:5,
+			\ 'next'   : a:6,
+			\ 'marked' : (marked == '+' ? '' : ' ' . marked . ' ')
+			\ }
+
+		for [k, v] in items(substitutes)
+			let stl = substitute(stl, '\v\%' . toupper(k), v, 'g')
+		endfor
+
+		return stl
+	endfunction " }}}
+	function! CtrlP_Statusline_Prog(...) " {{{
+		let stl = Pl#GetStoredStatusline('ctrlp_prog')['current']
+
+		let substitutes = {
+			\ 'len'  : a:1
+			\ }
+
+		for [k, v] in items(substitutes)
+			let stl = substitute(stl, '\v\%' . toupper(k), v, 'g')
+		endfor
+
+		return stl
+	endfunction " }}}
+endif
+" }}}
