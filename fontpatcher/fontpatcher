@@ -71,13 +71,14 @@ for font_path in args.fonts:
 	symbols.em = font.em
 
 	font_dim = {
-		'xmin'  : 0,
-		'ymin'  : 0,
-		'xmax'  : 0,
-		'ymax'  : 0,
+		'xmin'  :    0,
+		'ymin'  :    0,
+		'xmax'  :    0,
+		'ymax'  :    0,
 
-		'width' : 0,
-		'height': 0,
+		'width' :    0,
+		'height':    0,
+		'realwidth': 0,
 	}
 
 	# Find the biggest possible bounding box
@@ -85,6 +86,8 @@ for font_path in args.fonts:
 	for glyph in range(0x00, 0xff) + ['0', '1', '8', 'a', 'd', 'x', 'm', 'y', 'g', 'W', 'X', '\'', '_', 0x00cd, 0x00d5, 0x0114, 0x0177, 0x0643, 0x304c, 0x672c, 0x2588]:
 		try:
 			(xmin, ymin, xmax, ymax) = font[glyph].boundingBox()
+			if font_dim['realwidth'] == 0:
+				font_dim['realwidth'] = font[glyph].width
 		except TypeError:
 			continue
 
@@ -174,6 +177,9 @@ for font_path in args.fonts:
 			align_matrix = psMat.translate(0, 0)
 
 		font.transform(align_matrix)
+
+		# Ensure the font is considered monospaced on Windows
+		font[sym_glyph.unicode].width = font_dim['realwidth']
 
 	if font.bitmapSizes and not onlybitmaps:
 		# If this is an outline font with bitmaps, regenerate bitmaps for the changed glyphs
