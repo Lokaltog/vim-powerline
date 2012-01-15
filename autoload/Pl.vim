@@ -160,7 +160,7 @@
 			let gui = Pl#Colors#cterm2gui(a:cterm)
 		endif
 
-		let color = { 'cterm': a:cterm, 'gui': gui }
+		let color = { 'cterm': toupper(a:cterm), 'gui': toupper(gui) }
 
 		return ['fg', color]
 	endfunction " }}}
@@ -171,7 +171,7 @@
 			let gui = Pl#Colors#cterm2gui(a:cterm)
 		endif
 
-		let color = { 'cterm': a:cterm, 'gui': gui }
+		let color = { 'cterm': toupper(a:cterm), 'gui': toupper(gui) }
 
 		return ['bg', color]
 	endfunction " }}}
@@ -367,25 +367,26 @@
 		let bg   = a:hi['bg']
 		let attr = a:hi['attr']
 
-		" Calculate checksum for this highlighting group
-		" We do this to get a safe and shorter but still unique group name
-		let hi_group = printf('Pl%02x%06x%02x%06x%s'
-			\ , fg['cterm']
-			\ , fg['gui']
-			\ , bg['cterm']
-			\ , bg['gui']
+		" Create a short and unique highlighting group name
+		" It uses the hex values of all the color properties and an attribute flag at the end
+		" NONE colors are translated to NN for cterm and NNNNNN for gui colors
+		let hi_group = printf('Pl%s%s%s%s%s'
+			\ , (fg['cterm'] == 'NONE' ? 'NN'     : printf('%02x', fg['cterm']))
+			\ , (fg['gui']   == 'NONE' ? 'NNNNNN' : printf('%06x', fg['gui']  ))
+			\ , (bg['cterm'] == 'NONE' ? 'NN'     : printf('%02x', bg['cterm']))
+			\ , (bg['gui']   == 'NONE' ? 'NNNNNN' : printf('%06x', bg['gui']  ))
 			\ , substitute(attr, '\v([a-zA-Z])[a-zA-Z]*,?', '\1', 'g')
 			\ )
 
 		if ! s:HlExists(hi_group) || ! has_key(s:hi_groups, hi_group)
 			" Create the highlighting group
-			let hi_cmd = printf('hi %s ctermfg=%03d ctermbg=%03d cterm=%s guifg=#%06x guibg=#%06x gui=%s'
+			let hi_cmd = printf('hi %s ctermfg=%s ctermbg=%s cterm=%s guifg=%s guibg=%s gui=%s'
 				\ , hi_group
-				\ , fg['cterm']
-				\ , bg['cterm']
+				\ , (fg['cterm'] == 'NONE' ? 'NONE' : printf('%d', fg['cterm']))
+				\ , (bg['cterm'] == 'NONE' ? 'NONE' : printf('%d', bg['cterm']))
 				\ , attr
-				\ , fg['gui']
-				\ , bg['gui']
+				\ , (fg['gui'] == 'NONE' ? 'NONE' : printf('#%06x', fg['gui']))
+				\ , (bg['gui'] == 'NONE' ? 'NONE' : printf('#%06x', bg['gui']))
 				\ , attr
 				\ )
 

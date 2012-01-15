@@ -43,6 +43,10 @@ let s:cterm2gui = {
 \ }
 " }}}
 function! Pl#Colors#cterm2gui(cterm) " {{{
+	if toupper(a:cterm) == 'NONE'
+		return 'NONE'
+	endif
+
 	if ! has_key(s:cterm2gui, a:cterm)
 		return 0xff0000
 	endif
