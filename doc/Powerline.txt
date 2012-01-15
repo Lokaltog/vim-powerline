@@ -72,8 +72,9 @@ Vi-compatible mode must be disabled.
 
 The following configuration options should be set in your |vimrc|: >
 
-    set nocompatible " Disable vi-compatibility
-    set laststatus=2 " Always show the statusline
+    set nocompatible   " Disable vi-compatibility
+    set laststatus=2   " Always show the statusline
+    set encoding=utf-8 " Necessary to show unicode glyphs
 
 Note: If you're using an 88/256-color terminal but still don't see the colored 
 statusline, you may have to set the following option as well: >
