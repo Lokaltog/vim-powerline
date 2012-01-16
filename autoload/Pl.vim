@@ -563,5 +563,7 @@
 				let &l:statusline = '%!Pl#GetStatusline('. string(statusline['modes']) .','. a:current .')'
 			endif
 		endfor
+
+		redraw
 	endfunction " }}}
 " }}}
