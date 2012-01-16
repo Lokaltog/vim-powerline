@@ -189,7 +189,7 @@ for font_path in args.fonts:
 			font.regenBitmaps((size, ))
 
 	output_name, extension = os.path.split(font_path)[1].rsplit('.', 1)
-	if extension not in ['ttf', 'otf']:
+	if extension.lower() not in ['ttf', 'otf']:
 		# Default to OpenType if input is not TrueType/OpenType
 		extension = 'otf'
 
