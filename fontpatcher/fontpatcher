@@ -37,15 +37,15 @@ args = parser.parse_args()
 
 SYM_ATTR = {
 	# Right/left-aligned glyphs will have their advance width reduced in order to overlap the next glyph slightly
-	0x2b60: { 'align': 'c', 'stretch': 'y'  },
-	0x2b61: { 'align': 'c', 'stretch': ''   },
-	0x2b62: { 'align': 'r', 'stretch': ''   },
-	0x2b63: { 'align': 'l', 'stretch': ''   },
-	0x2b64: { 'align': 'c', 'stretch': ''   },
-	0x2b80: { 'align': 'l', 'stretch': 'xy' },
-	0x2b81: { 'align': 'l', 'stretch': 'xy' },
-	0x2b82: { 'align': 'r', 'stretch': 'xy' },
-	0x2b83: { 'align': 'r', 'stretch': 'xy' },
+	0x2b60: { 'align': 'c', 'stretch': 'y' , 'overlap': False },
+	0x2b61: { 'align': 'c', 'stretch': ''  , 'overlap': False },
+	0x2b62: { 'align': 'r', 'stretch': ''  , 'overlap': False },
+	0x2b63: { 'align': 'l', 'stretch': ''  , 'overlap': False },
+	0x2b64: { 'align': 'c', 'stretch': ''  , 'overlap': False },
+	0x2b80: { 'align': 'l', 'stretch': 'xy', 'overlap': True  },
+	0x2b81: { 'align': 'l', 'stretch': 'xy', 'overlap': True  },
+	0x2b82: { 'align': 'r', 'stretch': 'xy', 'overlap': True  },
+	0x2b83: { 'align': 'r', 'stretch': 'xy', 'overlap': True  },
 }
 
 # Open symbol font
@@ -70,35 +70,36 @@ for font_path in args.fonts:
 	# Force the em size to be equal
 	symbols.em = font.em
 
+	# Initial font dimensions
 	font_dim = {
 		'xmin'  :    0,
-		'ymin'  :    0,
+		'ymin'  :    -font.descent,
 		'xmax'  :    0,
-		'ymax'  :    0,
+		'ymax'  :    font.ascent,
 
 		'width' :    0,
 		'height':    0,
-		'realwidth': 0,
 	}
 
-	# Find the biggest possible bounding box
-	# Use urxvt's algorithm to determine the bounding box
-	for glyph in range(0x00, 0xff) + ['0', '1', '8', 'a', 'd', 'x', 'm', 'y', 'g', 'W', 'X', '\'', '_', 0x00cd, 0x00d5, 0x0114, 0x0177, 0x0643, 0x304c, 0x672c, 0x2588]:
+	# Find the biggest char width and height
+	#
+	# 0x00-0x17f is the Latin Extended-A range
+	# 0x2500-0x2600 is the box drawing range
+	for glyph in range(0x00, 0x17f) + range(0x2500, 0x2600):
 		try:
 			(xmin, ymin, xmax, ymax) = font[glyph].boundingBox()
-			if font_dim['realwidth'] == 0:
-				font_dim['realwidth'] = font[glyph].width
 		except TypeError:
 			continue
 
-		if xmin < font_dim['xmin']: font_dim['xmin'] = xmin
-		if xmax > font_dim['xmax']: font_dim['xmax'] = xmax
+		if font_dim['width'] == 0:
+			font_dim['width'] = font[glyph].width
+
 		if ymin < font_dim['ymin']: font_dim['ymin'] = ymin
 		if ymax > font_dim['ymax']: font_dim['ymax'] = ymax
+		if xmax > font_dim['xmax']: font_dim['xmax'] = xmax
 
-	# Target dimensions
-	font_dim['width']  = font_dim['xmax'] + (-font_dim['xmin'])
-	font_dim['height'] = font_dim['ymax'] + (-font_dim['ymin'])
+	# Calculate font height
+	font_dim['height'] = abs(font_dim['ymin']) + font_dim['ymax']
 
 	# Update the font encoding to ensure that the Unicode glyphs are available
 	font.encoding = 'ISO10646'
@@ -121,6 +122,8 @@ for font_path in args.fonts:
 
 	# Create glyphs from symbol font
 	for sym_glyph in symbols.glyphs():
+		sym_attr = SYM_ATTR[sym_glyph.unicode]
+
 		# Prepare symbol glyph dimensions
 		sym_dim = get_dim(sym_glyph)
 
@@ -134,7 +137,22 @@ for font_path in args.fonts:
 
 		# Now that we have copy/pasted the glyph, it's time to scale and move it
 
-		# Align the glyph vertically first, since all scaling operations are done from the glyph's center
+		# Handle glyph stretching
+		if 'x' in sym_attr['stretch']:
+			# Stretch the glyph horizontally
+			scale_ratio = font_dim['width'] / sym_dim['width']
+
+			font.transform(psMat.scale(scale_ratio, 1))
+		if 'y' in sym_attr['stretch']:
+			# Stretch the glyph vertically
+			scale_ratio = font_dim['height'] / sym_dim['height']
+
+			font.transform(psMat.scale(1, scale_ratio))
+
+		# Use the dimensions from the pasted and stretched glyph
+		sym_dim = get_dim(font[sym_glyph.unicode])
+
+		# Center-align the glyph vertically
 		font_ycenter = font_dim['height'] / 2
 		sym_ycenter  = sym_dim['height'] / 2
 
@@ -144,42 +162,42 @@ for font_path in args.fonts:
 		# Then move it the y center difference
 		font.transform(psMat.translate(0, sym_ycenter - font_ycenter))
 
-		# Handle glyph stretching
-		if 'x' in SYM_ATTR[sym_glyph.unicode]['stretch']:
-			# Stretch the glyph horizontally
-			scale_ratio = font_dim['width'] / sym_dim['width']
-
-			font.transform(psMat.scale(scale_ratio, 1))
-		if 'y' in SYM_ATTR[sym_glyph.unicode]['stretch']:
-			# Stretch the glyph vertically
-			scale_ratio = font_dim['height'] / sym_dim['height']
-
-			font.transform(psMat.scale(1, scale_ratio))
-
-		# Ensure that the glyph doesn't extend the font's bounding box
-		if font[sym_glyph.unicode].width > font_dim['width']:
+		# Ensure that the glyph doesn't extend outside the font's bounding box
+		if sym_dim['width'] > font_dim['width']:
 			# The glyph is too wide, scale it down to fit
-			scale_matrix = psMat.scale(font_dim['width'] / font[sym_glyph.unicode].width, 1)
+			scale_matrix = psMat.scale(font_dim['width'] / sym_dim['width'], 1)
 
 			font.transform(scale_matrix)
 
+			# Use the dimensions from the stretched glyph
+			sym_dim = get_dim(font[sym_glyph.unicode])
+
 		# Handle glyph alignment
-		if SYM_ATTR[sym_glyph.unicode]['align'] == 'l':
-			# Left align
-			align_matrix = psMat.translate(0, 0)
-		elif SYM_ATTR[sym_glyph.unicode]['align'] == 'c':
+		if sym_attr['align'] == 'c':
 			# Center align
 			align_matrix = psMat.translate(font_dim['width'] / 2 - sym_dim['width'] / 2 , 0)
-		elif SYM_ATTR[sym_glyph.unicode]['align'] == 'r':
+		elif sym_attr['align'] == 'r':
 			# Right align
 			align_matrix = psMat.translate(font_dim['width'] - sym_dim['width'], 0)
 		else:
+			# No alignment (left alignment)
 			align_matrix = psMat.translate(0, 0)
 
 		font.transform(align_matrix)
 
+		if sym_attr['overlap'] is True:
+			overlap_width = font.em / 48
+
+			# Stretch the glyph slightly horizontally if it should overlap
+			font.transform(psMat.scale((sym_dim['width'] + overlap_width) / sym_dim['width'], 1))
+
+			if sym_attr['align'] == 'l':
+				# The glyph should be left-aligned, so it must be moved overlap_width to the left
+				# This only applies to left-aligned glyphs because the glyph is scaled to the right
+				font.transform(psMat.translate(-overlap_width, 0))
+
 		# Ensure the font is considered monospaced on Windows
-		font[sym_glyph.unicode].width = font_dim['realwidth']
+		font[sym_glyph.unicode].width = font_dim['width']
 
 	if font.bitmapSizes and not onlybitmaps:
 		# If this is an outline font with bitmaps, regenerate bitmaps for the changed glyphs
