@@ -51,6 +51,21 @@ function! Stl_GetManPage() " {{{
 
 	return file
 endfunction " }}}
+function! Stl_GetFileSize() "{{{
+	let bytes = getfsize(expand("%:p"))
+	if bytes <= 0
+		return ""
+	endif
+	if bytes < 1024
+		return bytes . " Bytes"
+	else
+		return (bytes / 1024) . "kB"
+	endif
+endfunction "}}}
+function! Stl_GetCurrentDirectory() "{{{
+	let currentdir = substitute(getcwd(), expand("$HOME"), "~", "g")
+	return currentdir
+endfunction "}}}
 " Handle Ctrl-P statuslines {{{
 if exists('g:loaded_ctrlp') && g:loaded_ctrlp
 	let g:ctrlp_status_func = {

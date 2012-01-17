@@ -32,6 +32,12 @@ call Pl#Statusline(
 			\ Pl#HiInsert(    Pl#FG(196), Pl#Attr('bold')),
 			\ Pl#HiNonCurrent(Pl#FG( 88))
 			\ ),
+		\ Pl#Segment("%{Stl_GetFileSize()} ",
+			\ Pl#HiCurrent(   Pl#FG(250)),
+			\ Pl#HiInsert(    Pl#FG(117)),
+			\ Pl#HiNonCurrent(Pl#FG(239))
+			\ ),
+		\
 		\  Pl#Segment("%H%W ",
 			\ Pl#HiCurrent(   Pl#FG(250)),
 			\ Pl#HiInsert(    Pl#FG(117)),
