@@ -51,6 +51,12 @@ call Pl#Statusline(
 			\ )
 		\ ),
 	\
+	\ Pl#Segment(" %{Stl_GetCurrentDirectory()}  ",
+		\ Pl#HiCurrent(   Pl#FG(250)),
+		\ Pl#HiInsert(    Pl#FG(117)),
+		\ Pl#HiNonCurrent(Pl#FG(239))
+		\ ),
+	\
 	\ Pl#Segment("%<%{Stl_GetCurrentFunction()}",
 		\ exists('g:cfi_disable') && g:cfi_disable == 0,
 		\
