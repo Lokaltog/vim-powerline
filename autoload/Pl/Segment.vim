@@ -21,14 +21,15 @@ function! Pl#Segment#Create(name, ...) " {{{
 	endif
 
 	let name = a:name
-
 	let modes = s:default_modes
+	let segments = []
+
 	for param in a:000
 		" Lookup modes for this segment/group
 		if type(param) == type([]) && param[0] == 'modes'
 			let modes = param[1]
-
-			break
+		elseif type(a:1) == type([]) && a:1[0] == 'segment'
+			call add(segments, segment)
 		endif
 
 		unlet! param
@@ -38,7 +39,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 		" This is a segment group
 		return ['segment_group', {
 			\ 'name': name,
-			\ 'segments': a:000,
+			\ 'segments': segments,
 			\ 'modes': modes
 			\ }]
 	else
