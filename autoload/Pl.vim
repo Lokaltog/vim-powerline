@@ -3,6 +3,12 @@
 " Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
 " Source repository: https://github.com/Lokaltog/vim-powerline
 
+" Global plugin variables {{{
+	let Pl#MATCHES = {}
+	let Pl#SEGMENTS = {}
+	let Pl#COLORSCHEMES = {}
+	let Pl#THEMES = {}
+" }}}
 " Script resources {{{
 	let s:symbols = {
 		\ 'compatible': {
