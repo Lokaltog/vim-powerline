@@ -1,9 +1,5 @@
-let s:themes = Pl#THEMES
-
-function! Pl#Theme#Create(name, colorscheme, ...) " {{{
-	let buffer_segments = Pl#Colorscheme#Apply(a:colorscheme, copy(a:000))
-
-	let s:themes[a:name] = buffer_segments
+function! Pl#Theme#Create(colorscheme, ...) " {{{
+	return Pl#Colorscheme#Apply(a:colorscheme, copy(a:000))
 endfunction " }}}
 function! Pl#Theme#BufferSegments(matches, ...) " {{{
 	let segments = []

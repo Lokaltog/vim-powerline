@@ -1,4 +1,3 @@
-let s:segments = Pl#SEGMENTS
 let s:default_modes = ['n', 'N', 'v', 'i', 'r']
 
 function! s:CheckConditions(params) " {{{
@@ -69,7 +68,7 @@ function! Pl#Segment#Init(...) " {{{
 		let ns = a:1
 	endif
 
-	let s:segments[ns] = {}
+	let segment = {}
 
 	for param in a:000
 		if type(param) == type([])
@@ -81,11 +80,13 @@ function! Pl#Segment#Init(...) " {{{
 				let info.name = ns .':'. info.name
 			endif
 
-			let s:segments[ns][info.name] = info
+			let segment[info.name] = info
 		endif
 
 		unlet! param
 	endfor
+
+	return segment
 endfunction " }}}
 function! Pl#Segment#Modes(modes) " {{{
 	" Handle modes for both segments and groups
@@ -120,16 +121,16 @@ function! Pl#Segment#Get(name) " {{{
 	let seg_name_split = split(seg_name, ':')
 
 	" Handle segment namespacing
-	let ns = '__common__'
+	let ns = ''
 	let func = seg_name_split[0]
 
 	if len(seg_name_split) > 1
 		" The segment is in a namespace ("ns:segment")
-		let ns = seg_name_split[0]
-		let func = ns .':'. seg_name_split[1]
+		let ns = '#' . seg_name_split[0]
+		let func = join(seg_name_split, ':')
 	endif
 
-	let segment = s:segments[ns][func]
+	let segment = g:Powerline#Segments{ns}#segments[func]
 
 	if len(args)
 		" Handle segment printf arguments

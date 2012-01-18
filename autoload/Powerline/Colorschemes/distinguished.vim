@@ -1,4 +1,4 @@
-call Pl#Colorscheme#Init('distinguished',
+let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init(
 	\ Pl#Colorscheme#HiSegment('special.split', Pl#Hi#Create(Pl#Hi#Cterm(16, 231))),
 	\
 	\ Pl#Colorscheme#HiSegment('mode_indicator',

@@ -1,8 +1,8 @@
-call Pl#Segment#Init(
+let g:Powerline#Segments#segments = Pl#Segment#Init(
 	\ Pl#Segment#Create('special.split'   , '__split__'),
 	\ Pl#Segment#Create('special.truncate', '__truncate__'),
 	\
-	\ Pl#Segment#Create('mode_indicator'  , '%-2{Pl_Common_GetMode()}'        , Pl#Segment#Modes('!N')),
+	\ Pl#Segment#Create('mode_indicator'  , '%-2{Pl#Data#Functions#GetMode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileinfo',
 		\ Pl#Segment#Create('flags.ro'    , '%{&readonly ? " $ro" : ""}'),
 		\ Pl#Segment#Create('name'        , '%t'),

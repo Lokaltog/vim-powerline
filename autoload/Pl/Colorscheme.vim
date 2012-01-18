@@ -1,18 +1,18 @@
-let s:colorschemes = Pl#COLORSCHEMES
-
-function! Pl#Colorscheme#Init(name, ...) " {{{
-	let s:colorschemes[a:name] = {}
+function! Pl#Colorscheme#Init(...) " {{{
+	let colorscheme = {}
 
 	for param in a:000
 		let segment = param[0]
 		let mode_hi_dict = param[1]
 
-		let s:colorschemes[a:name][segment] = mode_hi_dict
+		let colorscheme[segment] = mode_hi_dict
 	endfor
+
+	return colorscheme
 endfunction " }}}
 function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 	" Set color parameters for all segments in a:buffer_segments
-	let colorscheme = s:colorschemes[a:colorscheme]
+	let colorscheme = g:Powerline#Colorschemes#{a:colorscheme}#colorscheme
 	let buffer_segments = copy(a:buffer_segments)
 
 	" This is a bit complex, I'll walk you through exactly what happens here...

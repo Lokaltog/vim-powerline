@@ -1,5 +1,4 @@
-call Pl#Theme#Create(
-	\ 'distinguished',
+let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 	\ 'distinguished',
 	\
 	\ Pl#Theme#BufferSegments(Pl#Match#Any(),
