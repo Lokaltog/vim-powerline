@@ -29,7 +29,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 		if type(param) == type([]) && param[0] == 'modes'
 			let modes = param[1]
 		elseif type(a:1) == type([]) && a:1[0] == 'segment'
-			call add(segments, segment)
+			call add(segments, param[1])
 		endif
 
 		unlet! param
@@ -38,6 +38,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 	if type(a:1) == type([]) && a:1[0] == 'segment'
 		" This is a segment group
 		return ['segment_group', {
+			\ 'type': 'segment_group',
 			\ 'name': name,
 			\ 'segments': segments,
 			\ 'modes': modes
@@ -47,6 +48,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 		let text = a:1
 
 		return ['segment', {
+			\ 'type': 'segment',
 			\ 'name': name,
 			\ 'text': text,
 			\ 'modes': modes
@@ -74,17 +76,12 @@ function! Pl#Segment#Init(...) " {{{
 			" Info dict is key 1 in segment/groups
 			let info = param[1]
 
-			if param[0] == 'segment_group'
-				" Segment group
-				let s:segments[ns][info.name] = {}
-
-				for segment in info.segments
-					let s:segments[ns][info.name][segment[1].name] = segment[1]
-				endfor
-			elseif param[0] == 'segment'
-				" Single segment
-				let s:segments[ns][info.name] = param[1]
+			if ns != '__common__'
+				" Prepend segment name with namespace if not in common namespace
+				let info.name = ns .':'. info.name
 			endif
+
+			let s:segments[ns][info.name] = info
 		endif
 
 		unlet! param
@@ -100,4 +97,45 @@ function! Pl#Segment#Modes(modes) " {{{
 	endif
 
 	return ['modes', modes]
+endfunction " }}}
+function! Pl#Segment#Split() " {{{
+	return 'special.split'
+endfunction " }}}
+function! Pl#Segment#Truncate() " {{{
+	return 'special.truncate'
+endfunction " }}}
+function! Pl#Segment#Get(name) " {{{
+	" Return a segment data dict
+	let args = []
+
+	" Check for printf segments (lists)
+	if type(a:name) == type([])
+		" We're dealing with a segment with printf arguments
+		let seg_name = a:name[0]
+		let args = a:name[1:]
+	else
+		let seg_name = a:name
+	endif
+
+	let seg_name_split = split(seg_name, ':')
+
+	" Handle segment namespacing
+	let ns = '__common__'
+	let func = seg_name_split[0]
+
+	if len(seg_name_split) > 1
+		" The segment is in a namespace ("ns:segment")
+		let ns = seg_name_split[0]
+		let func = ns .':'. seg_name_split[1]
+	endif
+
+	let segment = s:segments[ns][func]
+
+	if len(args)
+		" Handle segment printf arguments
+		" printf doesn't accept lists as its second argument, so we have to work around that
+		let segment.text = call('printf', [ segment.text ] + args)
+	endif
+
+	return segment
 endfunction " }}}
