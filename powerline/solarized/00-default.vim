@@ -61,8 +61,8 @@ call Pl#Statusline(
 		\ Pl#HiNonCurrent(Pl#FG(14), Pl#BG(0))
 		\ ),
    \ Pl#Segment(" c%-2c ",
-      \ Pl#HiCurrent(   Pl#FG(0)),
-      \ Pl#HiInsert(    Pl#FG(0))
+      \ Pl#HiCurrent(   Pl#FG(7)),
+      \ Pl#HiInsert(    Pl#FG(7))
       \ ),
    \ Pl#Segment("  %M  ",
       \ Pl#HiCurrent(   Pl#FG(15), Pl#BG(1), Pl#Attr('bold')),
