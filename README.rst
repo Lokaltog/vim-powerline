@@ -63,7 +63,7 @@ Troubleshooting
 ---------------
 
 I can't see the fancy symbols, what's wrong?
-    Make sure that you have ``let g:Powerline_symbols = 'fancy`` in your 
+    Make sure that you have ``let g:Powerline_symbols = 'fancy'`` in your 
     ``vimrc`` file. The settings may be loaded too late if you have this in 
     ``gvimrc``, so always put this in your ``vimrc``.
 
@@ -88,8 +88,9 @@ The Syntastic/Fugitive statusline flags don't work!
 
 The colors are weird in the default OS X Terminal app!
     The default OS X Terminal app is known to have some issues with the 
-    Powerline colors. Please use another terminal emulator. iTerm2 should 
-    work fine.
+    Powerline  colors. Please use another terminal emulator. iTerm2 should 
+    work fine. If you want to enable `Fancy`, make sure the `Non-Ascii` is set
+    to a patched font while you could use any monospace as default.
 
 The statusbar is hidden/only appears in split windows!
     Make sure that you have ``set laststatus=2`` in your ``vimrc``.
