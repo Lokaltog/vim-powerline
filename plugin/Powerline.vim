@@ -16,7 +16,7 @@
 		\ , 'colorscheme'  : 'distinguished'
 		\ , 'symbols'      : 'compatible'
 		\ , 'cache_file'   : (exists('$TEMP') && ! empty($TEMP) ? $TEMP : '/tmp') . '/Powerline.cache'
-		\ , 'cache_enable' : 1
+		\ , 'cache_enabled': 1
 		\ })
 
 		if ! exists('g:Powerline_' . key)

@@ -43,7 +43,7 @@
 " }}}
 " Script initialization {{{
 	function! Pl#LoadCached() " {{{
-		if filereadable(g:Powerline_cache_file)
+		if filereadable(g:Powerline_cache_file) && g:Powerline_cache_enabled
 			exec 'source' escape(g:Powerline_cache_file, ' \')
 
 			if ! exists('g:Powerline_cache_revision') || g:Powerline_cache_revision != s:CACHE_REVISION
@@ -81,7 +81,7 @@
 					\ })
 			endfor
 
-			if ! g:Powerline_cache_enable
+			if ! g:Powerline_cache_enabled
 				" Don't cache anything if caching is disabled or cache file isn't writeable
 				return
 			endif
