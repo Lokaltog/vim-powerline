@@ -98,7 +98,7 @@
 	endfunction " }}}
 " }}}
 " Statusline updater {{{
-	function! Pl#GetStatusline(statuslines, current) " {{{
+	function! Pl#Statusline(statuslines, current) " {{{
 		let mode = mode()
 
 		if mode =~# '(v|V|)'
@@ -127,7 +127,7 @@
 		for buffer_statusline in g:Pl#THEME
 			if Pl#Match#Validate(buffer_statusline.matches)
 				" Update window-local statusline
-				let &l:statusline = '%!Pl#GetStatusline('. string(buffer_statusline.mode_statuslines) .','. a:current .')'
+				let &l:statusline = '%!Pl#Statusline('. string(buffer_statusline.mode_statuslines) .','. a:current .')'
 			endif
 		endfor
 	endfunction " }}}
