@@ -24,7 +24,9 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 		" The 'matches' list has conditions to limit this statusline to specific buffers/windows.
 		" The 'segments' list has each segment and segment group for this buffer
 		for segment in buffer_segment.segments
-			if segment.type == 'segment_group'
+			let type = get(segment, 'type', '')
+
+			if type == 'segment_group'
 				" We're going to handle segment groups different from single segments. Segment groups
 				" have child segments which may have their own highlighting (e.g. fileinfo.flags),
 				" and these child segments may be grouped (e.g. fileinfo.flags.ro) to provide very
@@ -51,7 +53,7 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 						endif
 					endfor
 				endfor
-			else
+			elseif type == 'segment'
 				" TODO Handle namespaced highlighting groups, e.g. 'help:scrollpercent' should
 				" try that highlighting group and fallback to scrollpercent
 
@@ -60,6 +62,8 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 					let segment.colors = colorscheme[segment.name]
 				endif
 			endif
+
+			unlet! segment
 		endfor
 	endfor
 

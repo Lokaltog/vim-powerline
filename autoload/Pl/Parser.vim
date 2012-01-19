@@ -132,16 +132,9 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 			endif
 		endfor
 
-		" Skip truncate segments when referring to prev/next segment
-		if get(seg_prev, 'name') == 'special.truncate'
-			let seg_prev = copy(get(segments, i - 2, s:EMPTY_SEGMENT))
-		endif
-		if get(seg_next, 'name') == 'special.truncate'
-			let seg_next = copy(get(segments, i + 2, s:EMPTY_SEGMENT))
-		endif
-
-		if index(seg_curr.modes, mode) == -1
+		if index(get(seg_curr, 'modes', []), mode) == -1
 			" The segment is invisible in this mode, skip it
+			" FIXME When two segments after each other are hidden, a gap appears where the segments would be, this is probably due to segment padding
 			continue
 		endif
 
