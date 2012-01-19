@@ -43,9 +43,6 @@
 
 	let s:HARD_DIVIDER = 0
 	let s:SOFT_DIVIDER = 1
-
-	" Cache revision, this must be incremented whenever the cache format is changed
-	let s:CACHE_REVISION = 1
 " }}}
 " Script variables {{{
 	let s:hi_groups = {}
@@ -54,6 +51,12 @@
 
 	let s:match_statuslines = []
 	let s:stored_statuslines = {}
+
+	let g:Pl#THEME = []
+	let g:Pl#HL = []
+
+	" Cache revision, this must be incremented whenever the cache format is changed
+	let s:CACHE_REVISION = 1
 " }}}
 " Statusline functions {{{
 	function! Pl#Statusline(...) " {{{
@@ -455,28 +458,16 @@
 			exec 'source' escape(g:Powerline_cache_file, ' \')
 
 			if ! exists('g:Powerline_cache_revision') || g:Powerline_cache_revision != s:CACHE_REVISION
-				" Cache revision differs, force statusline reloading
+				" Cache revision differs, cache is invalid
 				unlet! g:Powerline_cache_revision
-				     \ g:Powerline_match_statuslines
-				     \ g:Powerline_stored_statuslines
-				     \ g:Powerline_hi_cmds
 
 				return 0
 			endif
 
 			" Create highlighting groups
-			for hi_cmd in g:Powerline_hi_cmds
+			for hi_cmd in g:Pl#HL
 				exec hi_cmd
 			endfor
-
-			" Assign statuslines
-			let s:match_statuslines  = g:Powerline_match_statuslines
-			let s:stored_statuslines = g:Powerline_stored_statuslines
-
-			unlet! g:Powerline_cache_revision
-			     \ g:Powerline_match_statuslines
-			     \ g:Powerline_stored_statuslines
-			     \ g:Powerline_hi_cmds
 
 			return 1
 		endif
@@ -489,32 +480,29 @@
 			call delete(g:Powerline_cache_file)
 		endif
 
-		" Load main statusline file
-		" If &rtp contains more than one matching files, take the first one
-		let main_path = split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'.vim', 1), '\n')[0]
-		if ! empty(main_path) && filereadable(main_path)
-			exec 'source' escape(main_path, ' \')
-		endif
-
-		" Load cached statuslines
-		" Reload and cache statuslines if no cached statuslines exist
 		if ! Pl#LoadCached()
-			for path in split(globpath(&rtp, 'powerline/'. g:Powerline_theme .'/*', 1), '\n')
-				exec 'source' escape(path, ' \')
+			" Autoload the theme dict first
+			let raw_theme = g:Powerline#Themes#{g:Powerline_theme}#theme
+
+			" Create list with parsed statuslines
+			for buffer_statusline in raw_theme
+				call add(g:Pl#THEME, {
+					\ 'matches': buffer_statusline.matches,
+					\ 'mode_statuslines': Pl#Parser#GetStatusline(buffer_statusline.segments)
+					\ })
 			endfor
 
-			" Prepare colors and statuslines for caching
-			let cache = [
-				\ 'let g:Powerline_cache_revision = '. string(s:CACHE_REVISION),
-				\ 'let g:Powerline_hi_cmds = '. string(s:hi_cmds),
-				\ 'let g:Powerline_match_statuslines  = '. string(s:match_statuslines),
-				\ 'let g:Powerline_stored_statuslines = '. string(s:stored_statuslines)
-			\ ]
-
-			if empty(g:Powerline_cache_file)
-				" Don't cache anything if g:Powerline_cache_file is empty
+			if ! g:Powerline_cache_enable || ! filewritable(g:Powerline_cache_file)
+				" Don't cache anything if caching is disabled or cache file isn't writeable
 				return
 			endif
+
+			" Prepare commands and statuslines for caching
+			let cache = [
+				\ 'let g:Powerline_cache_revision = '. string(s:CACHE_REVISION),
+				\ 'let g:Pl#HL = '. string(g:Pl#HL),
+				\ 'let g:Pl#THEME  = '. string(g:Pl#THEME),
+			\ ]
 
 			call writefile(cache, g:Powerline_cache_file)
 		endif
@@ -522,45 +510,35 @@
 " }}}
 " Statusline updater {{{
 	function! Pl#GetStatusline(statuslines, current) " {{{
-		let current_mode = mode()
-		let current_window = a:current
+		let mode = mode()
 
-		if current_window && current_mode == 'i'
-			let statusline_mode = 'insert'
-		elseif current_window
-			let statusline_mode = 'current'
+		if mode =~# '(v|V|)'
+			let mode = 'v' " Visual mode
+		elseif mode =~# 'i'
+			let mode = 'i' " Insert mode
+		elseif mode =~# '(R|Rv)'
+			let mode = 'r' " Replace mode
 		else
-			let statusline_mode = 'noncurrent'
+			" Normal mode or unknown mode
+			if a:current
+				let mode = 'n' " Normal/current
+			else
+				let mode = 'N' " Normal/non-current
+			endif
 		endif
 
-		return a:statuslines[statusline_mode]
-	endfunction " }}}
-	function! Pl#GetStoredStatusline(key) " {{{
-		return s:stored_statuslines[a:key]
+		return a:statuslines[mode]
 	endfunction " }}}
 	function! Pl#UpdateStatusline(current) " {{{
-		if empty(s:match_statuslines)
+		if empty(g:Pl#THEME)
 			" Load statuslines if they aren't loaded yet
 			call Pl#Load()
 		endif
 
-		for statusline in s:match_statuslines
-			let valid = 1
-
-			" Validate matches
-			if len(statusline['matches'])
-				for [eval, re] in statusline['matches']
-					if match(eval(eval), '\v'. re) == -1
-						let valid = 0
-
-						break
-					endif
-				endfor
-			endif
-
-			if valid
+		for buffer_statusline in g:Pl#THEME
+			if Pl#Match#Validate(buffer_statusline.matches)
 				" Update window-local statusline
-				let &l:statusline = '%!Pl#GetStatusline('. string(statusline['modes']) .','. a:current .')'
+				let &l:statusline = '%!Pl#GetStatusline('. string(buffer_statusline.mode_statuslines) .','. a:current .')'
 			endif
 		endfor
 	endfunction " }}}
