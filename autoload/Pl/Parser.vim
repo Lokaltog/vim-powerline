@@ -53,14 +53,20 @@ function! s:ParseSegments(mode, side, segment, ...) " {{{
 	" Handle the different segment types
 	if segment.type == 'segment'
 		if segment.name == 'special.truncate'
-			" Add truncation chars
+			" Truncate statusline
 			call add(ret, '%<')
 		elseif segment.name == 'special.split'
-			" Add split chars
-			call add(ret, '%=')
+			" Split statusline
 
 			" Switch sides
 			let side = s:RIGHT_SIDE
+
+			" Handle highlighting
+			let mode_colors = ! has_key(segment.colors, mode) ? segment.colors['n'] : segment.colors[mode]
+			let hl_group = s:HlCreate(mode_colors)
+
+			" Add segment text
+			call add(ret, '%#'. hl_group .'#%=')
 		else
 			" Add segment text
 			let text = segment.text
