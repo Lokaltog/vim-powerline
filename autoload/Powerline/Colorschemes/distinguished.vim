@@ -66,7 +66,7 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init(
 	\ Pl#Colorscheme#HiSegment('filetype',
 		\ Pl#Hi#Create(Pl#Hi#Cterm(246, 236)),
 		\ {
-			\ 'N': Pl#Hi#Create(Pl#Hi#Cterm( 75, 24)),
+			\ 'i': Pl#Hi#Create(Pl#Hi#Cterm( 75, 24)),
 		\ }
 	\),
 	\
