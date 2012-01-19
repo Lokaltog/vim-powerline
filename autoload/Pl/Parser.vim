@@ -1,3 +1,35 @@
+" Script resources {{{
+	let s:symbols = {
+		\ 'compatible': {
+			\   'dividers': [ '', [0x2502], '', [0x2502] ]
+			\ , 'symbols' : {
+				\   'branch': 'BR:'
+				\ , 'ro'    : 'RO'
+				\ , 'ft'    : 'FT'
+				\ , 'line'  : 'LN'
+			\ }
+		\ },
+		\ 'unicode': {
+			\   'dividers': [ [0x25b6], [0x276f], [0x25c0], [0x276e]  ]
+			\ , 'symbols' : {
+				\   'branch'  : [0x26a1]
+				\ , 'ro'      : [0x2613]
+				\ , 'ft'      : [0x2691]
+				\ , 'line'    : [0x204b]
+			\ },
+		\ },
+		\ 'fancy': {
+			\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
+			\ , 'symbols' : {
+				\   'branch'  : [0x2b60]
+				\ , 'ro'      : [0x2b64]
+				\ , 'ft'      : [0x2b62, 0x2b63]
+				\ , 'line'    : [0x2b61]
+			\ }
+		\ }
+	\ }
+" }}}
+
 let s:LEFT_SIDE = 0
 let s:RIGHT_SIDE = 1
 
