@@ -75,9 +75,53 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 		unlet! seg_prev seg_curr seg_next
 
 		" Prepare some resources (fetch previous, current and next segment)
-		let seg_prev = (i == 0) ? s:EMPTY_SEGMENT : copy(get(segments, i - 1))
 		let seg_curr = copy(get(segments, i))
-		let seg_next = (i == (len(segments) - 1)) ? s:EMPTY_SEGMENT : copy(get(segments, i + 1))
+
+		" Find previous segment
+		let seg_prev = s:EMPTY_SEGMENT
+
+		for j in range(i - 1, 0, -1)
+			let seg = copy(get(segments, j))
+			if get(seg, 'name') == 'special.truncate'
+				" Skip truncate segments
+				continue
+			endif
+
+			" Look ahead for another segment that's visible in this mode
+			if index(get(seg, 'modes'), mode) != -1
+				" Use this segment
+				let seg_prev = seg
+
+				break
+			endif
+		endfor
+
+		"" Find next segment
+		let seg_next = s:EMPTY_SEGMENT
+
+		for j in range(i + 1, len(segments) - 1, 1)
+			let seg = copy(get(segments, j))
+			if get(seg, 'name') == 'special.truncate'
+				" Skip truncate segments
+				continue
+			endif
+
+			" Look ahead for another segment that's visible in this mode
+			if index(get(seg, 'modes'), mode) != -1
+				" Use this segment
+				let seg_next = seg
+
+				break
+			endif
+		endfor
+
+		" Skip truncate segments when referring to prev/next segment
+		if get(seg_prev, 'name') == 'special.truncate'
+			let seg_prev = copy(get(segments, i - 2, s:EMPTY_SEGMENT))
+		endif
+		if get(seg_next, 'name') == 'special.truncate'
+			let seg_next = copy(get(segments, i + 2, s:EMPTY_SEGMENT))
+		endif
 
 		if index(seg_curr.modes, mode) == -1
 			" The segment is invisible in this mode, skip it
@@ -96,7 +140,7 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 				let side = s:RIGHT_SIDE
 
 				" Handle highlighting
-				let mode_colors = ! has_key(seg_curr.colors, mode) ? seg_curr.colors['n'] : seg_curr.colors[mode]
+				let mode_colors = get(seg_curr.colors, mode, seg_curr.colors['n'])
 				let hl_group = s:HlCreate(mode_colors)
 
 				" Add segment text
@@ -106,16 +150,16 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 				let text = seg_curr.text
 
 				" Decide on whether to use the group's colors or the segment's colors
-				let colors = ! has_key(seg_curr, 'colors') ? base_color : seg_curr.colors
+				let colors = get(seg_curr, 'colors', base_color)
 
 				" Fallback to normal (current) highlighting if we don't have mode-specific highlighting
-				let mode_colors = ! has_key(colors, mode) ? colors['n'] : colors[mode]
+				let mode_colors = get(colors, mode, colors['n'])
 
 				" Check if we're in a group (level > 0)
 				if level > 0
-					" If we're in a group we don't have dividers, so we should only pad one side
-					let padding_left  = (side == s:LEFT_SIDE  ? repeat(' ', s:PADDING) : '')
-					let padding_right = (side == s:RIGHT_SIDE ? repeat(' ', s:PADDING) : '')
+					" If we're in a group we don't have dividers between segments, so we should only pad one side
+					let padding_right = (side == s:LEFT_SIDE  ? repeat(' ', s:PADDING) : '')
+					let padding_left  = (side == s:RIGHT_SIDE ? repeat(' ', s:PADDING) : '')
 
 					" Check if we lack a bg/fg color for this segment
 					" If we do, use the bg/fg color from base_color
@@ -127,32 +171,43 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 						endif
 					endfor
 				else
-					" If we're outside a group we have dividers and must pad both sides
+					"" If we're outside a group we have dividers and must pad both sides
 					let padding_left  = repeat(' ', s:PADDING)
 					let padding_right = repeat(' ', s:PADDING)
 				endif
-
-				let sep_left  = ''
-				let sep_right = ''
 
 				" Get main hl group for segment
 				let hl_group = s:HlCreate(mode_colors)
 
 				" Prepare segment text
-				let text = '%#'. hl_group .'#%('. sep_left . padding_left . text . padding_right . sep_right .'%)'
+				let text = '%(%#'. hl_group .'#'. padding_left . text . padding_right . '%)'
+
+				if level == 0
+					" Add divider to single segments
+					let text = s:AddDivider(text, side, mode, colors, seg_prev, seg_curr, seg_next)
+				endif
 
 				call add(ret, text)
 			endif
 		elseif seg_curr.type == 'segment_group'
 			" Recursively parse segment group
-			if ! has_key(seg_curr, 'colors')
-				call extend(ret, s:ParseSegments(mode, side, seg_curr.segments, level + 1))
+			let func_params = [mode, side, seg_curr.segments, level + 1]
 
-				continue
+			if has_key(seg_curr, 'colors')
+				" Pass the base colors on to the child segments
+				call add(func_params, seg_curr.colors)
 			endif
 
-			" Pass the base colors on to the child segments
-			call extend(ret, s:ParseSegments(mode, side, seg_curr.segments, level + 1, seg_curr.colors))
+			" Get segment group string
+			let text = join(call('s:ParseSegments', func_params), '')
+
+			" Pad on the opposite side of the divider
+			let padding_right = (side == s:RIGHT_SIDE ? repeat(' ', s:PADDING) : '')
+			let padding_left  = (side == s:LEFT_SIDE  ? repeat(' ', s:PADDING) : '')
+
+			let text = s:AddDivider(padding_left . text . padding_right, side, mode, seg_curr.colors, seg_prev, seg_curr, seg_next)
+
+			call add(ret, text)
 		endif
 	endfor
 
@@ -201,4 +256,74 @@ function! s:HlExists(hl) " {{{
 	redir END
 
 	return (hlstatus !~ 'cleared')
+endfunction " }}}
+function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
+	let seg_prev = a:prev
+	let seg_curr = a:curr
+	let seg_next = a:next
+
+	" Set default color/type for the divider
+	let div_colors = copy(get(a:colors, a:mode, a:colors['n']))
+	let div_type = s:SOFT_DIVIDER
+
+	" Define segment to compare
+	let cmp_seg = a:side == s:LEFT_SIDE ? seg_next : seg_prev
+
+	let cmp_all_colors = get(cmp_seg, 'colors', {})
+	let cmp_colors = get(cmp_all_colors, a:mode, get(cmp_all_colors, 'n', {}))
+
+	if ! empty(cmp_colors)
+		" Compare the highlighting groups
+		"
+		" If the background color for cterm is equal, use soft divider with the current segment's highlighting
+		" If not, use hard divider with a new highlighting group
+		"
+		" Note that if the previous/next segment is the split, a hard divider is always used
+		if get(div_colors, 'ctermbg') != get(cmp_colors, 'ctermbg') || get(seg_next, 'name') == 'special.split' || get(seg_prev, 'name') == 'special.split'
+			let div_type = s:HARD_DIVIDER
+
+			" Create new highlighting group
+			" Use FG = CURRENT BG, BG = CMP BG
+			let div_colors['ctermfg'] = get(div_colors, 'ctermbg')
+			let div_colors['guifg']   = get(div_colors, 'guibg')
+
+			let div_colors['ctermbg'] = get(cmp_colors, 'ctermbg')
+			let div_colors['guibg']   = get(cmp_colors, 'guibg')
+		endif
+	endif
+
+	" Prepare divider
+	let divider_raw = copy(s:symbols[g:Powerline_symbols].dividers[a:side + div_type])
+	let divider = s:ParseChars(divider_raw)
+
+	" Don't add dividers for segments adjacent to split (unless it's a hard divider)
+	if ((get(seg_next, 'name') == 'special.split' || get(seg_prev, 'name') == 'special.split') && div_type != s:HARD_DIVIDER)
+		return ''
+	endif
+
+	if a:side == s:LEFT_SIDE
+		" Left side
+		" Divider to the right
+		return printf('%%(%s%%#%s#%s%%)', a:text, s:HlCreate(div_colors), divider)
+	else
+		" Right side
+		" Divider to the left
+		return printf('%%(%%#%s#%s%s%%)', s:HlCreate(div_colors), divider, a:text)
+	endif
+endfunction " }}}
+function! s:ParseChars(arg) " {{{
+	" Handles symbol arrays which can be either an array of hex values,
+	" or a string. Will convert the hex array to a string, or return the
+	" string as-is.
+	let arg = copy(a:arg)
+
+	if type(arg) == type([])
+		" Hex array
+		call map(arg, 'nr2char(v:val)')
+
+		return join(arg, '')
+	endif
+
+	" Anything else, just return it as it is
+	return arg
 endfunction " }}}
