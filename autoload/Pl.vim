@@ -101,19 +101,17 @@
 	function! Pl#Statusline(statuslines, current) " {{{
 		let mode = mode()
 
-		if mode =~# '(v|V|)'
+		if ! a:current
+			let mode = 'N' " Normal (non-current)
+		elseif mode =~# '(v|V|)'
 			let mode = 'v' " Visual mode
 		elseif mode =~# 'i'
 			let mode = 'i' " Insert mode
 		elseif mode =~# '(R|Rv)'
 			let mode = 'r' " Replace mode
 		else
-			" Normal mode or unknown mode
-			if a:current
-				let mode = 'n' " Normal/current
-			else
-				let mode = 'N' " Normal/non-current
-			endif
+			" Fallback to normal mode
+			let mode = 'n' " Normal (current)
 		endif
 
 		return a:statuslines[mode]
