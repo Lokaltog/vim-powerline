@@ -1,34 +1,35 @@
-" Script resources {{{
-	let s:symbols = {
-		\ 'compatible': {
-			\   'dividers': [ '', [0x2502], '', [0x2502] ]
-			\ , 'symbols' : {
-				\   'branch': 'BR:'
-				\ , 'ro'    : 'RO'
-				\ , 'ft'    : 'FT'
-				\ , 'line'  : 'LN'
-			\ }
+let g:Pl#Parser#Symbols = {
+	\ 'compatible': {
+		\   'dividers': [ '', [0x2502], '', [0x2502] ]
+		\ , 'symbols' : {
+			\   'BRANCH': 'BR:'
+			\ , 'RO'    : 'RO'
+			\ , 'FT'    : 'FT'
+			\ , 'LINE'  : 'LN'
+			\ , 'COL'   : 'C'
+		\ }
+	\ },
+	\ 'unicode': {
+		\   'dividers': [ [0x25b6], [0x276f], [0x25c0], [0x276e]  ]
+		\ , 'symbols' : {
+			\   'BRANCH': [0x26a1]
+			\ , 'RO'    : [0x2613]
+			\ , 'FT'    : [0x2691]
+			\ , 'LINE'  : [0x204b]
+			\ , 'COL'   : [0x2551]
 		\ },
-		\ 'unicode': {
-			\   'dividers': [ [0x25b6], [0x276f], [0x25c0], [0x276e]  ]
-			\ , 'symbols' : {
-				\   'branch'  : [0x26a1]
-				\ , 'ro'      : [0x2613]
-				\ , 'ft'      : [0x2691]
-				\ , 'line'    : [0x204b]
-			\ },
-		\ },
-		\ 'fancy': {
-			\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
-			\ , 'symbols' : {
-				\   'branch'  : [0x2b60]
-				\ , 'ro'      : [0x2b64]
-				\ , 'ft'      : [0x2b62, 0x2b63]
-				\ , 'line'    : [0x2b61]
-			\ }
+	\ },
+	\ 'fancy': {
+		\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
+		\ , 'symbols' : {
+			\   'BRANCH': [0x2b60]
+			\ , 'RO'    : [0x2b64]
+			\ , 'FT'    : [0x2b62, 0x2b63]
+			\ , 'LINE'  : [0x2b61]
+			\ , 'COL'   : [0x2551]
 		\ }
 	\ }
-" }}}
+\ }
 
 let s:LEFT_SIDE = 0
 let s:RIGHT_SIDE = 2
@@ -60,6 +61,22 @@ function! Pl#Parser#GetStatusline(segments) " {{{
 	endfor
 
 	return statusline
+endfunction " }}}
+function! Pl#Parser#ParseChars(arg) " {{{
+	" Handles symbol arrays which can be either an array of hex values,
+	" or a string. Will convert the hex array to a string, or return the
+	" string as-is.
+	let arg = copy(a:arg)
+
+	if type(arg) == type([])
+		" Hex array
+		call map(arg, 'nr2char(v:val)')
+
+		return join(arg, '')
+	endif
+
+	" Anything else, just return it as it is
+	return arg
 endfunction " }}}
 function! s:ParseSegments(mode, side, segments, ...) " {{{
 	let mode     = a:mode
@@ -293,8 +310,8 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 	endif
 
 	" Prepare divider
-	let divider_raw = copy(s:symbols[g:Powerline_symbols].dividers[a:side + div_type])
-	let divider = s:ParseChars(divider_raw)
+	let divider_raw = copy(g:Pl#Parser#Symbols[g:Powerline_symbols].dividers[a:side + div_type])
+	let divider = Pl#Parser#ParseChars(divider_raw)
 
 	" Don't add dividers for segments adjacent to split (unless it's a hard divider)
 	if ((get(seg_next, 'name') == 'special.split' || get(seg_prev, 'name') == 'special.split') && div_type != s:HARD_DIVIDER)
@@ -310,20 +327,4 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 		" Divider to the left
 		return printf('%%(%%#%s#%s%s%%)', s:HlCreate(div_colors), divider, a:text)
 	endif
-endfunction " }}}
-function! s:ParseChars(arg) " {{{
-	" Handles symbol arrays which can be either an array of hex values,
-	" or a string. Will convert the hex array to a string, or return the
-	" string as-is.
-	let arg = copy(a:arg)
-
-	if type(arg) == type([])
-		" Hex array
-		call map(arg, 'nr2char(v:val)')
-
-		return join(arg, '')
-	endif
-
-	" Anything else, just return it as it is
-	return arg
 endfunction " }}}

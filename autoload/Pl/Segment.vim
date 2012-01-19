@@ -46,6 +46,15 @@ function! Pl#Segment#Create(name, ...) " {{{
 		" This is a single segment
 		let text = a:1
 
+		" Search/replace symbols
+		for [key, symbol] in items(g:Pl#Parser#Symbols[g:Powerline_symbols].symbols)
+			let text = substitute(
+				\ text,
+				\ '\v\$('. key .')',
+				\ '\=Pl#Parser#ParseChars(g:Pl#Parser#Symbols[g:Powerline_symbols].symbols[submatch(1)])',
+				\ 'g')
+		endfor
+
 		return ['segment', {
 			\ 'type': 'segment',
 			\ 'name': name,
