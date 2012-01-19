@@ -81,7 +81,7 @@
 					\ })
 			endfor
 
-			if ! g:Powerline_cache_enable || ! filewritable(g:Powerline_cache_file)
+			if ! g:Powerline_cache_enable
 				" Don't cache anything if caching is disabled or cache file isn't writeable
 				return
 			endif
