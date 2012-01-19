@@ -141,6 +141,9 @@ function! s:HlCreate(hl) " {{{
 			\ )
 
 		exec hi_cmd
+
+		" Add command to Pl#HL list for caching
+		call add(g:Pl#HL, hi_cmd)
 	endif
 
 	" Return only the highlighting group name
