@@ -19,106 +19,107 @@ function! Pl#Parser#GetStatusline(segments) " {{{
 		" Create an empty statusline list
 		let stl = []
 
-		for i in range(0, len(a:segments) - 1)
-			unlet! seg_prev seg_curr seg_next
-
-			" Prepare some resources (fetch previous, current and next segment)
-			let seg_prev = (i == 0) ? s:EMPTY_SEGMENT : copy(get(a:segments, i - 1))
-			let seg_curr = copy(get(a:segments, i))
-			let seg_next = (i == (len(a:segments) - 1)) ? s:EMPTY_SEGMENT : copy(get(a:segments, i + 1))
-
-			if index(seg_curr.modes, mode) == -1
-				" The segment is invisible in this mode, skip it
-				continue
-			endif
-
-			call extend(stl, s:ParseSegments(mode, s:LEFT_SIDE, seg_curr))
-		endfor
+		call extend(stl, s:ParseSegments(mode, s:LEFT_SIDE, a:segments))
 
 		let statusline[mode] .= join(stl, '')
 	endfor
 
 	return statusline
 endfunction " }}}
-function! s:ParseSegments(mode, side, segment, ...) " {{{
-	let mode    = a:mode
-	let side    = a:side
-	let segment = a:segment
+function! s:ParseSegments(mode, side, segments, ...) " {{{
+	let mode     = a:mode
+	let side     = a:side
+	let segments = a:segments
 
 	let level      = exists('a:1') ? a:1 : 0
 	let base_color = exists('a:2') ? a:2 : {}
 
 	let ret = []
 
-	" Handle the different segment types
-	if segment.type == 'segment'
-		if segment.name == 'special.truncate'
-			" Truncate statusline
-			call add(ret, '%<')
-		elseif segment.name == 'special.split'
-			" Split statusline
+	for i in range(0, len(segments) - 1)
+		unlet! seg_prev seg_curr seg_next
 
-			" Switch sides
-			let side = s:RIGHT_SIDE
+		" Prepare some resources (fetch previous, current and next segment)
+		let seg_prev = (i == 0) ? s:EMPTY_SEGMENT : copy(get(segments, i - 1))
+		let seg_curr = copy(get(segments, i))
+		let seg_next = (i == (len(segments) - 1)) ? s:EMPTY_SEGMENT : copy(get(segments, i + 1))
 
-			" Handle highlighting
-			let mode_colors = ! has_key(segment.colors, mode) ? segment.colors['n'] : segment.colors[mode]
-			let hl_group = s:HlCreate(mode_colors)
-
-			" Add segment text
-			call add(ret, '%#'. hl_group .'#%=')
-		else
-			" Add segment text
-			let text = segment.text
-
-			" Decide on whether to use the group's colors or the segment's colors
-			let colors = ! has_key(segment, 'colors') ? base_color : segment.colors
-
-			" Fallback to normal (current) highlighting if we don't have mode-specific highlighting
-			let mode_colors = ! has_key(colors, mode) ? colors['n'] : colors[mode]
-
-			" Check if we're in a group (level > 0)
-			if level > 0
-				" If we're in a group we don't have dividers, so we should only pad one side
-				let padding_left  = (side == s:LEFT_SIDE  ? repeat(' ', s:PADDING) : '')
-				let padding_right = (side == s:RIGHT_SIDE ? repeat(' ', s:PADDING) : '')
-
-				" Check if we lack a bg/fg color for this segment
-				" If we do, use the bg/fg color from base_color
-				let base_color_mode = ! has_key(base_color, mode) ? base_color['n'] : base_color[mode]
-
-				for col in ['ctermbg', 'ctermfg', 'guibg', 'guifg']
-					if empty(mode_colors[col])
-						let mode_colors[col] = base_color_mode[col]
-					endif
-				endfor
-			else
-				" If we're outside a group we have dividers and must pad both sides
-				let padding_left  = repeat(' ', s:PADDING)
-				let padding_right = repeat(' ', s:PADDING)
-			endif
-
-			" Get main hl group for segment
-			let hl_group = s:HlCreate(mode_colors)
-
-			" Prepare segment text
-			let text = '%#'. hl_group .'#%('. padding_left . text . padding_right .'%)'
-
-			call add(ret, text)
+		if index(seg_curr.modes, mode) == -1
+			" The segment is invisible in this mode, skip it
+			continue
 		endif
-	elseif segment.type == 'segment_group'
-		for child_segment in segment.segments
+
+		" Handle the different segment types
+		if seg_curr.type == 'segment'
+			if seg_curr.name == 'special.truncate'
+				" Truncate statusline
+				call add(ret, '%<')
+			elseif seg_curr.name == 'special.split'
+				" Split statusline
+
+				" Switch sides
+				let side = s:RIGHT_SIDE
+
+				" Handle highlighting
+				let mode_colors = ! has_key(seg_curr.colors, mode) ? seg_curr.colors['n'] : seg_curr.colors[mode]
+				let hl_group = s:HlCreate(mode_colors)
+
+				" Add segment text
+				call add(ret, '%#'. hl_group .'#%=')
+			else
+				" Add segment text
+				let text = seg_curr.text
+
+				" Decide on whether to use the group's colors or the segment's colors
+				let colors = ! has_key(seg_curr, 'colors') ? base_color : seg_curr.colors
+
+				" Fallback to normal (current) highlighting if we don't have mode-specific highlighting
+				let mode_colors = ! has_key(colors, mode) ? colors['n'] : colors[mode]
+
+				" Check if we're in a group (level > 0)
+				if level > 0
+					" If we're in a group we don't have dividers, so we should only pad one side
+					let padding_left  = (side == s:LEFT_SIDE  ? repeat(' ', s:PADDING) : '')
+					let padding_right = (side == s:RIGHT_SIDE ? repeat(' ', s:PADDING) : '')
+
+					" Check if we lack a bg/fg color for this segment
+					" If we do, use the bg/fg color from base_color
+					let base_color_mode = ! has_key(base_color, mode) ? base_color['n'] : base_color[mode]
+
+					for col in ['ctermbg', 'ctermfg', 'guibg', 'guifg']
+						if empty(mode_colors[col])
+							let mode_colors[col] = base_color_mode[col]
+						endif
+					endfor
+				else
+					" If we're outside a group we have dividers and must pad both sides
+					let padding_left  = repeat(' ', s:PADDING)
+					let padding_right = repeat(' ', s:PADDING)
+				endif
+
+				let sep_left  = ''
+				let sep_right = ''
+
+				" Get main hl group for segment
+				let hl_group = s:HlCreate(mode_colors)
+
+				" Prepare segment text
+				let text = '%#'. hl_group .'#%('. sep_left . padding_left . text . padding_right . sep_right .'%)'
+
+				call add(ret, text)
+			endif
+		elseif seg_curr.type == 'segment_group'
 			" Recursively parse segment group
-			if ! has_key(segment, 'colors')
-				call extend(ret, s:ParseSegments(mode, side, child_segment, level + 1))
+			if ! has_key(seg_curr, 'colors')
+				call extend(ret, s:ParseSegments(mode, side, seg_curr.segments, level + 1))
 
 				continue
 			endif
 
 			" Pass the base colors on to the child segments
-			call extend(ret, s:ParseSegments(mode, side, child_segment, level + 1, segment.colors))
-		endfor
-	endif
+			call extend(ret, s:ParseSegments(mode, side, seg_curr.segments, level + 1, seg_curr.colors))
+		endif
+	endfor
 
 	return ret
 endfunction " }}}
