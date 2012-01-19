@@ -89,13 +89,11 @@ function! Pl#Hi#Create(...) " {{{
 
 	" Return dict with properly formatted color values
 	return {
-		\ 'ctermfg': (empty(hi['cterm'][0]) ? '' : (string(hi['cterm'][0]) == 'NONE' ? 'NONE' : printf('%d', hi['cterm'][0]))),
-		\ 'ctermbg': (empty(hi['cterm'][1]) ? '' : (string(hi['cterm'][1]) == 'NONE' ? 'NONE' : printf('%d', hi['cterm'][1]))),
-		\ 'cterm': join(hi['attr'], ','),
-		\
-		\ 'guifg': (empty(hi['gui'][0]) ? '' : (string(hi['gui'][0]) == 'NONE' ? 'NONE' : printf('#%06x', hi['gui'][0]))),
-		\ 'guibg': (empty(hi['gui'][1]) ? '' : (string(hi['gui'][1]) == 'NONE' ? 'NONE' : printf('#%06x', hi['gui'][1]))),
-		\ 'gui': join(hi['attr'], ',')
+		\ 'ctermfg': (empty(hi['cterm'][0]) ? '' : (string(hi['cterm'][0]) == 'NONE' ? 'NONE' : hi['cterm'][0])),
+		\ 'ctermbg': (empty(hi['cterm'][1]) ? '' : (string(hi['cterm'][1]) == 'NONE' ? 'NONE' : hi['cterm'][1])),
+		\ 'guifg': (empty(hi['gui'][0]) ? '' : (string(hi['gui'][0]) == 'NONE' ? 'NONE' : hi['gui'][0])),
+		\ 'guibg': (empty(hi['gui'][1]) ? '' : (string(hi['gui'][1]) == 'NONE' ? 'NONE' : hi['gui'][1])),
+		\ 'attr': (! len(hi['attr']) ? 'NONE' : join(hi['attr'], ','))
 		\ }
 endfunction " }}}
 function! Pl#Hi#Cterm(fg, ...) " {{{
