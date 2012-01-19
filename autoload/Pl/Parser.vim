@@ -31,11 +31,14 @@
 " }}}
 
 let s:LEFT_SIDE = 0
-let s:RIGHT_SIDE = 1
+let s:RIGHT_SIDE = 2
 
 let s:PADDING = 1
 
 let s:EMPTY_SEGMENT = { 'type': 'empty' }
+
+let s:HARD_DIVIDER = 0
+let s:SOFT_DIVIDER = 1
 
 function! Pl#Parser#GetStatusline(segments) " {{{
 	let statusline = {
