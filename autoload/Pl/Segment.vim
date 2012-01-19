@@ -139,7 +139,17 @@ function! Pl#Segment#Get(name) " {{{
 		let func = join(seg_name_split, ':')
 	endif
 
-	let segment = g:Powerline#Segments{ns}#segments[func]
+	try
+		" Try to use the namespaced function
+		let segment = g:Powerline#Segments{ns}#segments[func]
+	catch /E121/
+		" That didn't work, check out the common functions
+		let segment = g:Powerline#Segments#segments[seg_name_split[1]]
+	endtry
+
+	" Assign namespace to segment
+	" This will be used to have buffer-specific highlighting for this segment
+	let segment.ns = ns[1:]
 
 	if len(args)
 		" Handle segment printf arguments

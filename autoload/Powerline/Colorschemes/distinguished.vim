@@ -92,5 +92,21 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init(
 			\ 'N': Pl#Hi#Create(Pl#Hi#Cterm(241)),
 			\ 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23))
 		\ }
+	\),
+	\
+	\ Pl#Colorscheme#HiSegment('static_filename',
+		\ Pl#Hi#Create(Pl#Hi#Cterm(231, 240), 'bold'),
+		\ {
+			\ 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'),
+			\ 'i': Pl#Hi#Create(Pl#Hi#Cterm(231,  31), 'bold')
+		\ }
+	\),
+	\
+	\ Pl#Colorscheme#HiSegment('help:scrollpercent',
+		\ Pl#Hi#Create(Pl#Hi#Cterm(231, 240), 'bold'),
+		\ {
+			\ 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'),
+			\ 'i': Pl#Hi#Create(Pl#Hi#Cterm(231,  31), 'bold')
+		\ }
 	\)
 \ )

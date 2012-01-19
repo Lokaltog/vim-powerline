@@ -15,9 +15,9 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , 'lineinfo'
 	\ ),
 	\ Pl#Theme#BufferSegments(Pl#Match#Any('ft_help')
-		\ , ['static_filename', 'Help']
+		\ , ['help:static_filename', 'Help']
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
-		\ , 'scrollpercent'
+		\ , 'help:scrollpercent'
 	\ )
 \ )

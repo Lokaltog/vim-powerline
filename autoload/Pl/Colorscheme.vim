@@ -52,6 +52,9 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 					endfor
 				endfor
 			else
+				" TODO Handle namespaced highlighting groups, e.g. 'help:scrollpercent' should
+				" try that highlighting group and fallback to scrollpercent
+
 				" Apply colors to a single segment
 				if has_key(colorscheme, segment.name)
 					let segment.colors = colorscheme[segment.name]
