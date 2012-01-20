@@ -1,5 +1,5 @@
 let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init(
-	\ Pl#Colorscheme#HiSegment('special.split',
+	\ Pl#Colorscheme#HiSegment('special:split',
 		\ Pl#Hi#Create(Pl#Hi#Cterm(0, 236)),
 		\ {
 			\ 'N': Pl#Hi#Create(Pl#Hi#Cterm(0, 233)),

@@ -11,9 +11,12 @@ function! Pl#Colorscheme#Init(...) " {{{
 	return colorscheme
 endfunction " }}}
 function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
+	" TODO This function should be recursive and work on both segments and groups
+	" TODO We could probably handle the NS stuff here...
+
 	" Set color parameters for all segments in a:buffer_segments
 	let colorscheme = g:Powerline#Colorschemes#{a:colorscheme}#colorscheme
-	let buffer_segments = copy(a:buffer_segments)
+	let buffer_segments = a:buffer_segments
 
 	" This is a bit complex, I'll walk you through exactly what happens here...
 	"
@@ -32,35 +35,97 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 				" and these child segments may be grouped (e.g. fileinfo.flags.ro) to provide very
 				" specific highlighting. So here we'll handle all that:
 
-				" Apply colors to the entire segment group
-				if has_key(colorscheme, segment.name)
-					let segment.colors = colorscheme[segment.name]
-				endif
+				" Set the default/fallback colors for this group
+				for i in range(len(segment.variants), 0, -1)
+					" Check for available highlighting for the main group segment
+					"
+					" This works like the segment highlighting below
+					" TODO Create a function for this
+					let seg_variants = join(segment.variants[0:i], '.')
+
+					let seg_name = i > 0 ? segment.name .'.'. seg_variants : segment.name
+					let seg_ns_name = len(segment.ns) > 0 ? segment.ns .':'. seg_name : seg_name
+
+					if has_key(colorscheme, seg_ns_name)
+						" We have a namespaced highlight group
+						let segment.colors = colorscheme[seg_ns_name]
+						break
+					elseif has_key(colorscheme, seg_name)
+						" We have a non-namespaced group
+						let segment.colors = colorscheme[seg_name]
+						break
+					endif
+				endfor
+
+				" The reason why we need to deepcopy the group's segments is that the child segments
+				" all point to the same base segments and that screws up highlighting if we highlight
+				" some child segments with different namespaced colors
+				let segment.segments = deepcopy(segment.segments)
 
 				" Apply colors to each child segment
 				for child_segment in segment.segments
 					" Check if this child segment is grouped (e.g. fileinfo.flags.group.subgroup)
 					" We're going to prioritize the most specific grouping and then work back to the
 					" most common group (e.g. fileinfo.flags)
-					let child_segment_name_split = split(child_segment.name, '\.')
 
-					for i in range(len(child_segment_name_split) - 1, 0, -1)
-						let child_segment_name = segment.name .'.'. join(child_segment_name_split[0:i], '.')
+					" FIXME We don't have the variants from before because group children aren't run through Pl#Segment#Get
+					let child_segment.variants = [seg_name] + split(child_segment.name, '\.')
 
-						if has_key(colorscheme, child_segment_name)
-							" Add the specific colors to the child segment
-							let child_segment.colors = colorscheme[child_segment_name]
+					" Use the parent group's namespace
+					let child_segment.ns = segment.ns
+
+					for i in range(len(child_segment.variants), 0, -1)
+						" Check for available highlighting for the main group segment
+						let child_seg_name = join(child_segment.variants[0:i], '.')
+
+						let child_seg_ns_name = len(child_segment.ns) > 0 ? child_segment.ns .':'. child_seg_name : child_seg_name
+
+						if has_key(colorscheme, child_seg_ns_name)
+							" We have a namespaced highlight group
+							let child_segment.colors = colorscheme[child_seg_ns_name]
+							break
+						elseif has_key(colorscheme, child_seg_name)
+							" We have a non-namespaced group
+							let child_segment.colors = colorscheme[child_seg_name]
+							break
 						endif
 					endfor
 				endfor
 			elseif type == 'segment'
-				" TODO Handle namespaced highlighting groups, e.g. 'help:scrollpercent' should
-				" try that highlighting group and fallback to scrollpercent
+				if ! has_key(segment, 'variants')
+					" Fallback for special segments
+					let segment.colors = get(colorscheme, segment.name, {})
 
-				" Apply colors to a single segment
-				if has_key(colorscheme, segment.name)
-					let segment.colors = colorscheme[segment.name]
+					continue
 				endif
+
+				for i in range(len(segment.variants), 0, -1)
+					" Check for available highlighting
+					"
+					" This is done in the following manner, using the segment gundo:static_filename.text.buffer as an example:
+					"
+					" * Look for the hl group: gundo:static_filename.text.buffer
+					" * Look for the hl group:       static_filename.text.buffer
+					" * Look for the hl group: gundo:static_filename.text
+					" * Look for the hl group:       static_filename.text
+					" * Look for the hl group: gundo:static_filename
+					" * Look for the hl group:       static_filename
+					" * Return the segment without highlighting, causing an error in the parser
+					let seg_variants = join(segment.variants[0:i], '.')
+
+					let seg_name = i > 0 ? segment.name .'.'. seg_variants : segment.name
+					let seg_ns_name = len(segment.ns) > 0 ? segment.ns .':'. seg_name : seg_name
+
+					if has_key(colorscheme, seg_ns_name)
+						" We have a namespaced highlight group
+						let segment.colors = colorscheme[seg_ns_name]
+						break
+					elseif has_key(colorscheme, seg_name)
+						" We have a non-namespaced group
+						let segment.colors = colorscheme[seg_name]
+						break
+					endif
+				endfor
 			endif
 
 			unlet! segment

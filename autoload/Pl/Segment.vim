@@ -37,10 +37,10 @@ function! Pl#Segment#Create(name, ...) " {{{
 	if type(a:1) == type([]) && a:1[0] == 'segment'
 		" This is a segment group
 		return ['segment_group', {
-			\ 'type': 'segment_group',
-			\ 'name': name,
-			\ 'segments': segments,
-			\ 'modes': modes
+			\   'type': 'segment_group'
+			\ , 'name': name
+			\ , 'segments': segments
+			\ , 'modes': modes
 			\ }]
 	else
 		" This is a single segment
@@ -56,10 +56,10 @@ function! Pl#Segment#Create(name, ...) " {{{
 		endfor
 
 		return ['segment', {
-			\ 'type': 'segment',
-			\ 'name': name,
-			\ 'text': text,
-			\ 'modes': modes
+			\   'type': 'segment'
+			\ , 'name': name
+			\ , 'text': text
+			\ , 'modes': modes
 			\ }]
 	endif
 
@@ -70,49 +70,51 @@ function! Pl#Segment#Init(...) " {{{
 		return {}
 	endif
 
-	let ns = '__common__'
-
-	if type(a:1) == type('')
-		" Set namespace
-		let ns = a:1
-	endif
-
-	let segment = {}
+	let segments = {}
+	let ns = ''
 
 	for param in a:000
-		if type(param) == type([])
-			" Info dict is key 1 in segment/groups
-			let info = param[1]
+		if type(param) == type('')
+			" String parameters is the namespace
+			let ns = param
+		elseif type(param) == type([])
+			" The data dict is in param[1]
+			" By default we don't have a namespace for the segment
+			let segment = param[1]
 
-			if ns != '__common__'
-				" Prepend segment name with namespace if not in common namespace
-				let info.name = ns .':'. info.name
+			if ! empty(ns)
+				" Update segment so that it includes the namespace
+				" Add the namespace to the segment dict key
+				let segment.ns = ns
+				let segment.name = join([segment.ns, segment.name], ':')
 			endif
 
-			let segment[info.name] = info
+			let key = segment.name
+
+			let segments[key] = segment
 		endif
 
 		unlet! param
 	endfor
 
-	return segment
+	return segments
 endfunction " }}}
 function! Pl#Segment#Modes(modes) " {{{
 	" Handle modes for both segments and groups
-	let modes = split(copy(a:modes), '\zs')
+	let modes = split(a:modes, '\zs')
 
 	if modes[0] == '!'
 		" Filter modes (e.g. "!nr" will ignore the segment in normal and replace modes)
-		let modes = filter(copy(s:default_modes), 'v:val !~# "['. join(modes[1:]) .']"')
+		let modes = filter(deepcopy(s:default_modes), 'v:val !~# "['. join(modes[1:]) .']"')
 	endif
 
 	return ['modes', modes]
 endfunction " }}}
 function! Pl#Segment#Split() " {{{
-	return 'special.split'
+	return 'special:split'
 endfunction " }}}
 function! Pl#Segment#Truncate() " {{{
-	return 'special.truncate'
+	return 'special:truncate'
 endfunction " }}}
 function! Pl#Segment#Get(name) " {{{
 	" Return a segment data dict
@@ -121,35 +123,61 @@ function! Pl#Segment#Get(name) " {{{
 	" Check for printf segments (lists)
 	if type(a:name) == type([])
 		" We're dealing with a segment with printf arguments
-		let seg_name = a:name[0]
+		let seg_orig_name = a:name[0]
 		let args = a:name[1:]
 	else
-		let seg_name = a:name
+		let seg_orig_name = a:name
 	endif
 
-	let seg_name_split = split(seg_name, ':')
+	" Fetch namespace and variants for storing in the segment dict
+	let seg_ns = ''
+	let seg_variants = []
 
-	" Handle segment namespacing
-	let ns = ''
-	let func = seg_name_split[0]
+	" Retrieve color scheme variants
+	let seg_name_split = split(seg_orig_name, '\v\.')
+	if len(seg_name_split) > 1
+		let seg_variants = seg_name_split[1:]
+	endif
+
+	" Retrieve segment name and namespace
+	" Use the first piece of the split string, we can't have variants in the final segment name
+	let seg_name_split = split(seg_name_split[0], '\v:')
+	let seg_name = seg_name_split[0]
 
 	if len(seg_name_split) > 1
-		" The segment is in a namespace ("ns:segment")
-		let ns = '#' . seg_name_split[0]
-		let func = join(seg_name_split, ':')
+		let seg_ns = seg_name_split[0]
+		let seg_name = seg_name_split[-1]
 	endif
 
-	let segment = copy(get(g:Powerline#Segments{ns}#segments, func, {}))
-
-	if empty(segment)
-		return {}
+	if seg_ns == 'special'
+		" Return special segments (split/truncate) without modifications!
+		return deepcopy(g:Powerline#Segments#special#segments[seg_orig_name])
 	endif
 
-	if len(args)
+	try
+		" If we have a namespace, try to use the namespaced segment first (i.e. search for the segment in the namespaced file first)
+		let return_segment = deepcopy(g:Powerline#Segments#{seg_ns}#segments[seg_ns .':'. seg_name])
+	catch
+		try
+			" We didn't find a namespaced segment, fall back to common segments
+			let return_segment = deepcopy(g:Powerline#Segments#segments[seg_name])
+		catch
+			" Didn't find the segment among the common segments either, just skip it
+			let return_segment = {}
+		endtry
+	endtry
+
+	if len(args) && has_key(return_segment, 'text')
 		" Handle segment printf arguments
 		" printf doesn't accept lists as its second argument, so we have to work around that
-		let segment.text = call('printf', [ segment.text ] + args)
+		let return_segment.text = call('printf', [ return_segment.text ] + args)
 	endif
 
-	return segment
+	" Assign namespace, name and variants
+	let return_segment.ns = seg_ns
+	let return_segment.name = seg_name
+	let return_segment.orig_name = seg_orig_name
+	let return_segment.variants = seg_variants
+
+	return return_segment
 endfunction " }}}

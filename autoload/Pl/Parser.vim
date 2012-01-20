@@ -66,7 +66,7 @@ function! Pl#Parser#ParseChars(arg) " {{{
 	" Handles symbol arrays which can be either an array of hex values,
 	" or a string. Will convert the hex array to a string, or return the
 	" string as-is.
-	let arg = copy(a:arg)
+	let arg = a:arg
 
 	if type(arg) == type([])
 		" Hex array
@@ -92,14 +92,14 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 		unlet! seg_prev seg_curr seg_next
 
 		" Prepare some resources (fetch previous, current and next segment)
-		let seg_curr = copy(get(segments, i))
+		let seg_curr = deepcopy(get(segments, i))
 
 		" Find previous segment
 		let seg_prev = s:EMPTY_SEGMENT
 
 		for j in range(i - 1, 0, -1)
-			let seg = copy(get(segments, j))
-			if get(seg, 'name') == 'special.truncate'
+			let seg = deepcopy(get(segments, j))
+			if get(seg, 'name') == 'special:truncate'
 				" Skip truncate segments
 				continue
 			endif
@@ -117,8 +117,8 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 		let seg_next = s:EMPTY_SEGMENT
 
 		for j in range(i + 1, len(segments) - 1, 1)
-			let seg = copy(get(segments, j))
-			if get(seg, 'name') == 'special.truncate'
+			let seg = deepcopy(get(segments, j))
+			if get(seg, 'name') == 'special:truncate'
 				" Skip truncate segments
 				continue
 			endif
@@ -140,10 +140,10 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 
 		" Handle the different segment types
 		if seg_curr.type == 'segment'
-			if seg_curr.name == 'special.truncate'
+			if seg_curr.name == 'special:truncate'
 				" Truncate statusline
 				call add(ret, '%<')
-			elseif seg_curr.name == 'special.split'
+			elseif seg_curr.name == 'special:split'
 				" Split statusline
 
 				" Switch sides
@@ -163,7 +163,13 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 				let colors = get(seg_curr, 'colors', base_color)
 
 				" Fallback to normal (current) highlighting if we don't have mode-specific highlighting
-				let mode_colors = get(colors, mode, colors['n'])
+				let mode_colors = get(colors, mode, get(colors, 'n', {}))
+
+				if empty(mode_colors)
+					echoe 'Segment doesn''t have any colors! NS: "'. seg_curr.ns .'" SEG: "'. seg_curr.name .'"'
+
+					continue
+				endif
 
 				" Check if we're in a group (level > 0)
 				if level > 0
@@ -273,7 +279,7 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 	let seg_next = a:next
 
 	" Set default color/type for the divider
-	let div_colors = copy(get(a:colors, a:mode, a:colors['n']))
+	let div_colors = get(a:colors, a:mode, a:colors['n'])
 	let div_type = s:SOFT_DIVIDER
 
 	" Define segment to compare
@@ -289,7 +295,7 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 		" If not, use hard divider with a new highlighting group
 		"
 		" Note that if the previous/next segment is the split, a hard divider is always used
-		if get(div_colors, 'ctermbg') != get(cmp_colors, 'ctermbg') || get(seg_next, 'name') == 'special.split' || get(seg_prev, 'name') == 'special.split'
+		if get(div_colors, 'ctermbg') != get(cmp_colors, 'ctermbg') || get(seg_next, 'name') == 'special:split' || get(seg_prev, 'name') == 'special:split'
 			let div_type = s:HARD_DIVIDER
 
 			" Create new highlighting group
@@ -303,11 +309,11 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 	endif
 
 	" Prepare divider
-	let divider_raw = copy(g:Pl#Parser#Symbols[g:Powerline_symbols].dividers[a:side + div_type])
+	let divider_raw = deepcopy(g:Pl#Parser#Symbols[g:Powerline_symbols].dividers[a:side + div_type])
 	let divider = Pl#Parser#ParseChars(divider_raw)
 
 	" Don't add dividers for segments adjacent to split (unless it's a hard divider)
-	if ((get(seg_next, 'name') == 'special.split' || get(seg_prev, 'name') == 'special.split') && div_type != s:HARD_DIVIDER)
+	if ((get(seg_next, 'name') == 'special:split' || get(seg_prev, 'name') == 'special:split') && div_type != s:HARD_DIVIDER)
 		return ''
 	endif
 

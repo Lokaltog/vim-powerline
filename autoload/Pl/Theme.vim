@@ -1,15 +1,17 @@
 function! Pl#Theme#Create(colorscheme, ...) " {{{
-	return Pl#Colorscheme#Apply(a:colorscheme, copy(a:000))
+	return Pl#Colorscheme#Apply(a:colorscheme, a:000)
 endfunction " }}}
 function! Pl#Theme#BufferSegments(matches, ...) " {{{
 	let segments = []
 
-	let theme = copy(a:000)
+	let theme = a:000
 	let theme = Pl#Mod#UpdateTheme(theme) " Do all actions in Pl#Mod#theme
 
 	" Fetch segment data dicts
 	for segment_name in theme
-		call add(segments, Pl#Segment#Get(segment_name))
+		let segment = Pl#Segment#Get(segment_name)
+
+		call add(segments, segment)
 
 		unlet! segment_name
 	endfor

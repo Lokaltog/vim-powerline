@@ -1,7 +1,4 @@
 let g:Powerline#Segments#segments = Pl#Segment#Init(
-	\ Pl#Segment#Create('special.split'   , '__split__'),
-	\ Pl#Segment#Create('special.truncate', '__truncate__'),
-	\
 	\ Pl#Segment#Create('mode_indicator'  , '%{Powerline#Functions#GetMode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileinfo',
 		\ Pl#Segment#Create('flags.ro'    , '%{&readonly ? "$RO" : ""}'),
