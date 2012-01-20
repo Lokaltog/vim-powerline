@@ -28,6 +28,15 @@ instructions.
 .. _Pathogen: https://github.com/tpope/vim-pathogen
 .. _Vundle: https://github.com/gmarik/vundle
 
+Important information about caching
+-----------------------------------
+
+Powerline caches the statuslines in ``/tmp/Powerline.cache`` or 
+``$TEMP/Powerline.cache``. **Please remember to delete the cache file after 
+updating Powerline, after modifying your statusline theme or after changing 
+the font settings!** See ``:help Powerline_cache_file`` for more info about 
+the cache file.
+
 Screenshots
 -----------
 

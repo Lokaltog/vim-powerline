@@ -67,7 +67,7 @@ call Pl#Statusline(
 	\ Pl#Split(
 		\ Pl#HiCurrent(   Pl#BG(236)),
 		\ Pl#HiInsert(    Pl#BG( 24)),
-		\ Pl#HiNonCurrent(Pl#BG('none'))
+		\ Pl#HiNonCurrent(Pl#BG(233))
 		\ ),
 	\
 	\ Pl#Segment("%{&fileformat} %{(&fenc == '' ? &enc : &fenc)} ",
