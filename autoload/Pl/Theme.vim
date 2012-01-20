@@ -1,5 +1,18 @@
 function! Pl#Theme#Create(colorscheme, ...) " {{{
-	return Pl#Colorscheme#Apply(a:colorscheme, a:000)
+	let buffer_segments = []
+
+	for buffer_segment in a:000
+		" Remove empty segments (e.g. 'Pl#Theme#Function's)
+		if empty(buffer_segment)
+			continue
+		endif
+
+		call add(buffer_segments, buffer_segment)
+	endfor
+
+	let buffer_segments = Pl#Colorscheme#Apply(a:colorscheme, buffer_segments)
+
+	return buffer_segments
 endfunction " }}}
 function! Pl#Theme#BufferSegments(matches, ...) " {{{
 	let segments = []
