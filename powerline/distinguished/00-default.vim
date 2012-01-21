@@ -12,6 +12,13 @@ call Pl#Statusline(
 		\ Pl#HiNonCurrent(Pl#FG(239), Pl#BG(235))
 		\ ),
 	\
+	\ Pl#Segment("%{Stl_GetVirtualenv('$ro')}",
+		\ exists('g:virtualenv_loaded') && g:virtualenv_loaded== 1,
+        \ Pl#HiCurrent(   Pl#FG(231), Pl#Attr('bold')),
+        \ Pl#HiInsert(    Pl#FG(231), Pl#Attr('bold')),
+        \ Pl#HiNonCurrent(Pl#FG(245), Pl#Attr('bold'))
+		\ ),
+	\
 	\ Pl#SegmentGroup(
 		\ Pl#HiCurrent(   Pl#BG(240)),
 		\ Pl#HiInsert(    Pl#BG( 31)),
