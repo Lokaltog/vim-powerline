@@ -21,11 +21,11 @@ function! Pl#Theme#Buffer(ns, ...) " {{{
 	" Match namespace parameter by default
 	let matches = Pl#Match#Any(a:ns)
 
-	let theme = a:000
-	let theme = Pl#Mod#UpdateTheme(theme) " Do all actions in Pl#Mod#theme
+	let args = a:000
+	let args = Pl#Mod#ApplySegmentMods(args)
 
 	" Fetch segment data dicts
-	for item in theme
+	for item in args
 		if type(item) == type([])
 			if item[0] == 'match'
 				" Match item, overrides default namespace match
@@ -63,8 +63,7 @@ function! Pl#Theme#InsertSegment(new_segment, where, target_segment) " {{{
 	"
 	" These functions don't accept a name parameter, because they work on the
 	" currently selected theme (will change any selected theme)
-	call add(g:Pl#Mod#theme, {
-		\ 'action': 'insert',
+	call Pl#Mod#AddSegmentMod('insert_segment', {
 		\ 'new_segment': a:new_segment,
 		\ 'where': a:where,
 		\ 'target_segment': a:target_segment
@@ -78,8 +77,7 @@ function! Pl#Theme#RemoveSegment(target_segment) " {{{
 	"
 	" These functions don't accept a name parameter, because they work on the
 	" currently selected theme (will change any selected theme)
-	call add(g:Pl#Mod#theme, {
-		\ 'action': 'remove',
+	call Pl#Mod#AddSegmentMod('remove_segment', {
 		\ 'target_segment': a:target_segment
 		\ })
 endfunction " }}}
