@@ -1,4 +1,4 @@
-function! Pl#Theme#Create(colorscheme, ...) " {{{
+function! Pl#Theme#Create(...) " {{{
 	let buffer_segments = []
 
 	for buffer_segment in a:000
@@ -10,7 +10,7 @@ function! Pl#Theme#Create(colorscheme, ...) " {{{
 		call add(buffer_segments, buffer_segment)
 	endfor
 
-	let buffer_segments = Pl#Colorscheme#Apply(a:colorscheme, buffer_segments)
+	let buffer_segments = Pl#Colorscheme#Apply(g:Powerline_colorscheme, buffer_segments)
 
 	return buffer_segments
 endfunction " }}}
