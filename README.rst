@@ -72,7 +72,7 @@ Troubleshooting
 ---------------
 
 I can't see the fancy symbols, what's wrong?
-    Make sure that you have ``let g:Powerline_symbols = 'fancy'`` in your 
+    Make sure that you have ``let g:Powerline_symbols = 'fancy`` in your 
     ``vimrc`` file. The settings may be loaded too late if you have this in 
     ``gvimrc``, so always put this in your ``vimrc``.
 
