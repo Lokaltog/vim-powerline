@@ -1,12 +1,13 @@
 let g:Pl#Mod#theme = []
 
 function! Pl#Mod#UpdateTheme(theme) " {{{
-	let theme = a:theme
+	let theme = deepcopy(a:theme)
 
 	for mod in g:Pl#Mod#theme
 		" We have to loop through instead of using index() because some
 		" segments are lists!
 		let target_seg_idx = -1
+
 		for i in range(0, len(theme) - 1)
 			unlet! segment
 			let segment = theme[i]
