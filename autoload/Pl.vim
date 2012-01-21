@@ -4,6 +4,7 @@
 " Source repository: https://github.com/Lokaltog/vim-powerline
 
 " Script variables {{{
+	let g:Pl#OLD_STL = ''
 	let g:Pl#THEME = []
 	let g:Pl#HL = []
 
@@ -36,6 +37,11 @@
 		if a:0 && a:1 == 1
 			" Force cache reloading by deleting cache file
 			call delete(g:Powerline_cache_file)
+		endif
+
+		if empty(g:Pl#OLD_STL)
+			" Store old statusline
+			let g:Pl#OLD_STL = &statusline
 		endif
 
 		if ! Pl#LoadCached()
