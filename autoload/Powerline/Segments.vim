@@ -1,4 +1,7 @@
 let g:Powerline#Segments#segments = Pl#Segment#Init(
+	\ Pl#Segment#Create('SPLIT'   , '__split__'),
+	\ Pl#Segment#Create('TRUNCATE', '__truncate__'),
+	\
 	\ Pl#Segment#Create('mode_indicator'  , '%{Powerline#Functions#GetMode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileinfo',
 		\ Pl#Segment#Create('flags.ro'    , '%{&readonly ? "$RO" : ""}'),
@@ -6,7 +9,9 @@ let g:Powerline#Segments#segments = Pl#Segment#Init(
 		\ Pl#Segment#Create('flags.mod'   , '%M'),
 		\ Pl#Segment#Create('flags.type'  , '%H%W'),
 	\ ),
-	\ Pl#Segment#Create('static_filename' , '%%{"%s"}'),
+	\ Pl#Segment#Create('filename'        , '%t'),
+	\ Pl#Segment#Create('static_str'      , '%%{"%s"}'),
+	\ Pl#Segment#Create('raw'             , '%s'),
 	\ Pl#Segment#Create('fileformat'      , '%{&fileformat}'                  , Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileencoding'    , '%{(&fenc == "" ? &enc : &fenc)}' , Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('filetype'        , '$FT %{strlen(&ft) ? &ft : "n/a"}', Pl#Segment#Modes('!N')),

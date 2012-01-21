@@ -1,11 +1,14 @@
-function! Pl#Colorscheme#Init(...) " {{{
+function! Pl#Colorscheme#Init(hi) " {{{
 	let colorscheme = {}
 
-	for param in a:000
-		let segment = param[0]
-		let mode_hi_dict = param[1]
+	for hi in a:hi
+		" Ensure that the segments are a list
+		let segments = type(hi[0]) == type('') ? [ hi[0] ] : hi[0]
+		let mode_hi_dict = hi[1]
 
-		let colorscheme[segment] = mode_hi_dict
+		for segment in segments
+			let colorscheme[segment] = mode_hi_dict
+		endfor
 	endfor
 
 	return colorscheme
@@ -92,13 +95,6 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 					endfor
 				endfor
 			elseif type == 'segment'
-				if ! has_key(segment, 'variants')
-					" Fallback for special segments
-					let segment.colors = get(colorscheme, segment.name, {})
-
-					continue
-				endif
-
 				for i in range(len(segment.variants), 0, -1)
 					" Check for available highlighting
 					"
@@ -139,7 +135,7 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 	" array consiting of a statusline for each mode, with generated highlighting groups and dividers.
 	return buffer_segments
 endfunction " }}}
-function! Pl#Colorscheme#HiSegment(segment, normal, ...) " {{{
+function! Pl#Colorscheme#HiSegment(segments, normal, ...) " {{{
 	let mode_hi_dict = {
 		\ 	'n': a:normal
 		\ }
@@ -152,5 +148,6 @@ function! Pl#Colorscheme#HiSegment(segment, normal, ...) " {{{
 		endfor
 	endif
 
-	return [a:segment, mode_hi_dict]
+	" a:segments may be either a string or a list of strings to use this highlighting
+	return [a:segments, mode_hi_dict]
 endfunction " }}}

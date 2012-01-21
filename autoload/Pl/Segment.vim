@@ -110,11 +110,11 @@ function! Pl#Segment#Modes(modes) " {{{
 
 	return ['modes', modes]
 endfunction " }}}
-function! Pl#Segment#Split() " {{{
-	return 'special:split'
+function! Pl#Segment#Split(...) " {{{
+	return a:0 ? a:1 .':SPLIT' : 'SPLIT'
 endfunction " }}}
 function! Pl#Segment#Truncate() " {{{
-	return 'special:truncate'
+	return 'TRUNCATE'
 endfunction " }}}
 function! Pl#Segment#Get(name) " {{{
 	" Return a segment data dict
@@ -147,11 +147,6 @@ function! Pl#Segment#Get(name) " {{{
 	if len(seg_name_split) > 1
 		let seg_ns = seg_name_split[0]
 		let seg_name = seg_name_split[-1]
-	endif
-
-	if seg_ns == 'special'
-		" Return special segments (split/truncate) without modifications!
-		return deepcopy(g:Powerline#Segments#special#segments[seg_orig_name])
 	endif
 
 	try

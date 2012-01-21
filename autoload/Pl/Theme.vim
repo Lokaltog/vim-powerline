@@ -14,23 +14,41 @@ function! Pl#Theme#Create(colorscheme, ...) " {{{
 
 	return buffer_segments
 endfunction " }}}
-function! Pl#Theme#BufferSegments(matches, ...) " {{{
+function! Pl#Theme#Buffer(ns, ...) " {{{
 	let segments = []
+	let ns = ! empty(a:ns) ? a:ns .':' : ''
+
+	" Match namespace parameter by default
+	let matches = Pl#Match#Any(a:ns)
 
 	let theme = a:000
 	let theme = Pl#Mod#UpdateTheme(theme) " Do all actions in Pl#Mod#theme
 
 	" Fetch segment data dicts
-	for segment_name in theme
-		let segment = Pl#Segment#Get(segment_name)
+	for item in theme
+		if type(item) == type([])
+			if item[0] == 'match'
+				" Match item, overrides default namespace match
+				let matches = item
+
+				continue
+			endif
+
+			" printf segment, append ns to first item in list
+			let item[0] = ns . item[0]
+		else
+			let item = ns . item
+		endif
+
+		let segment = Pl#Segment#Get(item)
 
 		call add(segments, segment)
 
-		unlet! segment_name
+		unlet! item
 	endfor
 
 	return {
-		\ 	'matches': a:matches,
+		\ 	'matches': matches,
 		\ 	'segments': segments
 		\ }
 endfunction " }}}

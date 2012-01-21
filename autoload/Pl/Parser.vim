@@ -99,7 +99,7 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 
 		for j in range(i - 1, 0, -1)
 			let seg = deepcopy(get(segments, j))
-			if get(seg, 'name') == 'special:truncate'
+			if get(seg, 'name') ==# 'TRUNCATE'
 				" Skip truncate segments
 				continue
 			endif
@@ -118,7 +118,7 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 
 		for j in range(i + 1, len(segments) - 1, 1)
 			let seg = deepcopy(get(segments, j))
-			if get(seg, 'name') == 'special:truncate'
+			if get(seg, 'name') ==# 'TRUNCATE'
 				" Skip truncate segments
 				continue
 			endif
@@ -140,10 +140,10 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 
 		" Handle the different segment types
 		if seg_curr.type == 'segment'
-			if seg_curr.name == 'special:truncate'
+			if seg_curr.name ==# 'TRUNCATE'
 				" Truncate statusline
 				call add(ret, '%<')
-			elseif seg_curr.name == 'special:split'
+			elseif seg_curr.name ==# 'SPLIT'
 				" Split statusline
 
 				" Switch sides
@@ -295,7 +295,7 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 		" If not, use hard divider with a new highlighting group
 		"
 		" Note that if the previous/next segment is the split, a hard divider is always used
-		if get(div_colors, 'ctermbg') != get(cmp_colors, 'ctermbg') || get(seg_next, 'name') == 'special:split' || get(seg_prev, 'name') == 'special:split'
+		if get(div_colors, 'ctermbg') != get(cmp_colors, 'ctermbg') || get(seg_next, 'name') ==# 'SPLIT' || get(seg_prev, 'name') ==# 'SPLIT'
 			let div_type = s:HARD_DIVIDER
 
 			" Create new highlighting group
@@ -313,7 +313,7 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 	let divider = Pl#Parser#ParseChars(divider_raw)
 
 	" Don't add dividers for segments adjacent to split (unless it's a hard divider)
-	if ((get(seg_next, 'name') == 'special:split' || get(seg_prev, 'name') == 'special:split') && div_type != s:HARD_DIVIDER)
+	if ((get(seg_next, 'name') ==# 'SPLIT' || get(seg_prev, 'name') ==# 'SPLIT') && div_type != s:HARD_DIVIDER)
 		return ''
 	endif
 

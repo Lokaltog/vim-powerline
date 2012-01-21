@@ -5,7 +5,16 @@ function! Pl#Match#Any(...) " {{{
 	let matches = []
 
 	for match_name in a:000
-		call add(matches, g:Powerline#Matches#matches[match_name])
+		if empty(match_name)
+			" Skip empty match parameters
+			continue
+		endif
+
+		if has_key(g:Powerline#Matches#matches, match_name)
+			call add(matches, g:Powerline#Matches#matches[match_name])
+		endif
+
+		unlet! match_name
 	endfor
 
 	return ['match', 'any', matches]
