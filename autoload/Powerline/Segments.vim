@@ -16,7 +16,7 @@ let g:Powerline#Segments#segments = Pl#Segment#Init(
 	\ Pl#Segment#Create('raw'             , '%s'),
 	\ Pl#Segment#Create('fileformat'      , '%{&fileformat}' , Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileencoding'    , '%{(&fenc == "" ? &enc : &fenc)}' , Pl#Segment#Modes('!N')),
-	\ Pl#Segment#Create('filetype'        , '$FT %{strlen(&ft) ? &ft : "n/a"}' , Pl#Segment#Modes('!N')),
+	\ Pl#Segment#Create('filetype'        , '%{strlen(&ft) ? &ft : "no ft"}' , Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('scrollpercent'   , '%3p%%'),
 	\ Pl#Segment#Create('lineinfo',
 		\ Pl#Segment#Create('line.cur'    , '$LINE %3l'),
