@@ -8,7 +8,7 @@
 	let g:Pl#HL = []
 
 	" Cache revision, this must be incremented whenever the cache format is changed
-	let s:CACHE_REVISION = 1
+	let s:CACHE_REVISION = 2
 " }}}
 " Script initialization {{{
 	function! Pl#LoadCached() " {{{
