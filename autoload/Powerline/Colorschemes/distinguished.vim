@@ -15,6 +15,7 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\                           'pwd'],                                 Pl#Hi#Create(Pl#Hi#Cterm(247, 236)        ), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(117,  24)        ), } ),
 	\ Pl#Colorscheme#HiSegment(['filetype'],                            Pl#Hi#Create(Pl#Hi#Cterm(246, 236)        ), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm( 75,  24)        ), } ),
 	\ Pl#Colorscheme#HiSegment(['lineinfo'],                            Pl#Hi#Create(Pl#Hi#Cterm(236, 252), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'), 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 117), 'bold'), } ),
+	\ Pl#Colorscheme#HiSegment(['errors'],                              Pl#Hi#Create(Pl#Hi#Cterm(214, 236), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(214,  24), 'bold'), } ),
 	\ Pl#Colorscheme#HiSegment(['lineinfo.line.tot'],                   Pl#Hi#Create(Pl#Hi#Cterm(244     )        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(241     )        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23     )        ), } ),
 	\
 	\ Pl#Colorscheme#HiSegment(['gundo:static_str.name',
