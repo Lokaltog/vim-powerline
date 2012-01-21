@@ -42,14 +42,17 @@ function! Pl#Theme#Buffer(ns, ...) " {{{
 
 		let segment = Pl#Segment#Get(item)
 
-		call add(segments, segment)
+		if ! empty(segment)
+			" Skip empty (possible disabled) segments
+			call add(segments, segment)
+		endif
 
 		unlet! item
 	endfor
 
 	return {
-		\ 	'matches': matches,
-		\ 	'segments': segments
+		\ 'matches': matches,
+		\ 'segments': segments
 		\ }
 endfunction " }}}
 function! Pl#Theme#InsertSegment(new_segment, where, target_segment) " {{{

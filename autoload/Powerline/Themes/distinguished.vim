@@ -5,6 +5,7 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , 'mode_indicator'
 		\ , 'fugitive:branch'
 		\ , 'fileinfo'
+		\ , 'syntastic:errors'
 		\ , Pl#Segment#Truncate()
 		\ , 'cfi:current_function'
 		\ , Pl#Segment#Split()
