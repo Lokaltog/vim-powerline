@@ -158,7 +158,7 @@ function! Pl#Segment#Get(name) " {{{
 			let return_segment = deepcopy(g:Powerline#Segments#segments[seg_name])
 		catch
 			" Didn't find the segment among the common segments either, just skip it
-			let return_segment = {}
+			return {}
 		endtry
 	endtry
 
