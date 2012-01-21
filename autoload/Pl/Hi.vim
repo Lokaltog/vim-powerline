@@ -1,5 +1,5 @@
 " cterm -> gui color dict {{{
-let s:cterm2gui = {
+let s:cterm2gui_dict = {
 	\ 16:  0x000000, 17:  0x00005f, 18:  0x000087, 19:  0x0000af, 20:  0x0000d7, 21:  0x0000ff,
 	\ 22:  0x005f00, 23:  0x005f5f, 24:  0x005f87, 25:  0x005faf, 26:  0x005fd7, 27:  0x005fff,
 	\ 28:  0x008700, 29:  0x00875f, 30:  0x008787, 31:  0x0087af, 32:  0x0087d7, 33:  0x0087ff,
@@ -42,14 +42,63 @@ let s:cterm2gui = {
 	\ 250: 0xbcbcbc, 251: 0xc6c6c6, 252: 0xd0d0d0, 253: 0xdadada, 254: 0xe4e4e4, 255: 0xeeeeee
 \ }
 " }}}
-function! Pl#Colors#cterm2gui(cterm) " {{{
+function! s:Cterm2GUI(cterm) " {{{
 	if toupper(a:cterm) == 'NONE'
 		return 'NONE'
 	endif
 
-	if ! has_key(s:cterm2gui, a:cterm)
+	if ! has_key(s:cterm2gui_dict, a:cterm)
 		return 0xff0000
 	endif
 
-	return s:cterm2gui[a:cterm]
+	return s:cterm2gui_dict[a:cterm]
+endfunction " }}}
+function! Pl#Hi#Create(...) " {{{
+	let hi = {
+		\ 'cterm': ['', ''],
+		\ 'gui'  : ['', ''],
+		\ 'attr' : []
+		\ }
+
+	" Fetch highlighting details from parameters
+	for param in a:000
+		" String parameters are always attributes
+		if type(param) == type('')
+			if tolower(param) == 'none'
+				let param = 'NONE'
+			endif
+
+			call add(hi['attr'], param)
+
+			continue
+		endif
+
+		" Other parameters are either Pl#Hi#Cterm or Pl#Hi#GUI return values (lists)
+		let hi[param[0]] = [toupper(param[1]), toupper(param[2])]
+
+		unlet! param
+	endfor
+
+	" Fallback to term colors in gvim
+	if empty(hi['gui'][0]) && ! empty(hi['cterm'][0])
+		let hi['gui'][0] = s:Cterm2GUI(hi['cterm'][0])
+	endif
+	if empty(hi['gui'][1]) && ! empty(hi['cterm'][1])
+		let hi['gui'][1] = s:Cterm2GUI(hi['cterm'][1])
+	endif
+
+	" Return dict with properly formatted color values
+	return {
+		\ 'ctermfg': (empty(hi['cterm'][0]) ? '' : (string(hi['cterm'][0]) == 'NONE' ? 'NONE' : hi['cterm'][0])),
+		\ 'ctermbg': (empty(hi['cterm'][1]) ? '' : (string(hi['cterm'][1]) == 'NONE' ? 'NONE' : hi['cterm'][1])),
+		\ 'guifg': (empty(hi['gui'][0]) ? '' : (string(hi['gui'][0]) == 'NONE' ? 'NONE' : hi['gui'][0])),
+		\ 'guibg': (empty(hi['gui'][1]) ? '' : (string(hi['gui'][1]) == 'NONE' ? 'NONE' : hi['gui'][1])),
+		\ 'attr': (! len(hi['attr']) ? 'NONE' : join(hi['attr'], ','))
+		\ }
+endfunction " }}}
+function! Pl#Hi#Cterm(fg, ...) " {{{
+	return ['cterm', a:fg, (a:0 ? a:1 : '')]
+endfunction " }}}
+function! Pl#Hi#GUI(fg, ...) " {{{
+	return ['gui', a:fg, (a:0 ? a:1 : '')]
 endfunction " }}}
