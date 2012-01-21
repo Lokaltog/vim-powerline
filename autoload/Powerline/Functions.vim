@@ -4,16 +4,16 @@ function! Powerline#Functions#GetMode() " {{{
 	if mode =~# '\v(v|V|)'
 		" Visual mode
 		if mode ==# 'v'
-			let mode = ' V '
+			let mode = 'VISUAL'
 		elseif mode ==# 'V'
 			let mode = 'V·LINE'
 		elseif mode ==# ''
-			let mode = 'V·BLCK'
+			let mode = 'V·BLOCK'
 		endif
 	elseif mode =~# '\vi'
-		let mode = 'INS' " Insert mode
+		let mode = 'INSERT' " Insert mode
 	elseif mode =~# '\v(R|Rv)'
-		let mode = ' R ' " Replace mode
+		let mode = 'REPLACE' " Replace mode
 	else
 		" Fallback to normal mode
 		let mode = ' N ' " Normal (current)

@@ -1,7 +1,7 @@
 let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 	\ 'distinguished',
 	\
-	\ Pl#Theme#BufferSegments(Pl#Match#Any()
+	\ Pl#Theme#Buffer(''
 		\ , 'mode_indicator'
 		\ , 'fugitive:branch'
 		\ , 'fileinfo'
@@ -14,10 +14,67 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , 'scrollpercent'
 		\ , 'lineinfo'
 	\ ),
-	\ Pl#Theme#BufferSegments(Pl#Match#Any('ft_help')
-		\ , ['help:static_filename', 'Help']
+	\
+	\ Pl#Theme#Buffer('command_t'
+		\ , ['static_str.name', 'Command-T']
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
-		\ , 'help:scrollpercent'
+		\ , ['raw.line', '%10(Match #%l%)']
+	\ ),
+	\
+	\ Pl#Theme#Buffer('gundo', Pl#Match#Any('gundo_tree')
+		\ , ['static_str.name', 'Gundo']
+		\ , ['static_str.buffer', 'Undo tree']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
+	\ Pl#Theme#Buffer('gundo', Pl#Match#Any('gundo_preview')
+		\ , ['static_str.name', 'Gundo']
+		\ , ['static_str.buffer', 'Diff preview']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
+	\ Pl#Theme#Buffer('ft_help'
+		\ , ['static_str.name', 'Help']
+		\ , 'filename'
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+		\ , 'scrollpercent'
+	\ ),
+	\
+	\ Pl#Theme#Buffer('lustyexplorer'
+		\ , ['static_str.name', 'LustyExplorer']
+		\ , ['static_str.buffer', 'Buffer list']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
+	\ Pl#Theme#Buffer('ft_man'
+		\ , ['static_str.name', 'Man page']
+		\ , 'filename'
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+		\ , 'scrollpercent'
+	\ ),
+	\
+	\ Pl#Theme#Buffer('minibufexplorer'
+		\ , ['static_str.name', 'MiniBufExplorer']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
+	\ Pl#Theme#Buffer('ft_qf'
+		\ , ['static_str.name', 'Quickfix']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
+	\ Pl#Theme#Buffer('tagbar'
+		\ , ['static_str.name', 'Tagbar']
+		\ , ['static_str.buffer', 'Tree']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
 	\ )
 \ )
