@@ -21,3 +21,21 @@ function! Powerline#Functions#GetMode() " {{{
 
 	return mode
 endfunction " }}}
+function! Powerline#Functions#GetFilesize() " {{{
+	let bytes = getfsize(expand("%:p"))
+
+	if bytes <= 0
+		return ''
+	endif
+
+	if bytes < 1024
+		return bytes . 'B'
+	else
+		return (bytes / 1024) . 'kB'
+	endif
+endfunction "}}}
+function! Powerline#Functions#GetPwd() "{{{
+	let pwd = substitute(getcwd(), expand("$HOME"), "~", "g")
+
+	return pwd
+endfunction " }}}
