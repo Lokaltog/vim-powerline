@@ -20,10 +20,12 @@ CONTENTS                                                  *Powerline-contents*
        3.1 Recommended settings ........... |Powerline-recommended-settings|
     4. Configuration ...................... |Powerline-configuration|
        4.1 Powerline_cache_file ........... |Powerline_cache_file|
-       4.2 Powerline_symbols .............. |Powerline_symbols|
-           4.2.1 Compatible symbols ....... |Powerline-symbols-compatible|
-           4.2.2 Fancy symbols ............ |Powerline-symbols-fancy|
-       4.3 Powerline_theme ................ |Powerline_theme|
+       4.2 Powerline_cache_enabled ........ |Powerline_cache_enabled|
+       4.3 Powerline_symbols .............. |Powerline_symbols|
+           4.3.1 Compatible symbols ....... |Powerline-symbols-compatible|
+           4.3.2 Fancy symbols ............ |Powerline-symbols-fancy|
+       4.4 Powerline_theme ................ |Powerline_theme|
+       4.5 Powerline_colorscheme .......... |Powerline_colorscheme|
     5. Fonts .............................. |Powerline-fonts|
     6. Customization ...................... |Powerline-customization|
        6.1 Basics ......................... |Powerline-cust-basics|
@@ -67,7 +69,7 @@ The following configuration options should be set in your |vimrc|: >
 Note: If you're using an 88/256-color terminal but still don't see the colored 
 statusline, you may have to set the following option as well: >
 
-    set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
+    set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
 
 ==============================================================================
 4. Configuration                                     *Powerline-configuration*
@@ -80,22 +82,29 @@ file.
 4.1 Powerline_cache_file                                *Powerline_cache_file*
 
 By default Powerline caches all the statuslines and colors in a temporary 
-cache file. It's recommended that you use a cache file, as this dramatically 
-improves vim startup time after the cache file has been generated.
-
-It's possible to disable the cache file by setting this option to an empty 
-string (i.e. ""). This is especially useful if you're creating a new 
-Powerline.
+cache file. It's recommended that you enable the cache, as this dramatically 
+improves vim startup time after the cache file has been generated (the plugin 
+usually loads within ~100ms without the cache and ~1ms with the cache).
 
 Note: The default cache location for Linux/OS X users is in /tmp, which is 
 emptied when rebooting. This causes the cache file to be regenerated the first 
 time vim is run after bootup, and may cause a slight delay. You may put the 
-cache file in a permanent location (e.g. in ~/.vim) if you want to avoid this.
+cache file in a permanent location (e.g. in $HOME/.vim) if you want to avoid 
+this.
 
-Default: "/tmp/Powerline.cache"
+Defaults: "/tmp/Powerline.cache" on Linux/OS X
+          "$TEMP/Powerline.cache" on Windows
 
 ------------------------------------------------------------------------------
-4.2 Powerline_symbols                                      *Powerline_symbols*
+4.2 Powerline_cache_enabled                          *Powerline_cache_enabled*
+
+It's possible to disable statusline caching by setting this option to 0. This 
+is mostly useful when developing statuslines.
+
+Default: 1
+
+------------------------------------------------------------------------------
+4.3 Powerline_symbols                                      *Powerline_symbols*
 
 This option defines which set of symbols and dividers you want to use. There 
 are currently three available options: "compatible", "unicode" and "fancy".
@@ -108,10 +117,10 @@ are currently three available options: "compatible", "unicode" and "fancy".
 Symbols can be inserted into statuslines by using the following variables:
 
     VARIABLE       DESCRIPTION ~
-    $branch        Inserts a branch symbol
-    $ro            Inserts a read-only symbol
-    $ft            Inserts a filetype symbol
-    $line          Inserts a line number symbol
+    $BRANCH        Inserts a branch symbol
+    $RO            Inserts a read-only symbol
+    $FT            Inserts a filetype symbol
+    $LINE          Inserts a line number symbol
 
 Default: "compatible"
 
@@ -119,32 +128,33 @@ Note: You'll need to delete the |Powerline_cache_file| after changing this
 option for the changes to take effect.
 
 ------------------------------------------------------------------------------
-4.2.1 Compatible symbols                        *Powerline-symbols-compatible*
+4.3.1 Compatible symbols                        *Powerline-symbols-compatible*
 
 These symbols will work in any configuration, and do not require a special 
 font to work. This option will replace the fancy icons with plain text, and 
 the pointy dividers with straight lines.
 
 ------------------------------------------------------------------------------
-4.2.2 Fancy symbols                                  *Powerline-symbols-fancy*
+4.3.2 Fancy symbols                                  *Powerline-symbols-fancy*
 
 These symbols require a custom font to work. A font patcher is provided for 
 adding the required symbols to any outline font and some bitmap fonts, see 
 |Powerline-fonts| and the provided README file for usage details.
 
 ------------------------------------------------------------------------------
-4.3 Powerline_theme                                          *Powerline_theme*
+4.4 Powerline_theme                                          *Powerline_theme*
 
-This option defines which theme to use. See |Powerline-customization| for 
-details about creating your own Powerline theme.
+TODO
 
-Default: "distinguished"
+------------------------------------------------------------------------------
+4.5 Powerline_colorscheme                              *Powerline_colorscheme*
 
-Note: You'll need to delete the |Powerline_cache_file| after changing this 
-option for the changes to take effect.
+TODO
 
 ==============================================================================
 5. Fonts                                                     *Powerline-fonts*
+
+TODO
 
 ==============================================================================
 6. Customization                                     *Powerline-customization*
@@ -152,8 +162,12 @@ option for the changes to take effect.
 ------------------------------------------------------------------------------
 6.1 Basics                                             *Powerline-cust-basics*
 
+TODO
+
 ------------------------------------------------------------------------------
 6.2 Functions                                       *Powerline-cust-functions*
+
+TODO
 
 ==============================================================================
 7. License                                                 *Powerline-license*
@@ -165,16 +179,8 @@ http://creativecommons.org/licenses/by-sa/3.0/
 ==============================================================================
 8. Known issues                                       *Powerline-known-issues*
 
-- Spaces must be added manually in each segment. Unfortunately, 
-  I haven't found a reliable way of automatically padding segments 
-  without triggering rendering issues (wrong highlighting, double text, 
-  etc.)
-- Because %() is wrapped around each segment, text-only segments won't be 
-  rendered unless the text is wrapped in eval blocks like this: %{'My static 
-  text'}
-
-Note: Also see the issue tracker at
-      https://github.com/Lokaltog/vim-powerline/issues
+See the issue tracker at
+https://github.com/Lokaltog/vim-powerline/issues
 
 ==============================================================================
 9. Contributing                                       *Powerline-contributing*
