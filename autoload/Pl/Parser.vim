@@ -97,7 +97,9 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 		" Find previous segment
 		let seg_prev = s:EMPTY_SEGMENT
 
-		for j in range(i - 1, 0, -1)
+		" If we're currently at i = 0 we have to start on 0 or else we will start on the last segment (list[-1])
+		let range_start = (i == 0 ? i : i - 1)
+		for j in range(range_start, 0, -1)
 			let seg = deepcopy(get(segments, j))
 			if get(seg, 'name') ==# 'TRUNCATE'
 				" Skip truncate segments
@@ -116,7 +118,9 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 		"" Find next segment
 		let seg_next = s:EMPTY_SEGMENT
 
-		for j in range(i + 1, len(segments) - 1, 1)
+		" If we're currently at i = len(segments) - 1 we have to start on i or else we will get an error because the index doesn't exist
+		let range_start = (i == len(segments) - 1 ? i : i + 1)
+		for j in range(range_start, len(segments) - 1, 1)
 			let seg = deepcopy(get(segments, j))
 			if get(seg, 'name') ==# 'TRUNCATE'
 				" Skip truncate segments
