@@ -39,8 +39,14 @@
 		endif
 
 		if ! Pl#LoadCached()
-			" Autoload the theme dict first
-			let raw_theme = g:Powerline#Themes#{g:Powerline_theme}#theme
+			try
+				" Autoload the theme dict first
+				let raw_theme = g:Powerline#Themes#{g:Powerline_theme}#theme
+			catch
+				echoe 'Invalid Powerline theme! Please check your theme and colorscheme settings.'
+
+				return
+			endtry
 
 			" Create list with parsed statuslines
 			for buffer_statusline in raw_theme

@@ -14,11 +14,19 @@ function! Pl#Colorscheme#Init(hi) " {{{
 	return colorscheme
 endfunction " }}}
 function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
+	" Set color parameters for all segments in a:buffer_segments
+
 	" TODO This function should be recursive and work on both segments and groups
 	" TODO We could probably handle the NS stuff here...
 
-	" Set color parameters for all segments in a:buffer_segments
-	let colorscheme = g:Powerline#Colorschemes#{a:colorscheme}#colorscheme
+	try
+		let colorscheme = g:Powerline#Colorschemes#{a:colorscheme}#colorscheme
+	catch
+		echoe 'Color scheme "'. a:colorscheme .'" doesn''t exist!'
+
+		return
+	endtry
+
 	let buffer_segments = a:buffer_segments
 
 	" This is a bit complex, I'll walk you through exactly what happens here...
