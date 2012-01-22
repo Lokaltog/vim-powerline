@@ -15,7 +15,6 @@
 		\   'theme'        : 'distinguished'
 		\ , 'colorscheme'  : 'distinguished'
 		\ , 'symbols'      : 'compatible'
-		\ , 'cache_file'   : simplify(expand('<sfile>:p:h') . '/../Powerline.cache')
 		\ , 'cache_enabled': 1
 		\ })
 
@@ -23,6 +22,15 @@
 			exec printf('let g:Powerline_%s = %s', key, string(value))
 		endif
 	endfor
+
+	if ! exists('g:Powerline_cache_file')
+		exec 'let g:Powerline_cache_file = '. string(printf('%s/Powerline_%s_%s_%s.cache'
+			\ , simplify(expand('<sfile>:p:h') .'/..')
+			\ , g:Powerline_theme
+			\ , g:Powerline_colorscheme
+			\ , g:Powerline_symbols
+			\ ))
+	endif
 " }}}
 " Autocommands {{{
 	augroup Powerline

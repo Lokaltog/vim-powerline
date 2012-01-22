@@ -89,11 +89,13 @@ It's recommended that you enable the cache, as this dramatically improves vim
 startup time after the cache file has been generated (the plugin usually loads 
 within ~100ms without the cache and ~1ms with the cache).
 
-Note: You need to clear the cache after changing any Powerline settings. Run 
-":PowerlineClearCache" to clear the cache and restart vim for the changes to 
-take effect.
+Note: The default cache filename includes the current theme, colorscheme and 
+symbol settings in order to tie the cache file your current configuration, so 
+the cache file will be regenerated when you change any settings. This may 
+leave several old cache files in your vim folder, and these may safely be 
+deleted.
 
-Defaults: "<plugin directory>/Powerline.cache"
+Defaults: "<plugin_directory>/Powerline_<theme>_<colorscheme>_<symbols>.cache"
 
 ------------------------------------------------------------------------------
 4.2 Powerline_cache_enabled                          *Powerline_cache_enabled*
@@ -123,9 +125,6 @@ Symbols can be inserted into statuslines by using the following variables:
     $LINE          Inserts a line number symbol
 
 Default: "compatible"
-
-Note: You'll need to delete the |Powerline_cache_file| after changing this 
-option for the changes to take effect.
 
 ------------------------------------------------------------------------------
 4.3.1 Compatible symbols                        *Powerline-symbols-compatible*

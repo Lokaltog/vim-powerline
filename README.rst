@@ -28,13 +28,6 @@ instructions.
 .. _Pathogen: https://github.com/tpope/vim-pathogen
 .. _Vundle: https://github.com/gmarik/vundle
 
-Important information about caching
------------------------------------
-
-Powerline caches the statuslines by default to improve startup time. 
-**Please remember to clear the cache after changing any settings!** Run 
-``:PowerlineClearCache`` and restart vim to clear the cache.
-
 Screenshots
 -----------
 
@@ -91,7 +84,7 @@ I'm unable to patch my font, what should I do?
 The Syntastic/Fugitive statusline flags don't work!
     These flags should work without any configuration. If you installed 
     either plugin after Powerline, you'll have to clear the cache using 
-    ``:PowerlineClearCache``.
+    ``:PowerlineClearCache`` and restart vim.
 
 The colors are weird in the default OS X Terminal app!
     The default OS X Terminal app is known to have some issues with the 
