@@ -15,7 +15,7 @@
 		\   'theme'        : 'distinguished'
 		\ , 'colorscheme'  : 'distinguished'
 		\ , 'symbols'      : 'compatible'
-		\ , 'cache_file'   : (exists('$TEMP') && ! empty($TEMP) ? $TEMP : '/tmp') . '/Powerline.cache'
+		\ , 'cache_file'   : simplify(expand('<sfile>:p:h') . '/../Powerline.cache')
 		\ , 'cache_enabled': 1
 		\ })
 

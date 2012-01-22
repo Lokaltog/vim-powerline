@@ -3,6 +3,9 @@
 " Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
 " Source repository: https://github.com/Lokaltog/vim-powerline
 
+" Commands {{{
+	command! PowerlineClearCache call Pl#ClearCache()
+" }}}
 " Script variables {{{
 	let g:Pl#OLD_STL = ''
 	let g:Pl#THEME = []
@@ -12,7 +15,7 @@
 	let s:CACHE_REVISION = 2
 " }}}
 " Script initialization {{{
-	function! Pl#LoadCached() " {{{
+	function! Pl#LoadCache() " {{{
 		if filereadable(g:Powerline_cache_file) && g:Powerline_cache_enabled
 			exec 'source' escape(g:Powerline_cache_file, ' \')
 
@@ -33,18 +36,21 @@
 
 		return 0
 	endfunction " }}}
-	function! Pl#Load(...) " {{{
-		if a:0 && a:1 == 1
-			" Force cache reloading by deleting cache file
+	function! Pl#ClearCache() " {{{
+		if filereadable(g:Powerline_cache_file)
+			" Delete the cache file
 			call delete(g:Powerline_cache_file)
 		endif
 
+		echo 'Powerline cache cleared. Please restart vim for the changes to take effect.'
+	endfunction " }}}
+	function! Pl#Load() " {{{
 		if empty(g:Pl#OLD_STL)
 			" Store old statusline
 			let g:Pl#OLD_STL = &statusline
 		endif
 
-		if ! Pl#LoadCached()
+		if ! Pl#LoadCache()
 			try
 				" Autoload the theme dict first
 				let raw_theme = g:Powerline#Themes#{g:Powerline_theme}#theme

@@ -31,11 +31,9 @@ instructions.
 Important information about caching
 -----------------------------------
 
-Powerline caches the statuslines in ``/tmp/Powerline.cache`` or 
-``$TEMP/Powerline.cache``. **Please remember to delete the cache file after 
-updating Powerline, after modifying your statusline theme or after changing 
-the font settings!** See ``:help Powerline_cache_file`` for more info about 
-the cache file.
+Powerline caches the statuslines by default to improve startup time. 
+**Please remember to clear the cache after changing any settings!** Run 
+``:PowerlineClearCache`` and restart vim to clear the cache.
 
 Screenshots
 -----------
@@ -76,7 +74,7 @@ I can't see the fancy symbols, what's wrong?
     ``vimrc`` file. The settings may be loaded too late if you have this in 
     ``gvimrc``, so always put this in your ``vimrc``.
 
-    Delete the cache file (default location is ``/tmp/Powerline.cache``).
+    Clear the cache using ``:PowerlineClearCache`` and restart vim.
 
     Make sure that you've configured gvim or your terminal emulator to use 
     a patched font.
@@ -92,8 +90,8 @@ I'm unable to patch my font, what should I do?
 
 The Syntastic/Fugitive statusline flags don't work!
     These flags should work without any configuration. If you installed 
-    either plugin after Powerline, you'll have to delete the Powerline cache 
-    file.
+    either plugin after Powerline, you'll have to clear the cache using 
+    ``:PowerlineClearCache``.
 
 The colors are weird in the default OS X Terminal app!
     The default OS X Terminal app is known to have some issues with the 

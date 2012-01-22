@@ -81,19 +81,19 @@ file.
 ------------------------------------------------------------------------------
 4.1 Powerline_cache_file                                *Powerline_cache_file*
 
-By default Powerline caches all the statuslines and colors in a temporary 
-cache file. It's recommended that you enable the cache, as this dramatically 
-improves vim startup time after the cache file has been generated (the plugin 
-usually loads within ~100ms without the cache and ~1ms with the cache).
+By default Powerline caches all the statuslines and colors in a cache file in 
+the plugin's directory (or the vim directory, depending on the installation 
+method used).
 
-Note: The default cache location for Linux/OS X users is in /tmp, which is 
-emptied when rebooting. This causes the cache file to be regenerated the first 
-time vim is run after bootup, and may cause a slight delay. You may put the 
-cache file in a permanent location (e.g. in $HOME/.vim) if you want to avoid 
-this.
+It's recommended that you enable the cache, as this dramatically improves vim 
+startup time after the cache file has been generated (the plugin usually loads 
+within ~100ms without the cache and ~1ms with the cache).
 
-Defaults: "/tmp/Powerline.cache" on Linux/OS X
-          "$TEMP/Powerline.cache" on Windows
+Note: You need to clear the cache after changing any Powerline settings. Run 
+":PowerlineClearCache" to clear the cache and restart vim for the changes to 
+take effect.
+
+Defaults: "<plugin directory>/Powerline.cache"
 
 ------------------------------------------------------------------------------
 4.2 Powerline_cache_enabled                          *Powerline_cache_enabled*
