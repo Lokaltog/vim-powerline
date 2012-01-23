@@ -11,15 +11,15 @@
 	let g:Powerline_loaded = 1
 " }}}
 " Set default options {{{
-	for [key, value] in items({
+	for [s:key, s:value] in items({
 		\   'theme'        : 'distinguished'
 		\ , 'colorscheme'  : 'distinguished'
 		\ , 'symbols'      : 'compatible'
 		\ , 'cache_enabled': 1
 		\ })
 
-		if ! exists('g:Powerline_' . key)
-			exec printf('let g:Powerline_%s = %s', key, string(value))
+		if ! exists('g:Powerline_' . s:key)
+			exec printf('let g:Powerline_%s = %s', s:key, string(s:value))
 		endif
 	endfor
 
