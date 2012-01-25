@@ -92,6 +92,8 @@
 			let mode = 'N' " Normal (non-current)
 		elseif mode =~# '\v(v|V|)'
 			let mode = 'v' " Visual mode
+		elseif mode =~# '\v(s|S|)'
+			let mode = 's' " Select mode
 		elseif mode =~# '\vi'
 			let mode = 'i' " Insert mode
 		elseif mode =~# '\v(R|Rv)'

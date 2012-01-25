@@ -1,6 +1,6 @@
 let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Colorscheme#HiSegment(['SPLIT'],                               Pl#Hi#Create(Pl#Hi#Cterm(  0, 236)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0, 233)        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(  0,  24)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['mode_indicator'],                      Pl#Hi#Create(Pl#Hi#Cterm( 22, 148), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 231), 'bold'), 'v': Pl#Hi#Create(Pl#Hi#Cterm( 88, 208), 'bold'), 'r': Pl#Hi#Create(Pl#Hi#Cterm(231, 160), 'bold') } ),
+	\ Pl#Colorscheme#HiSegment(['mode_indicator'],                      Pl#Hi#Create(Pl#Hi#Cterm( 22, 148), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 231), 'bold'), 'v': Pl#Hi#Create(Pl#Hi#Cterm( 88, 208), 'bold'), 'r': Pl#Hi#Create(Pl#Hi#Cterm(231, 160), 'bold'), 's': Pl#Hi#Create(Pl#Hi#Cterm(231, 141), 'bold') } ),
 	\ Pl#Colorscheme#HiSegment(['branch',
 	\                           'scrollpercent',
 	\                           'raw',

@@ -10,6 +10,15 @@ function! Powerline#Functions#GetMode() " {{{
 		elseif mode ==# ''
 			let mode = 'V·BLOCK'
 		endif
+	elseif mode =~# '\v(s|S|)'
+		" Select mode
+		if mode ==# 's'
+			let mode = 'SELECT'
+		elseif mode ==# 'S'
+			let mode = 'S·LINE'
+		elseif mode ==# ''
+			let mode = 'S·BLOCK'
+		endif
 	elseif mode =~# '\vi'
 		let mode = 'INSERT' " Insert mode
 	elseif mode =~# '\v(R|Rv)'

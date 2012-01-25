@@ -43,11 +43,12 @@ let s:SOFT_DIVIDER = 1
 
 function! Pl#Parser#GetStatusline(segments) " {{{
 	let statusline = {
-		\ 'n': '',
-		\ 'N': '',
-		\ 'v': '',
-		\ 'i': '',
-		\ 'r': ''
+		\   'n': ''
+		\ , 'N': ''
+		\ , 'v': ''
+		\ , 'i': ''
+		\ , 'r': ''
+		\ , 's': ''
 		\ }
 
 	" Run through the different modes and create the statuslines

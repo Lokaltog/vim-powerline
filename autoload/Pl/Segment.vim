@@ -1,4 +1,4 @@
-let s:default_modes = ['n', 'N', 'v', 'i', 'r']
+let s:default_modes = ['n', 'N', 'v', 'i', 'r', 's']
 
 function! s:CheckConditions(params) " {{{
 	" Check conditions for a segment/group
