@@ -10,6 +10,7 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Colorscheme#HiSegment(['static_str'],                          Pl#Hi#Create(Pl#Hi#Cterm(231, 240)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235)        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(231,  31)        ), } ),
 	\ Pl#Colorscheme#HiSegment(['fileinfo.flags'],                      Pl#Hi#Create(Pl#Hi#Cterm(196     ), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 88     )        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(196     ), 'bold'), } ),
 	\ Pl#Colorscheme#HiSegment(['current_function',
+	\                           'virtualenv',
 	\                           'fileformat',
 	\                           'fileencoding',
 	\                           'pwd',

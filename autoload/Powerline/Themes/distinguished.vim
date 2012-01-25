@@ -2,6 +2,7 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'mode_indicator'
 		\ , 'fugitive:branch'
+		\ , 'virtualenv:virtualenv'
 		\ , 'fileinfo'
 		\ , 'syntastic:errors'
 		\ , Pl#Segment#Truncate()
