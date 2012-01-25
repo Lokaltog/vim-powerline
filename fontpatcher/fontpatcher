@@ -23,8 +23,17 @@ import argparse
 import os
 import sys
 
-import fontforge
-import psMat
+try:
+	import fontforge
+	import psMat
+except ImportError:
+	if sys.version_info.major > 2:
+		print("You must use Python 2 to run this script.")
+	else:
+		print("You must install fontforge to run this script.")
+
+	sys.exit(1)
+
 
 # Handle command-line arguments
 parser = argparse.ArgumentParser(description='Font patcher for Powerline. Creates dividers and symbols in FontForge-compatible font files. Requires FontForge with Python bindings. Stores glyphs in the U+2B80-U+2BFF range ("Miscellaneous symbols and arrows"). Stores the patched font as a new, renamed font file by default.')
