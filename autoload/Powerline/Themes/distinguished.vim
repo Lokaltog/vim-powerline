@@ -7,6 +7,7 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Truncate()
 		\ , 'cfi:current_function'
 		\ , Pl#Segment#Split()
+		\ , 'charcode'
 		\ , 'fileformat'
 		\ , 'fileencoding'
 		\ , 'filetype'
