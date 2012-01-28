@@ -85,7 +85,7 @@
 	endfunction " }}}
 " }}}
 " Statusline updater {{{
-	function! Pl#Statusline(statuslines, current) " {{{
+	function! Pl#Statusline(statusline, current) " {{{
 		let mode = mode()
 
 		if ! a:current
@@ -103,7 +103,7 @@
 			let mode = 'n' " Normal (current)
 		endif
 
-		return a:statuslines[mode]
+		return g:Pl#THEME[a:statusline].mode_statuslines[mode]
 	endfunction " }}}
 	function! Pl#UpdateStatusline(current) " {{{
 		if empty(g:Pl#THEME)
@@ -111,10 +111,10 @@
 			call Pl#Load()
 		endif
 
-		for buffer_statusline in g:Pl#THEME
-			if Pl#Match#Validate(buffer_statusline.matches)
+		for i in range(0, len(g:Pl#THEME) - 1)
+			if Pl#Match#Validate(g:Pl#THEME[i].matches)
 				" Update window-local statusline
-				let &l:statusline = '%!Pl#Statusline('. string(buffer_statusline.mode_statuslines) .','. a:current .')'
+				let &l:statusline = '%!Pl#Statusline('. i .','. a:current .')'
 			endif
 		endfor
 	endfunction " }}}
