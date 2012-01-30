@@ -43,6 +43,14 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , 'scrollpercent'
 	\ ),
 	\
+	\ Pl#Theme#Buffer('ft_vimpager'
+		\ , ['static_str.name', 'Pager']
+		\ , 'filename'
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+		\ , 'scrollpercent'
+	\ ),
+	\
 	\ Pl#Theme#Buffer('lustyexplorer'
 		\ , ['static_str.name', 'LustyExplorer']
 		\ , ['static_str.buffer', 'Buffer list']
