@@ -16,6 +16,7 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\                           'filetype',
 	\                           'rvm:string',
 	\                           'rvm:statusline',
+	\                           'virtualenv:statusline',
 	\                           'charcode'],                            Pl#Hi#Create(Pl#Hi#Cterm(247, 236)        ), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(117,  24)        ), } ),
 	\ Pl#Colorscheme#HiSegment(['lineinfo'],                            Pl#Hi#Create(Pl#Hi#Cterm(236, 252), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'), 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 117), 'bold'), } ),
 	\ Pl#Colorscheme#HiSegment(['errors'],                              Pl#Hi#Create(Pl#Hi#Cterm(214, 236), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(214,  24), 'bold'), } ),

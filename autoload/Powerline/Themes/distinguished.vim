@@ -8,6 +8,7 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , 'cfi:current_function'
 		\ , Pl#Segment#Split()
 		\ , 'rvm:string'
+		\ , 'virtualenv:statusline'
 		\ , 'fileformat'
 		\ , 'fileencoding'
 		\ , 'filetype'
