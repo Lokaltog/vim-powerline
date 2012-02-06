@@ -36,11 +36,11 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
 	\ ),
-    	\ Pl#Theme#Buffer('ft_nerdtree'
-        	\ , 'filename'
-        	\ , Pl#Segment#Truncate()
-        	\ , Pl#Segment#Split()
-    	\),
+	\ Pl#Theme#Buffer('ft_nerdtree'
+		\ , 'filename'
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\),
 	\
 	\ Pl#Theme#Buffer('ft_help'
 		\ , ['static_str.name', 'Help']
