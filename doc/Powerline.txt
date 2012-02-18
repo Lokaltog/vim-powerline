@@ -20,6 +20,7 @@ CONTENTS                                                  *Powerline-contents*
        3.1 Recommended settings ........... |Powerline-recommended-settings|
     4. Configuration ...................... |Powerline-configuration|
        4.1 Powerline_cache_file ........... |Powerline_cache_file|
+           4.1.1 Clearing the cache ....... |:PowerlineClearCache|
        4.2 Powerline_cache_enabled ........ |Powerline_cache_enabled|
        4.3 Powerline_symbols .............. |Powerline_symbols|
            4.3.1 Compatible symbols ....... |Powerline-symbols-compatible|
@@ -28,8 +29,12 @@ CONTENTS                                                  *Powerline-contents*
        4.5 Powerline_colorscheme .......... |Powerline_colorscheme|
     5. Fonts .............................. |Powerline-fonts|
     6. Customization ...................... |Powerline-customization|
-       6.1 Basics ......................... |Powerline-cust-basics|
-       6.2 Functions ...................... |Powerline-cust-functions|
+       6.1 Basic customization ............ |Powerline-basic-customization|
+       6.2 Advanced customization ......... |Powerline-advanced-customization|
+           6.2.1 Colorschemes ............. |Powerline-cust-colorschemes|
+           6.2.2 Functions ................ |Powerline-cust-functions|
+           6.2.3 Segments ................. |Powerline-cust-segments|
+           6.2.4 Themes ................... |Powerline-cust-themes|
     7. License ............................ |Powerline-license|
     8. Known issues ....................... |Powerline-known-issues|
     9. Contributing ....................... |Powerline-contributing|
@@ -98,6 +103,15 @@ deleted.
 Defaults: "<plugin_directory>/Powerline_<theme>_<colorscheme>_<symbols>.cache"
 
 ------------------------------------------------------------------------------
+4.1.1 Clearing the cache                                *:PowerlineClearCache*
+
+Powerline provides a command to easily clear the cache after changing your 
+settings or updating your theme. Simply run the following command to clear 
+your cache, and restart vim afterwards: >
+
+    :PowerlineClearCache
+<
+------------------------------------------------------------------------------
 4.2 Powerline_cache_enabled                          *Powerline_cache_enabled*
 
 It's possible to disable statusline caching by setting this option to 0. This 
@@ -116,7 +130,8 @@ are currently three available options: "compatible", "unicode" and "fancy".
     unicode        Simulates icons and arrows using similar unicode glyphs.
     fancy          Custom icons and arrows. Requires a patched font.
 
-Symbols can be inserted into statuslines by using the following variables:
+Symbols can be inserted into statuslines by using the following variables 
+(just insert the variables as text in your segments):
 
     VARIABLE       DESCRIPTION ~
     $BRANCH        Inserts a branch symbol
@@ -143,12 +158,18 @@ adding the required symbols to any outline font and some bitmap fonts, see
 ------------------------------------------------------------------------------
 4.4 Powerline_theme                                          *Powerline_theme*
 
-TODO
+This option defines the theme Powerline uses. The available themes are located 
+in autoload/Powerline/Themes/.
+
+Default: "distinguished"
 
 ------------------------------------------------------------------------------
 4.5 Powerline_colorscheme                              *Powerline_colorscheme*
 
-TODO
+This option defines the colorscheme Powerline uses. The available colorschemes 
+are located in autoload/Powerline/Colorschemes/.
+
+Default: "distinguished"
 
 ==============================================================================
 5. Fonts                                                     *Powerline-fonts*
@@ -158,13 +179,115 @@ TODO
 ==============================================================================
 6. Customization                                     *Powerline-customization*
 
+There are currently two ways of customizing Powerline: Basic customization 
+using a couple of functions to insert/remove existing segments into the 
+statusline, and advanced customization using your own autoload files. The 
+customization features of Powerline allows you to create your own statuslines 
+without ever touching the original source code.
+
 ------------------------------------------------------------------------------
-6.1 Basics                                             *Powerline-cust-basics*
+6.1 Basic customization                        *Powerline-basic-customization*
+
+Powerline provides the following functions to alter the default statusline 
+look. These functions should be called from your |vimrc| file or another file 
+which is sourced at vim startup.
+
+Note: These functions are currently applied to all statuslines, so if you 
+insert a segment after a segment which is present in many statuslines (e.g.  
+the "filename" segment), all the statuslines will have the inserted segment.  
+This behavior may be changed in a future version of Powerline.
+
+Note: Remember to clear your cache with |:PowerlineClearCache| after changing 
+your statusline!
+
+Example: >
+
+    " Insert the charcode segment after the filetype segment
+    call Pl#Theme#InsertSegment('charcode', 'after', 'filetype')
+
+    " Replace the scrollpercent segment with the charcode segment
+    call Pl#Theme#ReplaceSegment('scrollpercent', 'fileinfo')
+<
+                                                      *Pl#Theme#InsertSegment*
+Pl#Theme#InsertSegment({newsegment}, {location}, {targetsegment})
+
+This function inserts {newsegment} before or after {targetsegment}. The 
+{location} parameter specifies the location of the new segment, valid values 
+are "before" and "after". You can see all the available segments in 
+autoload/Powerline/Segments.vim and the files specified in 
+|Powerline-cust-segments|.
+
+Pl#Theme#RemoveSegment({targetsegment})               *Pl#Theme#RemoveSegment*
+
+This function removes the {targetsegment} segment entirely.
+
+Pl#Theme#ReplaceSegment({oldsegment}, {newsegment})  *Pl#Theme#ReplaceSegment*
+
+This function replaces {oldsegment} with {newsegment}.
+
+------------------------------------------------------------------------------
+6.2 Advanced customization                  *Powerline-advanced-customization*
+
+Because Powerline utilizes vim's autoload functionality, you can easily create 
+your own segments, themes, functions and colorschemes without touching the 
+original source code. This is a bit more complex than using the utility 
+functions, but it allows you to do a lot more with your statusline.
+
+Your custom autoload files should be stored in your |runtimepath| (usually in 
+"~/.vim/autoload/Powerline/*").
+
+Note: Remember to clear your cache with |:PowerlineClearCache| after changing 
+your statusline!
+
+6.2.1 Colorschemes                               *Powerline-cust-colorschemes*
+
+Colorschemes should be stored as separate files in 
+{runtimepath}/autoload/Powerline/Colorschemes/.
+
+SYNTAX ~
 
 TODO
 
-------------------------------------------------------------------------------
-6.2 Functions                                       *Powerline-cust-functions*
+EXAMPLE ~
+
+TODO
+
+6.2.2 Functions                                     *Powerline-cust-functions*
+
+Functions should be stored as separate files in 
+{runtimepath}/autoload/Powerline/Functions/.
+
+SYNTAX ~
+
+TODO
+
+EXAMPLE ~
+
+TODO
+
+6.2.3 Segments                                       *Powerline-cust-segments*
+
+Segments should be stored as separate files in 
+{runtimepath}/autoload/Powerline/Segments/.
+
+SYNTAX ~
+
+TODO
+
+EXAMPLE ~
+
+TODO
+
+6.2.4 Themes                                           *Powerline-cust-themes*
+
+Themes should be stored as separate files in 
+{runtimepath}/autoload/Powerline/Themes/.
+
+SYNTAX ~
+
+TODO
+
+EXAMPLE ~
 
 TODO
 
