@@ -43,11 +43,6 @@ function! Powerline#Functions#GetFilesize() " {{{
 		return (bytes / 1024) . 'kB'
 	endif
 endfunction "}}}
-function! Powerline#Functions#GetPwd() "{{{
-	let pwd = substitute(getcwd(), expand("$HOME"), "~", "g")
-
-	return pwd
-endfunction " }}}
 function! Powerline#Functions#GetCharCode() " {{{
 	" Get the output of :ascii
 	redir => ascii
