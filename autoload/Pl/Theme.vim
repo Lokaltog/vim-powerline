@@ -14,12 +14,16 @@ function! Pl#Theme#Create(...) " {{{
 
 	return buffer_segments
 endfunction " }}}
+function! Pl#Theme#Callback(name, expr) " {{{
+	return ['callback', a:name, a:expr]
+endfunction " }}}
 function! Pl#Theme#Buffer(ns, ...) " {{{
 	let segments = []
 	let ns = ! empty(a:ns) ? a:ns .':' : ''
 
 	" Match namespace parameter by default
 	let matches = Pl#Match#Any(a:ns)
+	let callback = []
 
 	let args = a:000
 	let args = Pl#Mod#ApplySegmentMods(args)
@@ -31,6 +35,14 @@ function! Pl#Theme#Buffer(ns, ...) " {{{
 				" Match item, overrides default namespace match
 				let matches = item
 
+				unlet! item
+				continue
+			elseif item[0] == 'callback'
+				" Store the item as a callback expression
+				let matches = ['match', 'none']
+				let callback = [a:ns, item[1], item[2]]
+
+				unlet! item
 				continue
 			endif
 
@@ -51,8 +63,9 @@ function! Pl#Theme#Buffer(ns, ...) " {{{
 	endfor
 
 	return {
-		\ 'matches': matches,
-		\ 'segments': segments
+		\   'matches': matches
+		\ , 'callback': callback
+		\ , 'segments': segments
 		\ }
 endfunction " }}}
 function! Pl#Theme#InsertSegment(new_segment, where, target_segment) " {{{

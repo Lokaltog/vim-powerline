@@ -19,15 +19,19 @@ function! Pl#Match#Any(...) " {{{
 
 	return ['match', 'any', matches]
 endfunction " }}}
-function! Pl#Match#Validate(match) " {{{
-	let [m, match, matches] = a:match
+function! Pl#Match#Validate(theme) " {{{
+	let match = a:theme.matches[1]
 
-	if ! len(matches)
-		" Empty match array matches everything
-		return 1
-	endif
+	if match == 'none'
+		return 0
+	elseif match == 'any'
+		let matches = a:theme.matches[2]
 
-	if match == 'any'
+		if ! len(matches)
+			" Empty match array matches everything
+			return 1
+		endif
+
 		for [eval, re] in matches
 			if match(eval(eval), '\v'. re) != -1
 				return 1
