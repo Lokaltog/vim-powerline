@@ -104,5 +104,11 @@ let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
 		\ , 'pwd'
+	\ ),
+	\
+	\ Pl#Theme#Buffer('nerdtree'
+		\ , ['raw.name', '%{expand("%:p:h")}']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
 	\ )
 \ )

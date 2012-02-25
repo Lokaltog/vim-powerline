@@ -9,4 +9,5 @@ let g:Powerline#Matches#matches = {
 	\ 'lustyexplorer'   : Pl#Match#Add('bufname("%")', '\[LustyExplorer-Buffers\]'),
 	\ 'minibufexplorer' : Pl#Match#Add('bufname("%")', '\-MiniBufExplorer\-'),
 	\ 'tagbar'          : Pl#Match#Add('&ft'         , 'tagbar'),
+	\ 'nerdtree'        : Pl#Match#Add('&ft'         , 'nerdtree'),
 \ }

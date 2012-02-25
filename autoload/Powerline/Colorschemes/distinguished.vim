@@ -35,9 +35,11 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\                           'lustyexplorer:SPLIT',
 	\                           'minibufexplorer:SPLIT'],               Pl#Hi#Create(Pl#Hi#Cterm(  0,  88)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  52)        ), } ),
 	\
-	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.name'],              Pl#Hi#Create(Pl#Hi#Cterm(231,  70), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22), 'bold'), } ),
+	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.name',
+	\                           'nerdtree:raw.name'],                   Pl#Hi#Create(Pl#Hi#Cterm(231,  70), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22), 'bold'), } ),
 	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.buffer'],            Pl#Hi#Create(Pl#Hi#Cterm(148,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['tagbar:SPLIT'],                        Pl#Hi#Create(Pl#Hi#Cterm(  0,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  22)        ), } ),
+	\ Pl#Colorscheme#HiSegment(['tagbar:SPLIT',
+	\                           'nerdtree:SPLIT'],                      Pl#Hi#Create(Pl#Hi#Cterm(  0,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  22)        ), } ),
 	\
 	\ Pl#Colorscheme#HiSegment(['ctrlp:focus',
 	\                           'ctrlp:byfname'],                       Pl#Hi#Create(Pl#Hi#Cterm(189,  55)        ) ),
