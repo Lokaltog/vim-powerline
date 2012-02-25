@@ -38,12 +38,12 @@
 
 		" Reload statuslines when changing color scheme
 		au ColorScheme *
-			\ call Pl#Load() | redraw
+			\ call Pl#Load()
 
 		au BufEnter,WinEnter,FileType,BufUnload *
-			\ call Pl#UpdateStatusline(1) | redraw
+			\ call Pl#UpdateStatusline(1)
 
 		au BufLeave,WinLeave *
-			\ call Pl#UpdateStatusline(0) | redraw
+			\ call Pl#UpdateStatusline(0)
 	augroup END
 " }}}
