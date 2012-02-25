@@ -38,4 +38,14 @@ let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.name'],              Pl#Hi#Create(Pl#Hi#Cterm(231,  70), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22), 'bold'), } ),
 	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.buffer'],            Pl#Hi#Create(Pl#Hi#Cterm(148,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22)        ), } ),
 	\ Pl#Colorscheme#HiSegment(['tagbar:SPLIT'],                        Pl#Hi#Create(Pl#Hi#Cterm(  0,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  22)        ), } ),
+	\
+	\ Pl#Colorscheme#HiSegment(['ctrlp:focus',
+	\                           'ctrlp:byfname'],                       Pl#Hi#Create(Pl#Hi#Cterm(189,  55)        ) ),
+	\ Pl#Colorscheme#HiSegment(['ctrlp:prev',
+	\                           'ctrlp:next',
+	\                           'ctrlp:pwd'],                           Pl#Hi#Create(Pl#Hi#Cterm(231,  98)        ) ),
+	\ Pl#Colorscheme#HiSegment(['ctrlp:item'],                          Pl#Hi#Create(Pl#Hi#Cterm( 55, 231), 'bold') ),
+	\ Pl#Colorscheme#HiSegment(['ctrlp:marked'],                        Pl#Hi#Create(Pl#Hi#Cterm(196,  55), 'bold') ),
+	\ Pl#Colorscheme#HiSegment(['ctrlp:count'],                         Pl#Hi#Create(Pl#Hi#Cterm( 55, 231)        ) ),
+	\ Pl#Colorscheme#HiSegment(['ctrlp:SPLIT'],                         Pl#Hi#Create(Pl#Hi#Cterm(231,  55)        ) ),
 \ ])
