@@ -64,7 +64,7 @@
 				" Autoload the theme dict first
 				let raw_theme = g:Powerline#Themes#{g:Powerline_theme}#theme
 			catch
-				echoe 'Invalid Powerline theme! Please check your theme and colorscheme settings.'
+				echom 'Invalid Powerline theme! Please check your theme and colorscheme settings.'
 
 				return
 			endtry

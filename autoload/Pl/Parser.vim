@@ -171,7 +171,7 @@ function! s:ParseSegments(mode, side, segments, ...) " {{{
 				let mode_colors = get(colors, mode, get(colors, 'n', {}))
 
 				if empty(mode_colors)
-					echoe 'Segment doesn''t have any colors! NS: "'. seg_curr.ns .'" SEG: "'. seg_curr.name .'"'
+					echom 'Segment doesn''t have any colors! NS: "'. seg_curr.ns .'" SEG: "'. seg_curr.name .'"'
 
 					continue
 				endif

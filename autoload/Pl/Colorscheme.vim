@@ -22,7 +22,7 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 	try
 		let colorscheme = g:Powerline#Colorschemes#{a:colorscheme}#colorscheme
 	catch
-		echoe 'Color scheme "'. a:colorscheme .'" doesn''t exist!'
+		echom 'Color scheme "'. a:colorscheme .'" doesn''t exist!'
 
 		return
 	endtry
