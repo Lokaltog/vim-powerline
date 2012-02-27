@@ -313,6 +313,8 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 
 			let div_colors['ctermbg'] = get(cmp_colors, 'ctermbg')
 			let div_colors['guibg']   = get(cmp_colors, 'guibg')
+
+			let div_colors['attr']    = 'NONE'
 		endif
 	endif
 
