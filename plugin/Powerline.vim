@@ -12,8 +12,8 @@
 " }}}
 " Set default options {{{
 	for [s:key, s:value] in items({
-		\   'theme'        : 'distinguished'
-		\ , 'colorscheme'  : 'distinguished'
+		\   'theme'        : 'default'
+		\ , 'colorscheme'  : 'default'
 		\ , 'symbols'      : 'compatible'
 		\ , 'cache_enabled': 1
 		\ })

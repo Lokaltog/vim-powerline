@@ -1,4 +1,4 @@
-let g:Powerline#Themes#distinguished#theme = Pl#Theme#Create(
+let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'mode_indicator'
 		\ , 'fugitive:branch'

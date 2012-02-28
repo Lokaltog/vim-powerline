@@ -161,7 +161,7 @@ adding the required symbols to any outline font and some bitmap fonts, see
 This option defines the theme Powerline uses. The available themes are located 
 in autoload/Powerline/Themes/.
 
-Default: "distinguished"
+Default: "default"
 
 ------------------------------------------------------------------------------
 4.5 Powerline_colorscheme                              *Powerline_colorscheme*
@@ -169,7 +169,7 @@ Default: "distinguished"
 This option defines the colorscheme Powerline uses. The available colorschemes 
 are located in autoload/Powerline/Colorschemes/.
 
-Default: "distinguished"
+Default: "default"
 
 ==============================================================================
 5. Fonts                                                     *Powerline-fonts*
