@@ -3,9 +3,6 @@
 " Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
 " Source repository: https://github.com/Lokaltog/vim-powerline
 
-" Commands {{{
-	command! PowerlineClearCache call Pl#ClearCache()
-" }}}
 " Script variables {{{
 	let g:Pl#OLD_STL = ''
 	let g:Pl#THEME = []
@@ -52,6 +49,24 @@
 		endif
 
 		echo 'Powerline cache cleared. Please restart vim for the changes to take effect.'
+	endfunction " }}}
+	function! Pl#ReloadColorscheme() " {{{
+		call Pl#ClearCache()
+
+		" The colorscheme and theme files must be manually sourced because
+		" vim won't reload previously autoloaded files
+		"
+		" This is a bit hackish, but it works
+		unlet! g:Powerline#Colorschemes#{g:Powerline_colorscheme}#colorscheme
+		exec "source" split(globpath(&rtp, 'autoload/Powerline/Colorschemes/'. g:Powerline_colorscheme .'.vim', 1), '\n')[0]
+
+		unlet! g:Powerline#Themes#{g:Powerline_theme}#theme
+		exec "source" split(globpath(&rtp, 'autoload/Powerline/Themes/'. g:Powerline_theme .'.vim', 1), '\n')[0]
+
+		let g:Pl#THEME = []
+		let g:Pl#HL = []
+
+		call Pl#Load()
 	endfunction " }}}
 	function! Pl#Load() " {{{
 		if empty(g:Pl#OLD_STL)
