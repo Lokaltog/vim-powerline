@@ -143,19 +143,3 @@ function! Pl#Colorscheme#Apply(colorscheme, buffer_segments) " {{{
 	" array consiting of a statusline for each mode, with generated highlighting groups and dividers.
 	return buffer_segments
 endfunction " }}}
-function! Pl#Colorscheme#HiSegment(segments, normal, ...) " {{{
-	let mode_hi_dict = {
-		\ 	'n': a:normal
-		\ }
-
-	if a:0 && type(a:1) == type({})
-		for [modes, hl] in items(a:1)
-			for mode in split(modes, '\zs')
-				let mode_hi_dict[mode] = hl
-			endfor
-		endfor
-	endif
-
-	" a:segments may be either a string or a list of strings to use this highlighting
-	return [a:segments, mode_hi_dict]
-endfunction " }}}

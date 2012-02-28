@@ -1,53 +1,156 @@
+call Pl#Hi#Allocate({
+	\ 'black'          : 16,
+	\ 'white'          : 231,
+	\
+	\ 'darkestgreen'   : 22,
+	\ 'darkgreen'      : 28,
+	\ 'mediumgreen'    : 70,
+	\ 'brightgreen'    : 148,
+	\
+	\ 'darkestcyan'    : 23,
+	\ 'mediumcyan'     : 117,
+	\
+	\ 'darkestblue'    : 24,
+	\ 'darkblue'       : 31,
+	\
+	\ 'darkestred'     : 52,
+	\ 'darkred'        : 88,
+	\ 'mediumred'      : 124,
+	\ 'brightred'      : 160,
+	\ 'brightestred'   : 196,
+	\
+	\ 'darkestpurple'  : 55,
+	\ 'mediumpurple'   : 98,
+	\ 'brightpurple'   : 189,
+	\
+	\ 'brightorange'   : 208,
+	\ 'brightestorange': 214,
+	\
+	\ 'gray0'          : 233,
+	\ 'gray1'          : 235,
+	\ 'gray2'          : 236,
+	\ 'gray3'          : 239,
+	\ 'gray4'          : 240,
+	\ 'gray5'          : 241,
+	\ 'gray6'          : 244,
+	\ 'gray7'          : 245,
+	\ 'gray8'          : 247,
+	\ 'gray9'          : 250,
+	\ 'gray10'         : 252,
+	\ })
+
 let g:Powerline#Colorschemes#distinguished#colorscheme = Pl#Colorscheme#Init([
-	\ Pl#Colorscheme#HiSegment(['SPLIT'],                               Pl#Hi#Create(Pl#Hi#Cterm(  0, 236)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0, 233)        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(  0,  24)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['mode_indicator'],                      Pl#Hi#Create(Pl#Hi#Cterm( 22, 148), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 231), 'bold'), 'v': Pl#Hi#Create(Pl#Hi#Cterm( 88, 208), 'bold'), 'r': Pl#Hi#Create(Pl#Hi#Cterm(231, 160), 'bold'), 's': Pl#Hi#Create(Pl#Hi#Cterm(231, 141), 'bold') } ),
-	\ Pl#Colorscheme#HiSegment(['branch',
-	\                           'scrollpercent',
-	\                           'raw',
-	\                           'filesize']     ,                       Pl#Hi#Create(Pl#Hi#Cterm(250, 240)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(239, 235)        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(117,  31)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['fileinfo',
-	\                           'filename'],                            Pl#Hi#Create(Pl#Hi#Cterm(231, 240), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'), 'i': Pl#Hi#Create(Pl#Hi#Cterm(231,  31), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['static_str'],                          Pl#Hi#Create(Pl#Hi#Cterm(231, 240)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235)        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(231,  31)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['fileinfo.flags'],                      Pl#Hi#Create(Pl#Hi#Cterm(196     ), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 88     )        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm(196     ), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['current_function',
-	\                           'fileformat',
-	\                           'fileencoding',
-	\                           'pwd',
-	\                           'filetype',
-	\                           'rvm:string',
-	\                           'rvm:statusline',
-	\                           'virtualenv:statusline',
-	\                           'charcode',
-	\                           'currhigroup'],                         Pl#Hi#Create(Pl#Hi#Cterm(247, 236)        ), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(117,  24)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['lineinfo'],                            Pl#Hi#Create(Pl#Hi#Cterm(236, 252), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(245, 235), 'bold'), 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23, 117), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['errors'],                              Pl#Hi#Create(Pl#Hi#Cterm(214, 236), 'bold'), {                                                   'i': Pl#Hi#Create(Pl#Hi#Cterm(214,  24), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['lineinfo.line.tot'],                   Pl#Hi#Create(Pl#Hi#Cterm(244     )        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(241     )        ), 'i': Pl#Hi#Create(Pl#Hi#Cterm( 23     )        ), } ),
+	\ Pl#Hi#Segments(['SPLIT'], {
+		\ 'n': ['white', 'gray2'],
+		\ 'N': ['white', 'gray0'],
+		\ 'i': ['white', 'darkestblue'],
+		\ }),
 	\
-	\ Pl#Colorscheme#HiSegment(['gundo:static_str.name',
-	\                           'command_t:static_str.name'],           Pl#Hi#Create(Pl#Hi#Cterm(231, 124), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(160,  52), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['gundo:static_str.buffer',
-	\                           'command_t:raw.line'],                  Pl#Hi#Create(Pl#Hi#Cterm(231,  88)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(160,  52)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['gundo:SPLIT',
-	\                           'command_t:SPLIT'],                     Pl#Hi#Create(Pl#Hi#Cterm(  0,  88)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  52)        ), } ),
+	\ Pl#Hi#Segments(['mode_indicator'], {
+		\ 'n': ['darkestgreen', 'brightgreen', ['bold']],
+		\ 'i': ['darkestcyan', 'white', ['bold']],
+		\ 'v': ['darkred', 'brightorange', ['bold']],
+		\ 'r': ['white', 'brightred', ['bold']],
+		\ 's': ['white', 'gray5', ['bold']],
+		\ }),
 	\
-	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.name',
-	\                           'lustyexplorer:static_str.name',
-	\                           'minibufexplorer.static_str.name',
-	\                           'nerdtree:raw.name'],                   Pl#Hi#Create(Pl#Hi#Cterm(231,  70), 'bold'), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22), 'bold'), } ),
-	\ Pl#Colorscheme#HiSegment(['tagbar:static_str.buffer',
-	\                           'lustyexplorer:static_str.buffer'],     Pl#Hi#Create(Pl#Hi#Cterm(148,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm( 70,  22)        ), } ),
-	\ Pl#Colorscheme#HiSegment(['tagbar:SPLIT',
-	\                           'nerdtree:SPLIT',
-	\                           'lustyexplorer:SPLIT',
-	\                           'minibufexplorer:SPLIT'],               Pl#Hi#Create(Pl#Hi#Cterm(  0,  28)        ), { 'N': Pl#Hi#Create(Pl#Hi#Cterm(  0,  22)        ), } ),
+	\ Pl#Hi#Segments(['branch', 'scrollpercent', 'raw', 'filesize'], {
+		\ 'n': ['gray9', 'gray4'],
+		\ 'N': ['gray3', 'gray1'],
+		\ 'i': ['mediumcyan', 'darkblue'],
+		\ }),
 	\
-	\ Pl#Colorscheme#HiSegment(['ctrlp:focus',
-	\                           'ctrlp:byfname'],                       Pl#Hi#Create(Pl#Hi#Cterm(189,  55)        ) ),
-	\ Pl#Colorscheme#HiSegment(['ctrlp:prev',
-	\                           'ctrlp:next',
-	\                           'ctrlp:pwd'],                           Pl#Hi#Create(Pl#Hi#Cterm(231,  98)        ) ),
-	\ Pl#Colorscheme#HiSegment(['ctrlp:item'],                          Pl#Hi#Create(Pl#Hi#Cterm( 55, 231), 'bold') ),
-	\ Pl#Colorscheme#HiSegment(['ctrlp:marked'],                        Pl#Hi#Create(Pl#Hi#Cterm(196,  55), 'bold') ),
-	\ Pl#Colorscheme#HiSegment(['ctrlp:count'],                         Pl#Hi#Create(Pl#Hi#Cterm( 55, 231)        ) ),
-	\ Pl#Colorscheme#HiSegment(['ctrlp:SPLIT'],                         Pl#Hi#Create(Pl#Hi#Cterm(231,  55)        ) ),
-\ ])
+	\ Pl#Hi#Segments(['fileinfo', 'filename'], {
+		\ 'n': ['white', 'gray4', ['bold']],
+		\ 'N': ['gray7', 'gray1', ['bold']],
+		\ 'i': ['white', 'darkblue', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['static_str'], {
+		\ 'n': ['white', 'gray4'],
+		\ 'N': ['gray7', 'gray1'],
+		\ 'i': ['white', 'darkblue'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['fileinfo.flags'], {
+		\ 'n': ['brightestred', ['bold']],
+		\ 'N': ['darkred'],
+		\ 'i': ['brightestred', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['current_function', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
+		\ 'n': ['gray8', 'gray2'],
+		\ 'i': ['mediumcyan', 'darkestblue'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['lineinfo'], {
+		\ 'n': ['gray2', 'gray10', ['bold']],
+		\ 'N': ['gray7', 'gray1', ['bold']],
+		\ 'i': ['darkestcyan', 'mediumcyan', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['errors'], {
+		\ 'n': ['brightestorange', 'gray2', ['bold']],
+		\ 'i': ['brightestorange', 'darkestblue', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['lineinfo.line.tot'], {
+		\ 'n': ['gray6'],
+		\ 'N': ['gray5'],
+		\ 'i': ['darkestcyan'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['gundo:static_str.name', 'command_t:static_str.name'], {
+		\ 'n': ['white', 'mediumred', ['bold']],
+		\ 'N': ['brightred', 'darkestred', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['gundo:static_str.buffer', 'command_t:raw.line'], {
+		\ 'n': ['white', 'darkred'],
+		\ 'N': ['brightred', 'darkestred'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['gundo:SPLIT', 'command_t:SPLIT'], {
+		\ 'n': ['white', 'darkred'],
+		\ 'N': ['white', 'darkestred'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer.static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
+		\ 'n': ['white', 'mediumgreen', ['bold']],
+		\ 'N': ['mediumgreen', 'darkestgreen', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['lustyexplorer:static_str.buffer', 'tagbar:static_str.buffer'], {
+		\ 'n': ['brightgreen', 'darkgreen'],
+		\ 'N': ['mediumgreen', 'darkestgreen'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['lustyexplorer:SPLIT', 'minibufexplorer:SPLIT', 'nerdtree:SPLIT', 'tagbar:SPLIT'], {
+		\ 'n': ['white', 'darkgreen'],
+		\ 'N': ['white', 'darkestgreen'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:focus', 'ctrlp:byfname'], {
+		\ 'n': ['brightpurple', 'darkestpurple'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:prev', 'ctrlp:next', 'ctrlp:pwd'], {
+		\ 'n': ['white', 'mediumpurple'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:item'], {
+		\ 'n': ['darkestpurple', 'white', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:marked'], {
+		\ 'n': ['brightestred', 'darkestpurple', ['bold']],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:count'], {
+		\ 'n': ['darkestpurple', 'white'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:SPLIT'], {
+		\ 'n': ['white', 'darkestpurple'],
+		\ }),
+	\ ])

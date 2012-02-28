@@ -42,6 +42,11 @@ let s:cterm2gui_dict = {
 	\ 250: 0xbcbcbc, 251: 0xc6c6c6, 252: 0xd0d0d0, 253: 0xdadada, 254: 0xe4e4e4, 255: 0xeeeeee
 \ }
 " }}}
+" Allocated color dict {{{
+let s:allocated_colors = {
+	\ 'NONE': 'NONE',
+	\ }
+" }}}
 function! s:Cterm2GUI(cterm) " {{{
 	if toupper(a:cterm) == 'NONE'
 		return 'NONE'
@@ -53,52 +58,83 @@ function! s:Cterm2GUI(cterm) " {{{
 
 	return s:cterm2gui_dict[a:cterm]
 endfunction " }}}
-function! Pl#Hi#Create(...) " {{{
-	let hi = {
-		\ 'cterm': ['', ''],
-		\ 'gui'  : ['', ''],
-		\ 'attr' : []
+function! Pl#Hi#Segments(segments, mode_colors) " {{{
+	let mode_translate = {
+		\ 'normal':     'n',
+		\ 'noncurrent': 'N',
+		\ 'insert':     'i',
+		\ 'visual':     'v',
+		\ 'replace':    'r',
+		\ 'select':     's',
 		\ }
 
-	" Fetch highlighting details from parameters
-	for param in a:000
-		" String parameters are always attributes
-		if type(param) == type('')
-			if tolower(param) == 'none'
-				let param = 'NONE'
-			endif
+	let attributes = ['bold', 'italic', 'underline']
 
-			call add(hi['attr'], param)
+	let segments = a:segments
+	let mode_hi_dict = {}
 
-			continue
+	" Mode dict
+	for [mode, colors] in items(a:mode_colors)
+		if has_key(mode_translate, mode)
+			let mode = mode_translate[mode]
 		endif
 
-		" Other parameters are either Pl#Hi#Cterm or Pl#Hi#GUI return values (lists)
-		let hi[param[0]] = [toupper(param[1]), toupper(param[2])]
+		unlet! fg
+		let fg = s:allocated_colors[colors[0]]
 
-		unlet! param
+		let hi = {
+			\ 'cterm': [fg['cterm'], ''],
+			\ 'gui'  : [fg['gui'], ''],
+			\ 'attr' : []
+			\ }
+
+		if exists('colors[1]')
+			if type(colors[1]) == type([])
+				" We don't have a BG color, but we have attributes
+				let hi.attr = colors[1]
+			else
+				" The second parameter is the background color
+				unlet! bg
+				let bg = s:allocated_colors[colors[1]]
+
+				let hi.cterm[1] = bg['cterm']
+				let hi.gui[1] = bg['gui']
+			endif
+		endif
+
+		if exists('colors[2]') && type(colors[2]) == type([])
+			" The third parameter is always an attribute list
+			let hi.attr = colors[2]
+		endif
+
+		let mode_hi_dict[mode] = {
+			\ 'ctermfg': (empty(hi['cterm'][0]) ? '' : (string(hi['cterm'][0]) == 'NONE' ? 'NONE' : hi['cterm'][0])),
+			\ 'ctermbg': (empty(hi['cterm'][1]) ? '' : (string(hi['cterm'][1]) == 'NONE' ? 'NONE' : hi['cterm'][1])),
+			\ 'guifg'  : (empty(hi['gui'][0]) ? '' : (string(hi['gui'][0]) == 'NONE' ? 'NONE' : hi['gui'][0])),
+			\ 'guibg'  : (empty(hi['gui'][1]) ? '' : (string(hi['gui'][1]) == 'NONE' ? 'NONE' : hi['gui'][1])),
+			\ 'attr'   : (! len(hi['attr']) ? 'NONE' : join(hi['attr'], ','))
+			\ }
 	endfor
 
-	" Fallback to term colors in gvim
-	if empty(hi['gui'][0]) && ! empty(hi['cterm'][0])
-		let hi['gui'][0] = s:Cterm2GUI(hi['cterm'][0])
-	endif
-	if empty(hi['gui'][1]) && ! empty(hi['cterm'][1])
-		let hi['gui'][1] = s:Cterm2GUI(hi['cterm'][1])
-	endif
+	return [segments, mode_hi_dict]
+endfunction " }}}
+function! Pl#Hi#Allocate(colors) " {{{
+	for [key, color] in items(a:colors)
+		if type(color) == type(0)
+			" Only terminal color
+			let cterm = color
+			let gui = s:Cterm2GUI(color)
+		elseif type(color) == type([]) && len(color) == 2
+			" Terminal and GUI colors
+			let cterm = color[0]
+			let gui = color[1]
+		endif
 
-	" Return dict with properly formatted color values
-	return {
-		\ 'ctermfg': (empty(hi['cterm'][0]) ? '' : (string(hi['cterm'][0]) == 'NONE' ? 'NONE' : hi['cterm'][0])),
-		\ 'ctermbg': (empty(hi['cterm'][1]) ? '' : (string(hi['cterm'][1]) == 'NONE' ? 'NONE' : hi['cterm'][1])),
-		\ 'guifg': (empty(hi['gui'][0]) ? '' : (string(hi['gui'][0]) == 'NONE' ? 'NONE' : hi['gui'][0])),
-		\ 'guibg': (empty(hi['gui'][1]) ? '' : (string(hi['gui'][1]) == 'NONE' ? 'NONE' : hi['gui'][1])),
-		\ 'attr': (! len(hi['attr']) ? 'NONE' : join(hi['attr'], ','))
-		\ }
-endfunction " }}}
-function! Pl#Hi#Cterm(fg, ...) " {{{
-	return ['cterm', a:fg, (a:0 ? a:1 : '')]
-endfunction " }}}
-function! Pl#Hi#GUI(fg, ...) " {{{
-	return ['gui', a:fg, (a:0 ? a:1 : '')]
+		let s:allocated_colors[key] = {
+			\ 'cterm': cterm,
+			\ 'gui': gui,
+			\ }
+
+		unlet! color
+	endfor
 endfunction " }}}
