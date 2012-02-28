@@ -49,5 +49,8 @@
 
 		au BufLeave,WinLeave *
 			\ call Pl#UpdateStatusline(0)
+
+		au BufWritePost */autoload/Powerline/Colorschemes/*.vim
+			\ :PowerlineReloadColorscheme
 	augroup END
 " }}}
