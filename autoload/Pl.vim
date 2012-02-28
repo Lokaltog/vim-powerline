@@ -64,7 +64,6 @@
 		exec "source" split(globpath(&rtp, 'autoload/Powerline/Themes/'. g:Powerline_theme .'.vim', 1), '\n')[0]
 
 		let g:Pl#THEME = []
-		let g:Pl#HL = []
 
 		call Pl#Load()
 	endfunction " }}}
