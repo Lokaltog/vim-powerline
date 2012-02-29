@@ -1,3 +1,6 @@
+" Recalculate the trailing whitespace warning when idle, and after saving
+autocmd CursorHold,BufWritePost,InsertLeave * unlet! b:statusline_trailing_space_warning
+
 function! Powerline#Functions#GetMode() " {{{
 	let mode = mode()
 
@@ -73,3 +76,15 @@ function! Powerline#Functions#GetCharCode() " {{{
 
 	return "'". char ."' ". nr
 endfunction "}}}
+function! Powerline#Functions#GetWSMarker() " {{{
+	" Return '...' if trailing white space is detected
+	" Return '' otherwise
+	if ! exists("b:statusline_trailing_space_warning")
+		if search('\s$', 'nw') != 0
+			let b:statusline_trailing_space_warning = ' … '
+		else
+			let b:statusline_trailing_space_warning = ''
+		endif
+	endif
+	return b:statusline_trailing_space_warning
+endfunction " }}}

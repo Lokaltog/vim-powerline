@@ -100,6 +100,11 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'i': ['darkestcyan'],
 		\ }),
 	\
+	\ Pl#Hi#Segments(['ws_marker'], {
+		\ 'n': ['white', 'brightestred'],
+		\ 'i': ['darkestcyan', 'white'],
+		\ }),
+	\
 	\ Pl#Hi#Segments(['gundo:static_str.name', 'command_t:static_str.name'], {
 		\ 'n': ['white', 'mediumred', ['bold']],
 		\ 'N': ['brightred', 'darkestred', ['bold']],
