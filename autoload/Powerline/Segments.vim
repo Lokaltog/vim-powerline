@@ -1,4 +1,4 @@
-let g:Powerline#Segments#segments = Pl#Segment#Init(
+let g:Powerline#Segments#segments = Pl#Segment#Init([
 	\ Pl#Segment#Create('SPLIT'   , '__split__'),
 	\ Pl#Segment#Create('TRUNCATE', '__truncate__'),
 	\
@@ -25,4 +25,4 @@ let g:Powerline#Segments#segments = Pl#Segment#Init(
 	\ Pl#Segment#Create('charcode'        , '%{Powerline#Functions#GetCharCode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('currhigroup'     , '%{synIDattr(synID(line("."), col("."), 1), "name")}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('ws_marker'       , '%{Powerline#Functions#GetWSMarker()}', Pl#Segment#Modes('!N')),
-\ )
+\ ])

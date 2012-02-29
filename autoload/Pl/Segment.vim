@@ -64,16 +64,16 @@ function! Pl#Segment#Create(name, ...) " {{{
 	endif
 
 endfunction " }}}
-function! Pl#Segment#Init(...) " {{{
+function! Pl#Segment#Init(params) " {{{
 	" Check condition parameters
-	if ! s:CheckConditions(a:000)
+	if ! s:CheckConditions(a:params)
 		return {}
 	endif
 
 	let segments = {}
 	let ns = ''
 
-	for param in a:000
+	for param in a:params
 		if type(param) == type('')
 			" String parameters is the namespace
 			let ns = param
