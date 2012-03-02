@@ -5,7 +5,7 @@ let g:Powerline#Segments#segments = Pl#Segment#Init([
 	\ Pl#Segment#Create('mode_indicator'  , '%{Powerline#Functions#GetMode()}', Pl#Segment#Modes('!N')),
 	\ Pl#Segment#Create('fileinfo',
 		\ Pl#Segment#Create('flags.ro'    , '%{&readonly ? "$RO" : ""}'),
-		\ Pl#Segment#Create('name'        , '%t'),
+		\ Pl#Segment#Create('name'        , '%{Powerline#Functions#GetFilename()}'),
 		\ Pl#Segment#Create('flags.mod'   , '%M'),
 		\ Pl#Segment#Create('flags.type'  , '%H%W'),
 	\ ),

@@ -16,10 +16,11 @@
 " }}}
 " Set default options {{{
 	for [s:key, s:value] in items({
-		\   'theme'        : 'default'
-		\ , 'colorscheme'  : 'default'
-		\ , 'symbols'      : 'compatible'
-		\ , 'cache_enabled': 1
+		\   'theme'         : 'default'
+		\ , 'colorscheme'   : 'default'
+		\ , 'symbols'       : 'compatible'
+		\ , 'stl_path_style': 'filename'
+		\ , 'cache_enabled' : 1
 		\ })
 
 		if ! exists('g:Powerline_' . s:key)

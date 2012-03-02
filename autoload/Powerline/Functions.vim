@@ -1,6 +1,35 @@
 " Recalculate the trailing whitespace warning when idle, and after saving
 autocmd CursorHold,BufWritePost,InsertLeave * unlet! b:statusline_trailing_space_warning
 
+function! Powerline#Functions#GetFilename() " {{{
+	let relpath = expand('%')
+	let fullpath = expand('%:p')
+	let filename = expand('%:t')
+	let noname = '[No Name]'
+
+	if empty(filename)
+		return noname
+	endif
+
+	if empty(g:Powerline_stl_path_style) || g:Powerline_stl_path_style == 'filename'
+		" Display only the file name, similar to the %t statusline item
+		return filename
+	elseif g:Powerline_stl_path_style == 'short'
+		" Display a short path, i.e. "/home/user/foo/bar/baz.vim" becomes
+		" "~/f/b/baz.vim"
+		let shortpath = substitute(substitute(expand('%:h'), $HOME, '~', 'g'), '\v/(\w)[^/]*', '/\1', 'g')
+
+		return empty(shortpath) || shortpath == '.' ? filename : shortpath .'/' . filename
+	elseif g:Powerline_stl_path_style == 'relative'
+		" Display a relative path, similar to the %f statusline item
+		return substitute(relpath, $HOME, '~', 'g')
+	elseif g:Powerline_stl_path_style == 'full'
+		" Display the full path, similar to the %F statusline item
+		return substitute(fullpath, $HOME, '~', 'g')
+	endif
+
+	return 'INVALID FILENAME SETTING: '. g:Powerline_stl_path_style
+endfunction " }}}
 function! Powerline#Functions#GetMode() " {{{
 	let mode = mode()
 

@@ -27,6 +27,7 @@ CONTENTS                                                  *Powerline-contents*
            4.3.2 Fancy symbols ............ |Powerline-symbols-fancy|
        4.4 Powerline_theme ................ |Powerline_theme|
        4.5 Powerline_colorscheme .......... |Powerline_colorscheme|
+       4.6 Powerline_stl_path_style ....... |Powerline_stl_path_style|
     5. Fonts .............................. |Powerline-fonts|
     6. Customization ...................... |Powerline-customization|
        6.1 Basic customization ............ |Powerline-basic-customization|
@@ -170,6 +171,25 @@ This option defines the colorscheme Powerline uses. The available colorschemes
 are located in autoload/Powerline/Colorschemes/.
 
 Default: "default"
+
+------------------------------------------------------------------------------
+4.6 Powerline_stl_path_style                        *Powerline_stl_path_style*
+
+There are currently four ways to display the current path and file name. The 
+default is to only display the file name like the %t statusline item. By 
+setting this configuration value you can choose from the following ways 
+display the current path and file name:
+
+    VALUE      DESCRIPTION ~
+    filename   Display only the file name, similar to the %t statusline item.
+    short      Display a short path. The home directory is substituted with
+               "~", and the directories leading to the file are shortened to
+               their first letter, i.e. "/home/user/foo/bar/baz.vim" becomes
+               "~/f/b/baz.vim".
+    relative  Display a relative path, similar to the %f statusline item.
+    full      Display the full path, similar to the %F statusline item.
+
+Default: "filename"
 
 ==============================================================================
 5. Fonts                                                     *Powerline-fonts*
