@@ -30,6 +30,15 @@ function! Powerline#Functions#GetFilename() " {{{
 
 	return 'INVALID FILENAME SETTING: '. g:Powerline_stl_path_style
 endfunction " }}}
+function! Powerline#Functions#GetShortPath(threshold) " {{{
+	let fullpath = split(substitute(expand('%:p:h'), $HOME, '~', 'g'), '/')
+
+	if len(fullpath) > a:threshold
+		let fullpath = [fullpath[0], '…'] +  fullpath[-a:threshold + 1 :]
+	endif
+
+	return join(fullpath, '/')
+endfunction " }}}
 function! Powerline#Functions#GetMode() " {{{
 	let mode = mode()
 
