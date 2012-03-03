@@ -191,7 +191,7 @@ display the current path and file name:
     relative   Display a relative path, similar to the %f statusline item.
     full       Display the full path, similar to the %F statusline item.
 
-Default: "filename"
+Default: "relative"
 
 ==============================================================================
 5. Fonts                                                     *Powerline-fonts*

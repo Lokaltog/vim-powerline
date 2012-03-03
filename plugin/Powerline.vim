@@ -19,7 +19,7 @@
 		\   'theme'         : 'default'
 		\ , 'colorscheme'   : 'default'
 		\ , 'symbols'       : 'compatible'
-		\ , 'stl_path_style': 'filename'
+		\ , 'stl_path_style': 'relative'
 		\ , 'cache_enabled' : 1
 		\ })
 
