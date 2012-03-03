@@ -56,13 +56,13 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['branch', 'scrollpercent', 'raw', 'filesize'], {
 		\ 'n': ['gray9', 'gray4'],
-		\ 'N': ['gray3', 'gray1'],
+		\ 'N': ['gray4', 'gray1'],
 		\ 'i': ['mediumcyan', 'darkblue'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo', 'filename'], {
 		\ 'n': ['white', 'gray4', ['bold']],
-		\ 'N': ['gray7', 'gray1', ['bold']],
+		\ 'N': ['gray7', 'gray0', ['bold']],
 		\ 'i': ['white', 'darkblue', ['bold']],
 		\ }),
 	\

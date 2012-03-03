@@ -6,7 +6,6 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : 'RO'
 			\ , 'FT'    : 'FT'
 			\ , 'LINE'  : 'LN'
-			\ , 'COL'   : 'C'
 		\ }
 	\ },
 	\ 'unicode': {
@@ -16,7 +15,6 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : [0x2613]
 			\ , 'FT'    : [0x2691]
 			\ , 'LINE'  : [0x204b]
-			\ , 'COL'   : [0x2551]
 		\ },
 	\ },
 	\ 'fancy': {
@@ -26,7 +24,6 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : [0x2b64]
 			\ , 'FT'    : [0x2b62, 0x2b63]
 			\ , 'LINE'  : [0x2b61]
-			\ , 'COL'   : [0x2551]
 		\ }
 	\ }
 \ }
