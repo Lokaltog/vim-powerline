@@ -57,6 +57,8 @@ function! Pl#Segment#Create(name, ...) " {{{
 				\ '\v\$('. key .')',
 				\ '\=Pl#Parser#ParseChars(g:Pl#Parser#Symbols[g:Powerline_symbols].symbols[submatch(1)])',
 				\ 'g')
+
+			unlet! key symbol
 		endfor
 
 		return ['segment', {

@@ -25,6 +25,7 @@ CONTENTS                                                  *Powerline-contents*
        4.3 Powerline_symbols .............. |Powerline_symbols|
            4.3.1 Compatible symbols ....... |Powerline-symbols-compatible|
            4.3.2 Fancy symbols ............ |Powerline-symbols-fancy|
+           4.3.3 Overriding symbols ....... |Powerline_symbols_override|
        4.4 Powerline_theme ................ |Powerline_theme|
        4.5 Powerline_colorscheme .......... |Powerline_colorscheme|
        4.6 Powerline_stl_path_style ....... |Powerline_stl_path_style|
@@ -157,6 +158,19 @@ adding the required symbols to any outline font and some bitmap fonts, see
 |Powerline-fonts| and the provided README file for usage details.
 
 ------------------------------------------------------------------------------
+4.3.3 Overriding symbols                          *Powerline_symbols_override*
+
+You can override single symbols (not dividers) by adding your symbols to the 
+g:Powerline_symbols_override dictionary. Example: If you want the branch 
+symbol to be "∓" (hex code 0x2213) and the line symbol to be "L" you can add 
+the following to your |vimrc|: >
+
+    let g:Powerline_symbols_override = {
+        \ 'BRANCH': [0x2213],
+        \ 'LINE': 'L',
+        \ }
+<
+-----------------------------------------------------------------------------
 4.4 Powerline_theme                                          *Powerline_theme*
 
 This option defines the theme Powerline uses. The available themes are located 

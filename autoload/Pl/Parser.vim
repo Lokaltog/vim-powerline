@@ -28,6 +28,13 @@ let g:Pl#Parser#Symbols = {
 	\ }
 \ }
 
+" Handle symbol overrides
+for [s:key, s:value] in items(g:Powerline_symbols_override)
+	let g:Pl#Parser#Symbols[g:Powerline_symbols].symbols[s:key] = s:value
+
+	unlet! s:key s:value
+endfor
+
 let s:LEFT_SIDE = 0
 let s:RIGHT_SIDE = 2
 
