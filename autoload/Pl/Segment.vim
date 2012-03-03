@@ -21,12 +21,15 @@ function! Pl#Segment#Create(name, ...) " {{{
 
 	let name = a:name
 	let modes = s:default_modes
+	let padding = 1
 	let segments = []
 
 	for param in a:000
 		" Lookup modes for this segment/group
 		if type(param) == type([]) && param[0] == 'modes'
 			let modes = param[1]
+		elseif type(param) == type([]) && param[0] == 'nopadding'
+			let padding = 0
 		elseif type(a:1) == type([]) && a:1[0] == 'segment'
 			call add(segments, param[1])
 		endif
@@ -41,6 +44,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 			\ , 'name': name
 			\ , 'segments': segments
 			\ , 'modes': modes
+			\ , 'padding': padding
 			\ }]
 	else
 		" This is a single segment
@@ -60,6 +64,7 @@ function! Pl#Segment#Create(name, ...) " {{{
 			\ , 'name': name
 			\ , 'text': text
 			\ , 'modes': modes
+			\ , 'padding': padding
 			\ }]
 	endif
 
@@ -109,6 +114,9 @@ function! Pl#Segment#Modes(modes) " {{{
 	endif
 
 	return ['modes', modes]
+endfunction " }}}
+function! Pl#Segment#NoPadding() " {{{
+	return ['nopadding']
 endfunction " }}}
 function! Pl#Segment#Split(...) " {{{
 	return a:0 ? a:1 .':SPLIT' : 'SPLIT'
