@@ -10,6 +10,7 @@ function! Powerline#Functions#GetFilepath() " {{{
 
 	let headpath = substitute(expand('%:h'), $HOME, '~', '')
 	let fullpath = substitute(expand('%:p:h'), $HOME, '~', '')
+	let ret = ''
 
 	if g:Powerline_stl_path_style == 'short'
 		" Display a short path where the first directory is displayed with its
@@ -18,19 +19,20 @@ function! Powerline#Functions#GetFilepath() " {{{
 		" "~/foo/f/b/baz.vim"
 		let fpath = split(headpath, '/')
 		let fpath_shortparts = map(fpath[1:], 'v:val[0]')
-		let shortpath = join(extend([fpath[0]], fpath_shortparts), '/') .'/'
-
-		return shortpath
+		let ret = join(extend([fpath[0]], fpath_shortparts), '/') .'/'
 	elseif g:Powerline_stl_path_style == 'relative'
 		" Display a relative path, similar to the %f statusline item
-		return headpath .'/'
+		let ret = headpath .'/'
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
-		return fullpath .'/'
+		let ret = fullpath .'/'
 	endif
 
-	" Fallback to no path
-	return ''
+	if ret == './'
+		return ''
+	endif
+
+	return ret
 endfunction " }}}
 function! Powerline#Functions#GetShortPath(threshold) " {{{
 	let fullpath = split(substitute(expand('%:p:h'), $HOME, '~', 'g'), '/')
