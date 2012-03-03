@@ -181,13 +181,15 @@ setting this configuration value you can choose from the following ways
 display the current path and file name:
 
     VALUE      DESCRIPTION ~
-    filename   Display only the file name, similar to the %t statusline item.
+    filename   Display only the file name using the %t statusline item.
     short      Display a short path. The home directory is substituted with
-               "~", and the directories leading to the file are shortened to
-               their first letter, i.e. "/home/user/foo/bar/baz.vim" becomes
-               "~/f/b/baz.vim".
-    relative  Display a relative path, similar to the %f statusline item.
-    full      Display the full path, similar to the %F statusline item.
+               "~", the first directory is displayed with its full name, and
+               subsequent directories are shortened to their first letter.
+               I.e. "/home/user/foo/bar/baz.vim" becomes "~/f/b/baz.vim" and
+               "long/relative/path/foo/bar/baz.vim becomes
+               "long/r/p/f/b/baz.vim".
+    relative   Display a relative path, similar to the %f statusline item.
+    full       Display the full path, similar to the %F statusline item.
 
 Default: "filename"
 

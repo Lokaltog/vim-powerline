@@ -1,34 +1,36 @@
 " Recalculate the trailing whitespace warning when idle, and after saving
 autocmd CursorHold,BufWritePost,InsertLeave * unlet! b:statusline_trailing_space_warning
 
-function! Powerline#Functions#GetFilename() " {{{
+function! Powerline#Functions#GetFilepath() " {{{
 	let relpath = expand('%')
-	let fullpath = expand('%:p')
-	let filename = expand('%:t')
-	let noname = '[No Name]'
 
-	if empty(filename)
-		return noname
+	if empty(relpath)
+		return ''
 	endif
 
-	if empty(g:Powerline_stl_path_style) || g:Powerline_stl_path_style == 'filename'
-		" Display only the file name, similar to the %t statusline item
-		return filename
-	elseif g:Powerline_stl_path_style == 'short'
-		" Display a short path, i.e. "/home/user/foo/bar/baz.vim" becomes
-		" "~/f/b/baz.vim"
-		let shortpath = substitute(substitute(expand('%:h'), $HOME, '~', 'g'), '\v/(\w)[^/]*', '/\1', 'g')
+	let headpath = substitute(expand('%:h'), $HOME, '~', '')
+	let fullpath = substitute(expand('%:p:h'), $HOME, '~', '')
 
-		return empty(shortpath) || shortpath == '.' ? filename : shortpath .'/' . filename
+	if g:Powerline_stl_path_style == 'short'
+		" Display a short path where the first directory is displayed with its
+		" full name, and the subsequent directories are shortened to their
+		" first letter, i.e. "/home/user/foo/foo/bar/baz.vim" becomes
+		" "~/foo/f/b/baz.vim"
+		let fpath = split(headpath, '/')
+		let fpath_shortparts = map(fpath[1:], 'v:val[0]')
+		let shortpath = join(extend([fpath[0]], fpath_shortparts), '/') .'/'
+
+		return shortpath
 	elseif g:Powerline_stl_path_style == 'relative'
 		" Display a relative path, similar to the %f statusline item
-		return substitute(relpath, $HOME, '~', 'g')
+		return headpath .'/'
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
-		return substitute(fullpath, $HOME, '~', 'g')
+		return fullpath .'/'
 	endif
 
-	return 'INVALID FILENAME SETTING: '. g:Powerline_stl_path_style
+	" Fallback to no path
+	return ''
 endfunction " }}}
 function! Powerline#Functions#GetShortPath(threshold) " {{{
 	let fullpath = split(substitute(expand('%:p:h'), $HOME, '~', 'g'), '/')
