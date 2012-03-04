@@ -35,6 +35,11 @@ for [s:key, s:value] in items(g:Powerline_symbols_override)
 	unlet! s:key s:value
 endfor
 
+" Handle divider overrides
+if len(g:Powerline_dividers_override) == 4
+	let g:Pl#Parser#Symbols[g:Powerline_symbols].dividers = g:Powerline_dividers_override
+endif
+
 let s:LEFT_SIDE = 0
 let s:RIGHT_SIDE = 2
 

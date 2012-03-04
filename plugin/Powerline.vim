@@ -16,12 +16,13 @@
 " }}}
 " Set default options {{{
 	for [s:key, s:value] in items({
-		\   'theme'           : 'default'
-		\ , 'colorscheme'     : 'default'
-		\ , 'symbols'         : 'compatible'
-		\ , 'symbols_override': {}
-		\ , 'stl_path_style'  : 'relative'
-		\ , 'cache_enabled'   : 1
+		\   'theme'            : 'default'
+		\ , 'colorscheme'      : 'default'
+		\ , 'symbols'          : 'compatible'
+		\ , 'symbols_override' : {}
+		\ , 'dividers_override': []
+		\ , 'stl_path_style'   : 'relative'
+		\ , 'cache_enabled'    : 1
 		\ })
 
 		if ! exists('g:Powerline_' . s:key)

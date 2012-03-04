@@ -26,6 +26,7 @@ CONTENTS                                                  *Powerline-contents*
            4.3.1 Compatible symbols ....... |Powerline-symbols-compatible|
            4.3.2 Fancy symbols ............ |Powerline-symbols-fancy|
            4.3.3 Overriding symbols ....... |Powerline_symbols_override|
+           4.3.4 Overriding dividers ...... |Powerline_dividers_override|
        4.4 Powerline_theme ................ |Powerline_theme|
        4.5 Powerline_colorscheme .......... |Powerline_colorscheme|
        4.6 Powerline_stl_path_style ....... |Powerline_stl_path_style|
@@ -160,7 +161,7 @@ adding the required symbols to any outline font and some bitmap fonts, see
 ------------------------------------------------------------------------------
 4.3.3 Overriding symbols                          *Powerline_symbols_override*
 
-You can override single symbols (not dividers) by adding your symbols to the 
+You can override symbols by adding your symbols to the 
 g:Powerline_symbols_override dictionary. Example: If you want the branch 
 symbol to be "∓" (hex code 0x2213) and the line symbol to be "L" you can add 
 the following to your |vimrc|: >
@@ -169,6 +170,21 @@ the following to your |vimrc|: >
         \ 'BRANCH': [0x2213],
         \ 'LINE': 'L',
         \ }
+<
+------------------------------------------------------------------------------
+4.3.4 Overriding dividers                        *Powerline_dividers_override*
+
+If you for some reason want to override the dividers then you can set 
+g:Powerline_dividers_override to a list with exactly four elements:
+
+    1: Hard right-pointing arrow
+    2: Soft right-pointing arrow
+    3: Hard left-pointing arrow
+    4: Soft left-pointing arrow
+
+Example: >
+
+    let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 <
 -----------------------------------------------------------------------------
 4.4 Powerline_theme                                          *Powerline_theme*
