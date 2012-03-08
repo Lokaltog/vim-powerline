@@ -41,7 +41,7 @@ call Pl#Hi#Allocate({
 
 let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['SPLIT'], {
-		\ 'n': ['white', 'gray2'],
+		\ 'n': ['white', 'gray1'],
 		\ 'N': ['white', 'gray1'],
 		\ }),
 	\
@@ -54,7 +54,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['branch', 'scrollpercent', 'raw', 'filesize'], {
-		\ 'n': ['gray1', 'darkblue'],
+		\ 'n': ['darkestblue', 'darkblue'],
 		\ 'N': ['gray3', 'gray1'],
 		\ }),
 	\
@@ -70,7 +70,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['static_str'], {
-		\ 'n': ['white', 'gray4'],
+		\ 'n': ['brightpurple', 'darkestpurple'],
 		\ 'N': ['gray7', 'gray1'],
 		\ 'i': ['white', 'darkblue'],
 		\ }),
@@ -123,7 +123,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer:static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
-		\ 'n': ['gray5', 'gray1', ['bold']],
+		\ 'n': ['gray10', 'darkestblue', ['bold']],
 		\ 'N': ['gray3', 'gray2', ['bold']],
 		\ }),
 	\
@@ -133,8 +133,8 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:SPLIT', 'minibufexplorer:SPLIT', 'nerdtree:SPLIT', 'tagbar:SPLIT'], {
-		\ 'n': ['gray3', 'gray3'],
-		\ 'N': ['gray3', 'gray3'],
+		\ 'n': ['gray3', 'darkblue'],
+		\ 'N': ['gray3', 'gray2'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:focus', 'ctrlp:byfname'], {
@@ -146,11 +146,11 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:item'], {
-		\ 'n': ['darkestgreen', 'white', ['bold']],
+		\ 'n': ['white', 'darkestgreen', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:marked'], {
-		\ 'n': ['brightestred', 'darkestgreen', ['bold']],
+		\ 'n': ['brightgreen', 'darkestgreen', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:count'], {
@@ -162,7 +162,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
   \
   \ Pl#Hi#Segments(['sass:status'], {
-		\ 'n': ['gray5', 'gray1'],
+		\ 'n': ['darkblue', 'gray1'],
 		\ 'N': ['gray3', 'gray1'],
     \ }),
 \ ])
