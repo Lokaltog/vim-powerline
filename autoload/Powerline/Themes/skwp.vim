@@ -15,7 +15,6 @@ let g:Powerline#Themes#skwp#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Split()
 		\ , 'sass:status'
 		\ , 'rvm:string'
-		\ , 'scrollpercent'
 		\ , 'paste_indicator'
 	\ ),
 	\
