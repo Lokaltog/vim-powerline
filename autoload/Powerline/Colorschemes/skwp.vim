@@ -1,3 +1,5 @@
+" This theme is based on Solarized-dark colors, combined
+" with Powerline native colors
 call Pl#Hi#Allocate({
 	\ 'black'          : 16,
 	\ 'white'          : 231,
@@ -72,7 +74,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['branch', 'raw', 'filesize'], {
 		\ 'n': ['base03', 'blue'],
-		\ 'N': ['gray5', 'base02'],
+		\ 'N': ['gray5', 'base03'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['scrollpercent'], {
@@ -116,6 +118,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['errors'], {
 		\ 'n': ['orange', 'base02', ['bold']],
+		\ 'N': ['gray5', 'base03', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lineinfo.line.tot'], {
