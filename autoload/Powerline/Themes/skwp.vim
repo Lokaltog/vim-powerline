@@ -8,7 +8,7 @@
 let g:Powerline#Themes#skwp#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'fugitive:branch'
-		\ , 'filename'
+		\ , 'fileinfo'
 		\ , 'flags.mod'
 		\ , 'syntastic:errors'
 		\ , Pl#Segment#Truncate()

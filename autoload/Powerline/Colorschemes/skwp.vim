@@ -82,7 +82,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ 'N': ['base2', 'base02'],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['fileinfo', 'filename'], {
+	\ Pl#Hi#Segments(['fileinfo', 'filename', 'filepath'], {
 		\ 'n': ['base2', 'darkestblue', ['bold']],
 		\ 'N': ['base1', 'base02', ['bold']],
 		\ }),
@@ -147,13 +147,13 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer:static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
-		\ 'n': ['gray10', 'base02', ['bold']],
+		\ 'n': ['gray10', 'darkestblue', ['bold']],
 		\ 'N': ['gray3', 'base02', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.buffer', 'tagbar:static_str.buffer'], {
-		\ 'n': ['brightgreen', 'darkgreen'],
-		\ 'N': ['mediumgreen', 'darkestgreen'],
+		\ 'n': ['base3', 'blue'],
+		\ 'N': ['gray5', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:SPLIT', 'minibufexplorer:SPLIT', 'nerdtree:SPLIT', 'tagbar:SPLIT'], {
