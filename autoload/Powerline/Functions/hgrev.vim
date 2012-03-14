@@ -7,8 +7,6 @@ function! Powerline#Functions#hgrev#Status(symbol) " {{{
     silent execute "RefreshMercurialRev"
   endif
   let b:statusline_hg_status=HGRev()
-  "let ret=substitute(b:statusline_hg_status,'^[^ ]*', a:symbol .'\1','g')
-  "let ret=substitute(ret,' M$','+','g')
   if b:statusline_hg_status != ''
     let ret = "\u26A1". '' . substitute(b:statusline_hg_status, '^[^ ]*', '\1', 'g')
     let ret=substitute(ret,' M$','+','g')
