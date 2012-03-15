@@ -67,8 +67,8 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['mode_indicator'], {
 		\ 'n': ['darkestgreen', 'brightgreen', ['bold']],
 		\ 'i': ['darkestcyan', 'white', ['bold']],
-		\ 'v': ['darkred', 'brightorange', ['bold']],
-		\ 'r': ['white', 'brightred', ['bold']],
+		\ 'v': ['red', 'brightorange', ['bold']],
+		\ 'r': ['white', 'violet', ['bold']],
 		\ 's': ['white', 'gray5', ['bold']],
 		\ }),
 	\
@@ -100,9 +100,9 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo.flags'], {
-		\ 'n': ['brightestred', ['bold']],
-		\ 'N': ['darkred'],
-		\ 'i': ['brightestred', ['bold']],
+		\ 'n': ['base03', ['bold']],
+		\ 'N': ['gray5'],
+		\ 'i': ['base03', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['current_function', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
@@ -128,22 +128,22 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['paste_indicator', 'ws_marker'], {
-		\ 'n': ['white', 'brightred', ['bold']],
+		\ 'n': ['base3', 'red', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['gundo:static_str.name', 'command_t:static_str.name'], {
-		\ 'n': ['white', 'mediumred', ['bold']],
-		\ 'N': ['brightred', 'darkestred', ['bold']],
+		\ 'n': ['base3', 'darkblue', ['bold']],
+		\ 'N': ['base1', 'base03', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['gundo:static_str.buffer', 'command_t:raw.line'], {
-		\ 'n': ['white', 'darkred'],
-		\ 'N': ['brightred', 'darkestred'],
+		\ 'n': ['white', 'base02'],
+		\ 'N': ['gray5', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['gundo:SPLIT', 'command_t:SPLIT'], {
-		\ 'n': ['white', 'darkred'],
-		\ 'N': ['white', 'darkestred'],
+		\ 'n': ['white', 'base02'],
+		\ 'N': ['white', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer:static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
