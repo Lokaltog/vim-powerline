@@ -10,5 +10,5 @@ let g:Powerline#Matches#matches = {
 	\ 'minibufexplorer' : Pl#Match#Add('bufname("%")', '\-MiniBufExplorer\-'),
 	\ 'tagbar'          : Pl#Match#Add('&ft'         , 'tagbar'),
 	\ 'nerdtree'        : Pl#Match#Add('&ft'         , 'nerdtree'),
-    	\ 'calendar'        : Pl#Match#Add('&ft'         , 'calendar'),
+	\ 'calendar'        : Pl#Match#Add('&ft'         , 'calendar'),
 \ }
