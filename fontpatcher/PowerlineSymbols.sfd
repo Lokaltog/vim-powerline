@@ -20,7 +20,7 @@ OS2Version: 0
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1321867751
-ModificationTime: 1326665029
+ModificationTime: 1334557584
 OS2TypoAscent: 0
 OS2TypoAOffset: 1
 OS2TypoDescent: 0
@@ -49,8 +49,8 @@ BeginPrivate: 0
 EndPrivate
 BeginChars: 1114112 9
 
-StartChar: uni2B80
-Encoding: 11136 11136 0
+StartChar: uniEE20
+Encoding: 60960 60960 0
 Width: 621
 Flags: HMW
 LayerCount: 2
@@ -63,8 +63,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B81
-Encoding: 11137 11137 1
+StartChar: uniEE21
+Encoding: 60961 60961 1
 Width: 621
 Flags: HMW
 LayerCount: 2
@@ -88,8 +88,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B82
-Encoding: 11138 11138 2
+StartChar: uniEE22
+Encoding: 60962 60962 2
 Width: 621
 Flags: HMW
 LayerCount: 2
@@ -102,8 +102,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B83
-Encoding: 11139 11139 3
+StartChar: uniEE23
+Encoding: 60963 60963 3
 Width: 621
 Flags: HMW
 LayerCount: 2
@@ -127,8 +127,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B61
-Encoding: 11105 11105 4
+StartChar: uniEE01
+Encoding: 60929 60929 4
 Width: 555
 VWidth: 0
 Flags: HMW
@@ -156,8 +156,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B60
-Encoding: 11104 11104 5
+StartChar: uniEE00
+Encoding: 60928 60928 5
 Width: 676
 Flags: HMW
 LayerCount: 2
@@ -176,15 +176,15 @@ SplineSet
  0 -244 l 1
  0 197 l 1
 0 288 m 1
- 0 405 0 944 0 944 c 1
+ 0 944 l 1
  208 944 l 1
  208 944 208 451 208 334 c 1
  185 311 12 288 0 288 c 1
 EndSplineSet
 EndChar
 
-StartChar: uni2B62
-Encoding: 11106 11106 6
+StartChar: uniEE02
+Encoding: 60930 60930 6
 Width: 428
 VWidth: 0
 Flags: HMW
@@ -215,8 +215,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B63
-Encoding: 11107 11107 7
+StartChar: uniEE03
+Encoding: 60931 60931 7
 Width: 428
 VWidth: 0
 Flags: HMW
@@ -247,8 +247,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni2B64
-Encoding: 11108 11108 8
+StartChar: uniEE04
+Encoding: 60932 60932 8
 Width: 546
 VWidth: 0
 Flags: HMW
@@ -277,43 +277,43 @@ EndSplineSet
 EndChar
 EndChars
 BitmapFont: 10 10 8 2 1 
-BDFChar: 0 11136 6 0 4 -2 7
+BDFChar: 0 60933 6 0 4 -2 7
 JAC+4q"X@:^jlCb
-BDFChar: 1 11137 6 0 4 -2 7
+BDFChar: 1 60934 6 0 4 -2 7
 J3Y4g#RCta5_&h7
-BDFChar: 2 11138 6 1 5 -2 7
+BDFChar: 2 60935 6 1 5 -2 7
 #T,OGq"T(n(^L*A
-BDFChar: 3 11139 6 1 5 -2 7
+BDFChar: 3 60936 6 1 5 -2 7
 #S8+DJ:Km-&-r79
-BDFChar: 4 11105 6 1 4 -1 7
+BDFChar: 4 60929 6 1 4 -1 7
 J:N1>!0GR3O8o7\
-BDFChar: 5 11104 7 0 5 -2 7
+BDFChar: 5 60928 7 0 5 -2 7
 ^rY<PaN2`d^q]pM
-BDFChar: 6 11106 4 1 5 -1 6
+BDFChar: 6 60930 4 1 5 -1 6
 G^u0KJ=)F+
-BDFChar: 7 11107 4 0 5 -1 6
+BDFChar: 7 60931 4 0 5 -1 6
 p]QtGOH>Q3
-BDFChar: 8 11108 5 0 5 0 6
+BDFChar: 8 60932 5 0 5 0 6
 0M"b4bku\c
 EndBitmapFont
 BitmapFont: 12 10 10 2 1 
-BDFChar: 0 11136 7 0 6 -2 11
+BDFChar: 0 60933 7 0 6 -2 11
 !!%Pbi:-O>r:od>^jlCb
-BDFChar: 1 11137 7 0 6 -3 11
+BDFChar: 1 60934 7 0 6 -3 11
 !!%O7+:ne]":,P]5_&h7
-BDFChar: 2 11138 7 0 6 -2 11
+BDFChar: 2 60935 7 0 6 -2 11
 !!!-1*'AWHr-UUH$j6P1
-BDFChar: 3 11139 7 0 6 -2 11
+BDFChar: 3 60936 7 0 6 -2 11
 !!!--&0O5gJ3Y4g#Qt,-
-BDFChar: 4 11105 7 0 5 0 8
+BDFChar: 4 60929 7 0 5 0 8
 J:N1>!$jBP,QIfE
-BDFChar: 5 11104 8 0 8 -3 11
+BDFChar: 5 60928 8 0 8 -3 11
 z^];.Ma8juqa8j9]a8jQehuLOm^];.Mz
-BDFChar: 6 11106 5 1 6 0 8
+BDFChar: 6 60930 5 1 6 0 8
 !-j$]R"1Qc?iU0,
-BDFChar: 7 11107 5 0 5 0 7
+BDFChar: 7 60931 5 0 5 0 7
 p]QtGOH>Q3
-BDFChar: 8 11108 7 0 5 0 8
+BDFChar: 8 60932 7 0 5 0 8
 0M"`*r63C_GQ7^D
 EndBitmapFont
 EndSplineFont
