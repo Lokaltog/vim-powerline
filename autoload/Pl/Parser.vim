@@ -18,12 +18,12 @@ let g:Pl#Parser#Symbols = {
 		\ },
 	\ },
 	\ 'fancy': {
-		\   'dividers': [ [0x2b80], [0x2b81], [0x2b82], [0x2b83] ]
+		\   'dividers': [ [0xee00], [0xee01], [0xee02], [0xee03] ]
 		\ , 'symbols' : {
-			\   'BRANCH': [0x2b60]
-			\ , 'RO'    : [0x2b64]
-			\ , 'FT'    : [0x2b62, 0x2b63]
-			\ , 'LINE'  : [0x2b61]
+			\   'BRANCH': [0xee20]
+			\ , 'RO'    : [0xee24]
+			\ , 'FT'    : [0xee22, 0xee23]
+			\ , 'LINE'  : [0xee21]
 		\ }
 	\ }
 \ }
