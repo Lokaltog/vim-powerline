@@ -74,6 +74,11 @@ I can't see the fancy symbols, what's wrong?
 
     Make sure that vim is compiled with the ``--with-features=big`` flag.
 
+    If you're using the latest version of Powerline and you have an older 
+    patched font, you may need to re-patch your fonts. The symbols have been 
+    moved to the Unicode Private Use Area due to issues with the previous 
+    code points.
+
 I'm unable to patch my font, what should I do?
     Font patching is only known to work on most Linux and OS X machines. If 
     you have followed the instructions in the fontpatcher README and still 
