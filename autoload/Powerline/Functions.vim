@@ -8,8 +8,8 @@ function! Powerline#Functions#GetFilepath() " {{{
 		return ''
 	endif
 
-	let headpath = substitute(expand('%:h'), escape($HOME, '\'), '~', '')
-	let fullpath = substitute(expand('%:p:h'), escape($HOME, '\'), '~', '')
+	let headpath = substitute(expand('%:h'), escape($HOME, '~\'), '~', '')
+	let fullpath = substitute(expand('%:p:h'), escape($HOME, '~\'), '~', '')
 	let ret = ''
 
 	if g:Powerline_stl_path_style == 'short'
