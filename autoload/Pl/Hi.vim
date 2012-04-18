@@ -52,6 +52,10 @@ function! s:Cterm2GUI(cterm) " {{{
 		return 'NONE'
 	endif
 
+	if type(a:cterm) == type("")
+		return a:cterm
+	endif
+
 	if ! has_key(s:cterm2gui_dict, a:cterm)
 		return 0xff0000
 	endif
@@ -128,6 +132,10 @@ function! Pl#Hi#Allocate(colors) " {{{
 			" Terminal and GUI colors
 			let cterm = color[0]
 			let gui = color[1]
+		elseif type(color) == type("")
+			" Terminal color as string (16-color name)
+			let cterm = color
+			let gui = color
 		endif
 
 		let s:allocated_colors[key] = {
