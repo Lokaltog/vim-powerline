@@ -49,10 +49,7 @@
 		au ColorScheme *
 			\ call Pl#Load()
 
-		au BufEnter,WinEnter,BufUnload *
-			\ call Pl#UpdateStatusline(1)
-
-		au FileType <buffer>
+		au BufEnter,WinEnter,FileType,BufUnload *
 			\ call Pl#UpdateStatusline(1)
 
 		au BufLeave,WinLeave *
