@@ -318,14 +318,35 @@ function! s:AddDivider(text, side, mode, colors, prev, curr, next) " {{{
 			let div_type = s:HARD_DIVIDER
 
 			" Create new highlighting group
-			" Use FG = CURRENT BG, BG = CMP BG
-			let div_colors['ctermfg'] = get(div_colors, 'ctermbg')
-			let div_colors['guifg']   = get(div_colors, 'guibg')
+			if div_colors['attr'] =~ 'reverse' && cmp_colors['attr'] =~ 'reverse'
+				" Use FG = CURRENT FG, BG = CMP FG
+				let div_colors['ctermbg'] = get(cmp_colors, 'ctermfg')
+				let div_colors['guibg']   = get(cmp_colors, 'guifg')
 
-			let div_colors['ctermbg'] = get(cmp_colors, 'ctermbg')
-			let div_colors['guibg']   = get(cmp_colors, 'guibg')
+				let div_colors['attr']    = div_colors['attr'] =~ 'bold' ? 'bold' : 'NONE'
+			elseif div_colors['attr'] =~ 'reverse'
+				" Use FG = CURRENT FG, BG = CMP BG
+				let div_colors['ctermbg'] = get(cmp_colors, 'ctermbg')
+				let div_colors['guibg']   = get(cmp_colors, 'guibg')
 
-			let div_colors['attr']    = 'NONE'
+				let div_colors['attr']    = div_colors['attr'] =~ 'bold' ? 'bold' : 'NONE'
+			elseif cmp_colors['attr'] =~ 'reverse'
+				" Use FG = CMP FG, BG = CURRENT BG : reversed
+				let div_colors['ctermfg'] = get(cmp_colors, 'ctermfg')
+				let div_colors['guifg']   = get(cmp_colors, 'guifg')
+
+				let div_colors['attr']    = 'reverse'
+
+			else
+				" Use FG = CURRENT BG, BG = CMP BG
+				let div_colors['ctermfg'] = get(div_colors, 'ctermbg')
+				let div_colors['guifg']   = get(div_colors, 'guibg')
+
+				let div_colors['ctermbg'] = get(cmp_colors, 'ctermbg')
+				let div_colors['guibg']   = get(cmp_colors, 'guibg')
+
+				let div_colors['attr']    = 'NONE'
+			endif
 		endif
 	endif
 
