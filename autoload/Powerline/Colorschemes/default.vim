@@ -89,7 +89,7 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'i': ['mediumcyan', 'darkestblue'],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['lineinfo'], {
+	\ Pl#Hi#Segments(['lineinfo', 'tabbar:raw.name'], {
 		\ 'n': ['gray2', 'gray10', ['bold']],
 		\ 'N': ['gray7', 'gray1', ['bold']],
 		\ 'i': ['darkestcyan', 'mediumcyan', ['bold']],

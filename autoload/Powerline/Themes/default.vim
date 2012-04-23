@@ -75,6 +75,13 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Split()
 	\ ),
 	\
+	\ Pl#Theme#Buffer('tabbar'
+		\ , ['static_str.name', 'Tabbar']
+		\ , ['raw.name', '%{expand("%:p:h")}']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
+	\
 	\ Pl#Theme#Buffer('ft_qf'
 		\ , ['static_str.name', 'Quickfix']
 		\ , Pl#Segment#Truncate()

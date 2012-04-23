@@ -8,6 +8,7 @@ let g:Powerline#Matches#matches = {
 	\ 'gundo_tree'      : Pl#Match#Add('bufname("%")', '__Gundo__'),
 	\ 'lustyexplorer'   : Pl#Match#Add('bufname("%")', '\[LustyExplorer-Buffers\]'),
 	\ 'minibufexplorer' : Pl#Match#Add('bufname("%")', '\-MiniBufExplorer\-'),
+	\ 'tabbar'          : Pl#Match#Add('bufname("%")', '\-TabBar\-'),
 	\ 'tagbar'          : Pl#Match#Add('&ft'         , 'tagbar'),
 	\ 'nerdtree'        : Pl#Match#Add('&ft'         , 'nerdtree'),
 \ }
