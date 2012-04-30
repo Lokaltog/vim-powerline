@@ -46,6 +46,17 @@ parser.add_argument('--symbol-font', help='font file with symbols', metavar='fon
 args = parser.parse_args()
 
 SYM_ATTR = {
+	# Compatibility glyphs
+	0x2b60: { 'align': 'c', 'stretch': 'y' , 'overlap': False },
+	0x2b61: { 'align': 'c', 'stretch': ''  , 'overlap': False },
+	0x2b62: { 'align': 'r', 'stretch': ''  , 'overlap': False },
+	0x2b63: { 'align': 'l', 'stretch': ''  , 'overlap': False },
+	0x2b64: { 'align': 'c', 'stretch': ''  , 'overlap': False },
+	0x2b80: { 'align': 'l', 'stretch': 'xy', 'overlap': True  },
+	0x2b81: { 'align': 'l', 'stretch': 'xy', 'overlap': True  },
+	0x2b82: { 'align': 'r', 'stretch': 'xy', 'overlap': True  },
+	0x2b83: { 'align': 'r', 'stretch': 'xy', 'overlap': True  },
+
 	# Right/left-aligned glyphs will have their advance width reduced in order to overlap the next glyph slightly
 	0xee00: { 'align': 'c', 'stretch': 'y' , 'overlap': False },
 	0xee01: { 'align': 'c', 'stretch': ''  , 'overlap': False },
