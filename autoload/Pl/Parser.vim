@@ -6,6 +6,8 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : 'RO'
 			\ , 'FT'    : 'FT'
 			\ , 'LINE'  : 'LN'
+			\ , 'OK'    : ''
+			\ , 'NG'    : '+'
 		\ }
 	\ },
 	\ 'unicode': {
@@ -15,6 +17,8 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : [0x2613]
 			\ , 'FT'    : [0x2691]
 			\ , 'LINE'  : [0x204b]
+			\ , 'OK'    : [0x2714]
+			\ , 'NG'    : [0x2718]
 		\ },
 	\ },
 	\ 'fancy': {
@@ -24,6 +28,8 @@ let g:Pl#Parser#Symbols = {
 			\ , 'RO'    : [0x2b64]
 			\ , 'FT'    : [0x2b62, 0x2b63]
 			\ , 'LINE'  : [0x2b61]
+			\ , 'OK'    : [0x2714]
+			\ , 'NG'    : [0x2718]
 		\ }
 	\ }
 \ }

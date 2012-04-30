@@ -84,6 +84,12 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'i': ['brightestred', ['bold']],
 		\ }),
 	\
+	\ Pl#Hi#Segments(['fileinfo.flags.modOK'], {
+		\ 'n': ['brightgreen', ['bold']],
+		\ 'N': ['mediumgreen'],
+		\ 'i': ['brightgreen', ['bold']],
+		\ }),
+	\
 	\ Pl#Hi#Segments(['current_function', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
 		\ 'n': ['gray8', 'gray2'],
 		\ 'i': ['mediumcyan', 'darkestblue'],
