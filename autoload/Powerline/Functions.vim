@@ -5,15 +5,14 @@ function! Powerline#Functions#GetFilepath() " {{{
 	if exists('b:Powerline_filepath')
 		return b:Powerline_filepath
 	endif
-	let dirsep = has('win32') && ! &shellslash ? '\' : '/'
-	let relpath = expand('%')
 
-	if empty(relpath)
+	let dirsep = has('win32') && ! &shellslash ? '\' : '/'
+	let filepath = expand('%')
+
+	if empty(filepath)
 		return ''
 	endif
 
-	let headpath = substitute(expand('%:h'), escape($HOME, '~\'), '~', '')
-	let fullpath = substitute(expand('%:p:h'), escape($HOME, '~\'), '~', '')
 	let ret = ''
 
 	if g:Powerline_stl_path_style == 'short'
@@ -21,15 +20,18 @@ function! Powerline#Functions#GetFilepath() " {{{
 		" full name, and the subsequent directories are shortened to their
 		" first letter, i.e. "/home/user/foo/foo/bar/baz.vim" becomes
 		" "~/foo/f/b/baz.vim"
-		let fpath = split(fullpath, dirsep)
+		"
+		" This displays the shortest possible path, relative to ~ or the
+		" current directory.
+		let fpath = split(fnamemodify(filepath, ':~:.:h'), dirsep)
 		let fpath_shortparts = map(fpath[1:], 'v:val[0]')
 		let ret = join(extend([fpath[0]], fpath_shortparts), dirsep) . dirsep
 	elseif g:Powerline_stl_path_style == 'relative'
 		" Display a relative path, similar to the %f statusline item
-		let ret = headpath . dirsep
+		let ret = fnamemodify(filepath, ':.:h') . dirsep
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
-		let ret = fullpath . dirsep
+		let ret = filepath . dirsep
 	endif
 
 	if ret == ('.'. dirsep)
