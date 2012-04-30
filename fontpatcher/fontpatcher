@@ -76,6 +76,8 @@ for font_path in args.fonts:
 		font.familyname += ' for Powerline'
 		font.fullname += ' for Powerline'
 		font.fontname += 'ForPowerline'
+		font.appendSFNTName('English (US)', 'Preferred Family', font.familyname)
+		font.appendSFNTName('English (US)', 'Compatible Full', font.fullname)
 
 	# Force the em size to be equal
 	symbols.em = font.em
