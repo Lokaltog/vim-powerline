@@ -250,25 +250,25 @@ function! s:HlCreate(hl) " {{{
 	" It uses the hex values of all the color properties and an attribute flag at the end
 	" NONE colors are translated to NN for cterm and NNNNNN for gui colors
 	let hi_group = printf('Pl%s%s%s%s%s'
-		\ , (a:hl['ctermfg'] == 'NONE' ? 'NN'     : type(a:hl['ctermfg']) == type(0) ? printf('%02x', a:hl['ctermfg']) : a:hl['ctermfg'])
-		\ , (a:hl['guifg']   == 'NONE' ? 'NNNNNN' : type(a:hl['guifg']) == type(0) ? printf('%06x', a:hl['guifg']  ) : a:hl['guifg'])
-		\ , (a:hl['ctermbg'] == 'NONE' ? 'NN'     : type(a:hl['ctermbg']) == type(0) ? printf('%02x', a:hl['ctermbg']) : a:hl['ctermbg'])
-		\ , (a:hl['guibg']   == 'NONE' ? 'NNNNNN' : type(a:hl['guibg']) == type(0) ? printf('%06x', a:hl['guibg']  ) : a:hl['guibg'])
+		\ , (a:hl['ctermfg'] == 'NONE' ? 'NN'     : printf('%02x', a:hl['ctermfg']))
+		\ , (a:hl['guifg']   == 'NONE' ? 'NNNNNN' : printf('%06x', a:hl['guifg']  ))
+		\ , (a:hl['ctermbg'] == 'NONE' ? 'NN'     : printf('%02x', a:hl['ctermbg']))
+		\ , (a:hl['guibg']   == 'NONE' ? 'NNNNNN' : printf('%06x', a:hl['guibg']  ))
 		\ , substitute(a:hl['attr'], '\v([a-zA-Z])[a-zA-Z]*,?', '\1', 'g')
 		\ )
 
 	if ! s:HlExists(hi_group)
-		let ctermbg = a:hl['ctermbg'] == 'NONE' ? 'NONE' : type(a:hl['ctermbg']) == type(0) ? printf('%d', a:hl['ctermbg']) : a:hl['ctermbg']
+		let ctermbg = a:hl['ctermbg'] == 'NONE' ? 'NONE' : printf('%d', a:hl['ctermbg'])
 		if (has('win32') || has('win64')) && !has('gui_running') && ctermbg != 'NONE' && ctermbg > 128
 			let ctermbg -= 128
 		endif
 		let hi_cmd = printf('hi %s ctermfg=%s ctermbg=%s cterm=%s guifg=%s guibg=%s gui=%s'
 			\ , hi_group
-			\ , a:hl['ctermfg'] == 'NONE' ? 'NONE' : type(a:hl['ctermfg']) == type(0) ? printf('%d', a:hl['ctermfg']) : a:hl['ctermfg']
+			\ , a:hl['ctermfg'] == 'NONE' ? 'NONE' : printf('%d', a:hl['ctermfg'])
 			\ , ctermbg
 			\ , a:hl['attr']
-			\ , (a:hl['guifg'] == 'NONE' ? 'NONE' : type(a:hl['guifg']) == type(0) ? printf('#%06x', a:hl['guifg']) : a:hl['guifg'])
-			\ , (a:hl['guibg'] == 'NONE' ? 'NONE' : type(a:hl['guibg']) == type(0) ? printf('#%06x', a:hl['guibg']) : a:hl['guibg'])
+			\ , (a:hl['guifg'] == 'NONE' ? 'NONE' : printf('#%06x', a:hl['guifg']))
+			\ , (a:hl['guibg'] == 'NONE' ? 'NONE' : printf('#%06x', a:hl['guibg']))
 			\ , a:hl['attr']
 			\ )
 
