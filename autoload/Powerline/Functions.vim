@@ -2,6 +2,10 @@
 autocmd CursorHold,BufWritePost,InsertLeave * unlet! b:statusline_trailing_space_warning
 
 function! Powerline#Functions#GetFilepath() " {{{
+	if exists('b:Powerline_filepath')
+		return b:Powerline_filepath
+	endif
+	let dirsep = has('win32') && ! &shellslash ? '\' : '/'
 	let relpath = expand('%')
 
 	if empty(relpath)
@@ -17,21 +21,22 @@ function! Powerline#Functions#GetFilepath() " {{{
 		" full name, and the subsequent directories are shortened to their
 		" first letter, i.e. "/home/user/foo/foo/bar/baz.vim" becomes
 		" "~/foo/f/b/baz.vim"
-		let fpath = split(headpath, '/')
+		let fpath = split(fullpath, dirsep)
 		let fpath_shortparts = map(fpath[1:], 'v:val[0]')
-		let ret = join(extend([fpath[0]], fpath_shortparts), '/') .'/'
+		let ret = join(extend([fpath[0]], fpath_shortparts), dirsep) . dirsep
 	elseif g:Powerline_stl_path_style == 'relative'
 		" Display a relative path, similar to the %f statusline item
-		let ret = headpath .'/'
+		let ret = headpath . dirsep
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
-		let ret = fullpath .'/'
+		let ret = fullpath . dirsep
 	endif
 
-	if ret == './'
+	if ret == ('.'. dirsep)
 		return ''
 	endif
 
+	let b:Powerline_filepath = ret
 	return ret
 endfunction " }}}
 function! Powerline#Functions#GetShortPath(threshold) " {{{
