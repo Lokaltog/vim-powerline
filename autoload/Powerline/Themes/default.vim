@@ -113,5 +113,11 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , ['raw.name', '%{Powerline#Functions#GetShortPath(4)}']
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
-	\ )
+	\ ),
+	\
+	\ Pl#Theme#Buffer('calendar'
+		\ , ['static_str.name', 'Calendar']
+		\ , Pl#Segment#Truncate()
+		\ , Pl#Segment#Split()
+	\ ),
 \ )
