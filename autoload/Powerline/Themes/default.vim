@@ -83,9 +83,11 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Split()
 	\ ),
 	\
-	\ Pl#Theme#Buffer('tagbar'
+	\ Pl#Theme#Buffer('tagbar', Pl#Theme#Callback('tagbar_main', 'if ! exists("g:tagbar_statusfuncs") | let g:tagbar_statusfuncs = {} | endif | let g:tagbar_statusfuncs.tagbar = "%s"')
 		\ , ['static_str.name', 'Tagbar']
-		\ , ['static_str.buffer', 'Tree']
+		\ , 'tagbar:current'
+		\ , 'tagbar:sort'
+		\ , 'tagbar:fname'
 		\ , Pl#Segment#Truncate()
 		\ , Pl#Segment#Split()
 	\ ),

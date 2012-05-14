@@ -130,6 +130,11 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'N': ['mediumgreen', 'darkestgreen', ['bold']],
 		\ }),
 	\
+	\ Pl#Hi#Segments(['tagbar:current', 'tagbar:sort', 'tagbar:fname'], {
+		\ 'n': ['white', 'mediumgreen', ['bold']],
+		\ 'N': ['mediumgreen', 'darkestgreen', ['bold']],
+		\ }),
+	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.buffer', 'tagbar:static_str.buffer'], {
 		\ 'n': ['brightgreen', 'darkgreen'],
 		\ 'N': ['mediumgreen', 'darkestgreen'],
