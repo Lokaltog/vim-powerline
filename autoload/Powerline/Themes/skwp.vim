@@ -39,7 +39,7 @@ let g:Powerline#Themes#skwp#theme = Pl#Theme#Create(
 		\ , Pl#Segment#Split()
 	\ ),
 	\
-	\ Pl#Theme#Buffer('ft_help'
+	\ Pl#Theme#Buffer('bt_help'
 		\ , ['static_str.name', 'Help']
 		\ , 'filename'
 		\ , Pl#Segment#Truncate()
