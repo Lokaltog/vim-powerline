@@ -8,7 +8,7 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , 'aurum:status'
 		\ , 'syntastic:errors'
 		\ , Pl#Segment#Truncate()
-		\ , 'cfi:current_function'
+		\ , 'tagbar:currenttag'
 		\ , Pl#Segment#Split()
 		\ , 'rvm:string'
 		\ , 'virtualenv:statusline'
