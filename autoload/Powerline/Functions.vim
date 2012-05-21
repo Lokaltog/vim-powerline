@@ -7,7 +7,7 @@ function! Powerline#Functions#GetFilepath() " {{{
 	endif
 
 	let dirsep = has('win32') && ! &shellslash ? '\' : '/'
-	let filepath = expand('%')
+	let filepath = expand('%:p')
 
 	if empty(filepath)
 		return ''
@@ -23,7 +23,8 @@ function! Powerline#Functions#GetFilepath() " {{{
 		"
 		" This displays the shortest possible path, relative to ~ or the
 		" current directory.
-		let fpath = split(fnamemodify(filepath, ':~:.:h'), dirsep)
+		let mod = (exists('+acd') && &acd) ? ':~:h' : ':~:.:h'
+		let fpath = split(fnamemodify(filepath, mod), dirsep)
 		let fpath_shortparts = map(fpath[1:], 'v:val[0]')
 		let ret = join(extend([fpath[0]], fpath_shortparts), dirsep) . dirsep
 	elseif g:Powerline_stl_path_style == 'relative'
@@ -31,10 +32,10 @@ function! Powerline#Functions#GetFilepath() " {{{
 		let ret = fnamemodify(filepath, ':.:h') . dirsep
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
-		let ret = filepath . dirsep
+		let ret = fnamemodify(filepath, ':h') . dirsep
 	endif
 
-	if ret == ('.'. dirsep)
+	if ret == ('.' . dirsep)
 		return ''
 	endif
 
