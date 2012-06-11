@@ -66,7 +66,7 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 		\ 'i': ['white', 'darkblue', ['bold']],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['fileinfo.filepath', 'status'], {
+	\ Pl#Hi#Segments(['fileinfo.filepath'], {
 		\ 'n': ['gray10'],
 		\ 'N': ['gray5'],
 		\ 'i': ['mediumcyan'],
