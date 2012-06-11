@@ -98,8 +98,8 @@ startup time after the cache file has been generated (the plugin usually loads
 within ~100ms without the cache and ~1ms with the cache).
 
 Note: The default cache filename includes the current theme, colorscheme and 
-symbol settings in order to tie the cache file your current configuration, so 
-the cache file will be regenerated when you change any settings. This may 
+symbol settings in order to tie the cache file to your current configuration, 
+so the cache file will be regenerated when you change any settings. This may 
 leave several old cache files in your vim folder, and these may safely be 
 deleted.
 
