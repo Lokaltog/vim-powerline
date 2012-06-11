@@ -1,5 +1,5 @@
-let g:Powerline#Segments#tagbar#segments = Pl#Segment#Init(['tagbar'
-	\ (exists('g:loaded_tagbar') && g:loaded_tagbar == 1),
+let g:Powerline#Segments#tagbar#segments = Pl#Segment#Init(['tagbar',
+	\ (exists(':Tagbar') > 0),
 	\
-	\ , Pl#Segment#Create('currenttag', '%{tagbar#currenttag("%s", "")}', Pl#Segment#Modes('!N'))
+	\ Pl#Segment#Create('currenttag', '%{tagbar#currenttag("%s", "")}', Pl#Segment#Modes('!N'))
 \ ])
