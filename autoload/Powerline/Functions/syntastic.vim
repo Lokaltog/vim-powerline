@@ -6,7 +6,7 @@ function! Powerline#Functions#syntastic#GetErrors(line_symbol) " {{{
 
 	" Temporarily change syntastic output format
 	let old_stl_format = g:syntastic_stl_format
-	let g:syntastic_stl_format = '╱╱╱%E{ ERRORS (%e) '. a:line_symbol .' %fe }%W{ WARNINGS (%w) '. a:line_symbol .' %fw }╱╱╱'
+	let g:syntastic_stl_format = '%E{ ERRORS (%e) '. a:line_symbol .' %fe }%W{ WARNINGS (%w) '. a:line_symbol .' %fw }'
 
 	let ret = SyntasticStatuslineFlag()
 
