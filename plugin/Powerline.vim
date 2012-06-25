@@ -42,20 +42,28 @@
 	endif
 " }}}
 " Autocommands {{{
-	augroup Powerline
+	function! s:CreateAutocmds()
+		augroup PowerlineMain
+			autocmd!
+
+			" Reload statuslines when changing color scheme
+			autocmd ColorScheme *
+				\ call Pl#Load()
+
+			autocmd BufEnter,WinEnter,FileType,BufUnload *
+				\ call Pl#UpdateStatusline(1)
+
+			autocmd BufLeave,WinLeave *
+				\ call Pl#UpdateStatusline(0)
+
+			autocmd BufWritePost */autoload/Powerline/Colorschemes/*.vim
+				\ :PowerlineReloadColorscheme
+		augroup END
+	endfunction
+
+	augroup PowerlineStartup
 		autocmd!
 
-		" Reload statuslines when changing color scheme
-		au ColorScheme *
-			\ call Pl#Load()
-
-		au BufEnter,WinEnter,FileType,BufUnload *
-			\ call Pl#UpdateStatusline(1)
-
-		au BufLeave,WinLeave *
-			\ call Pl#UpdateStatusline(0)
-
-		au BufWritePost */autoload/Powerline/Colorschemes/*.vim
-			\ :PowerlineReloadColorscheme
+		autocmd VimEnter * call s:CreateAutocmds() | call Pl#UpdateStatusline(1)
 	augroup END
 " }}}
