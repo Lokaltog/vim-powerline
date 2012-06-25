@@ -124,6 +124,9 @@ I'm using tmux and Powerline looks like crap, what's wrong?
 
         set -g default-terminal "screen-256color"
 
+    If you use iTerm2, make sure that you have enabled the setting 'Set 
+    locale variables automatically' in Profiles > Terminal > Environment.
+
 If you have any other issues and you can't find the answer in the docs, 
 please submit an issue on GitHub.
 
