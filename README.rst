@@ -74,6 +74,10 @@ I can't see the fancy symbols, what's wrong?
 
     Make sure that vim is compiled with the ``--with-features=big`` flag.
 
+The fancy symbols look a bit blurry or "off"!
+    Make sure that you have patched all variants of your font (i.e. both the 
+    regular and the bold font files).
+
 I'm unable to patch my font, what should I do?
     Font patching is only known to work on most Linux and OS X machines. If 
     you have followed the instructions in the fontpatcher README and still 
