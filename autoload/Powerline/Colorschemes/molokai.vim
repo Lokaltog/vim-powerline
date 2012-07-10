@@ -39,7 +39,7 @@ call Pl#Hi#Allocate({
 	\ 'gray10'         : 252,
 	\ })
 
-let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
+let g:Powerline#Colorschemes#molokai#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['SPLIT'], {
 		\ 'n': ['white', 'gray2'],
 		\ 'N': ['white', 'gray0'],
