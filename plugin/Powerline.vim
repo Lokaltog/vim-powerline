@@ -64,6 +64,6 @@
 	augroup PowerlineStartup
 		autocmd!
 
-		autocmd VimEnter * call s:CreateAutocmds() | call Pl#UpdateStatusline(1)
+		autocmd VimEnter * call s:CreateAutocmds() | call Pl#UpdateStatusline(1) | call Pl#ModeNames()
 	augroup END
 " }}}

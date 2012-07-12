@@ -186,6 +186,28 @@ Example: >
 
     let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 <
+
+------------------------------------------------------------------------------
+4.3.5 Overriding mode names                                   *Powerline_mode*
+
+You can change the names used for modes at the far left by setting some
+variables in your |vimrc|. For example you can change "N" to "NORMAL" with: >
+
+    let g:Powerline_mode_n = 'NORMAL'
+<
+The variables are all named beginning with 'g:Powerline_mode_', as follows:
+
+mode                name    default       note ~
+Normal              n       ' N '         (surrounded by spaces)
+Insert              i       INSERT
+Replace             R       REPLACE       |Replace-mode|
+Visual              v       VISUAL        |Visual-mode|
+Visual linewise     V       V⋅LINE
+Visual blockwise    cv      V⋅BLOCK
+Select              s       SELECT        |Select-mode|
+Select linewise     S       S⋅LINE
+Select blockwise    cs      S⋅BLOCK
+
 -----------------------------------------------------------------------------
 4.4 Powerline_theme                                          *Powerline_theme*
 
