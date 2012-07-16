@@ -182,7 +182,7 @@
 	endfunction " }}}
 	function! Pl#ModeNames()
 		let names = {
-			\ 'n':  ' N '
+			\ 'n':  ' N ',
 			\ 'R':  'REPLACE',
 			\ 'i':  'INSERT',
 			\ 'v':  'VISUAL',
@@ -190,7 +190,7 @@
 			\ 'cv': 'V⋅BLOCK',
 			\ 's':  'SELECT',
 			\ 'S':  'S⋅LINE',
-			\ 'cs': 'S⋅BLOCK',
+			\ 'cs': 'S⋅BLOCK'
 			\ }
 		for n in keys(names)
 			if !exists('g:Powerline_mode_'.n)
