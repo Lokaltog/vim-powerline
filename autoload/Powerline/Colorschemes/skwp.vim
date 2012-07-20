@@ -105,7 +105,7 @@ let g:Powerline#Colorschemes#skwp#colorscheme = Pl#Colorscheme#Init([
 		\ 'i': ['base03', ['bold']],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['currenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
+	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
 		\ 'n': ['gray5', 'gray2'],
 		\ 'i': ['mediumcyan', 'base02'],
 		\ }),
