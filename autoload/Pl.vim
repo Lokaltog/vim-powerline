@@ -180,22 +180,4 @@
 			endif
 		endfor
 	endfunction " }}}
-	function! Pl#ModeNames()
-		let names = {
-			\ 'n':  ' N ',
-			\ 'R':  'REPLACE',
-			\ 'i':  'INSERT',
-			\ 'v':  'VISUAL',
-			\ 'V':  'V⋅LINE',
-			\ 'cv': 'V⋅BLOCK',
-			\ 's':  'SELECT',
-			\ 'S':  'S⋅LINE',
-			\ 'cs': 'S⋅BLOCK'
-			\ }
-		for n in keys(names)
-			if !exists('g:Powerline_mode_'.n)
-				let g:Powerline_mode_{n} = names[n]
-			endif
-		endfor
-	endfunction
 " }}}
