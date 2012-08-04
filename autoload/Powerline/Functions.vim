@@ -2,6 +2,13 @@
 autocmd CursorHold,BufWritePost,InsertLeave * unlet! b:statusline_trailing_space_warning
 
 function! Powerline#Functions#GetFilepath() " {{{
+	" Recalculate the filepath when cwd changes.
+	let cwd = getcwd()
+	if exists("b:Powerline_cwd") && cwd != b:Powerline_cwd
+		unlet! b:Powerline_filepath
+	endif
+	let b:Powerline_cwd = cwd
+
 	if exists('b:Powerline_filepath')
 		return b:Powerline_filepath
 	endif
