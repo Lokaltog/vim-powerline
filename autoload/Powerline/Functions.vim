@@ -36,7 +36,7 @@ function! Powerline#Functions#GetFilepath() " {{{
 	endif
 
 	if ret == ('.' . dirsep)
-		return ''
+		let ret = ''
 	endif
 
 	let b:Powerline_filepath = ret
