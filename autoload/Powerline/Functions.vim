@@ -29,7 +29,7 @@ function! Powerline#Functions#GetFilepath() " {{{
 		let ret = join(extend([fpath[0]], fpath_shortparts), dirsep) . dirsep
 	elseif g:Powerline_stl_path_style == 'relative'
 		" Display a relative path, similar to the %f statusline item
-		let ret = fnamemodify(filepath, ':.:h') . dirsep
+		let ret = fnamemodify(filepath, ':~:.:h') . dirsep
 	elseif g:Powerline_stl_path_style == 'full'
 		" Display the full path, similar to the %F statusline item
 		let ret = fnamemodify(filepath, ':h') . dirsep
