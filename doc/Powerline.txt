@@ -46,7 +46,7 @@ CONTENTS                                                  *Powerline-contents*
 1. Introduction                           *Powerline* *Powerline-introduction*
 
 Powerline is a utility plugin which allows you to create better-looking, more 
-functional vim statuslines.
+functional Vim statuslines.
 
 ==============================================================================
 2. Usage                                                     *Powerline-usage*
@@ -54,14 +54,21 @@ functional vim statuslines.
 Powerline is automatically enabled when it's installed, either by unzipping 
 the provided archive or by adding it as a Pathogen/Vundle bundle.
 
+Powerline replaces the standard Vim 'statusline' with a custom statusline made 
+up of Powerline segments.
+
+Powerline ignores any 'statusline' customizations you have defined in your 
+|vimrc|. If you remove Powerline, your 'statusline' customizations are 
+restored.
+
 ==============================================================================
 3. Requirements                                       *Powerline-requirements*
 
-Powerline has been developed and tested in vim 7.3, but it should run without 
-any problems in vim 7.2. The default configuration requires a Unix-like system 
+Powerline has been developed and tested in Vim 7.3, but it should run without 
+any problems in Vim 7.2. The default configuration requires a Unix-like system 
 to work properly.
 
-The plugin only works with vim running in an 88/256-color terminal or gvim.
+The plugin only works with Vim running in an 88/256-color terminal or Gvim.
 
 Vi-compatible mode must be disabled.
 
@@ -72,12 +79,12 @@ The following configuration options should be set in your |vimrc|: >
 
     set nocompatible   " Disable vi-compatibility
     set laststatus=2   " Always show the statusline
-    set encoding=utf-8 " Necessary to show unicode glyphs
+    set encoding=utf-8 " Necessary to show Unicode glyphs
 
 Note: If you're using an 88/256-color terminal but still don't see the colored 
 statusline, you may have to set the following option as well: >
 
-    set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
+    set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
 
 ==============================================================================
 4. Configuration                                     *Powerline-configuration*
@@ -90,17 +97,17 @@ file.
 4.1 Powerline_cache_file                                *Powerline_cache_file*
 
 By default Powerline caches all the statuslines and colors in a cache file in 
-the plugin's directory (or the vim directory, depending on the installation 
+the plugin's directory (or the Vim directory, depending on the installation 
 method used).
 
-It's recommended that you enable the cache, as this dramatically improves vim 
+It's recommended that you enable the cache, as this dramatically improves Vim 
 startup time after the cache file has been generated (the plugin usually loads 
 within ~100ms without the cache and ~1ms with the cache).
 
 Note: The default cache filename includes the current theme, colorscheme and 
 symbol settings in order to tie the cache file to your current configuration, 
 so the cache file will be regenerated when you change any settings. This may 
-leave several old cache files in your vim folder, and these may safely be 
+leave several old cache files in your Vim folder, and these may safely be 
 deleted.
 
 Defaults: "<plugin_directory>/Powerline_<theme>_<colorscheme>_<symbols>.cache"
@@ -110,7 +117,7 @@ Defaults: "<plugin_directory>/Powerline_<theme>_<colorscheme>_<symbols>.cache"
 
 Powerline provides a command to easily clear the cache after changing your 
 settings or updating your theme. Simply run the following command to clear 
-your cache, and restart vim afterwards: >
+your cache, and restart Vim afterwards: >
 
     :PowerlineClearCache
 <
@@ -119,6 +126,11 @@ your cache, and restart vim afterwards: >
 
 It's possible to disable statusline caching by setting this option to 0. This 
 is mostly useful when developing statuslines.
+
+Example: >
+
+    let g:Powerline_cache_enabled = 0
+<
 
 Default: 1
 
@@ -130,8 +142,15 @@ are currently three available options: "compatible", "unicode" and "fancy".
 
     TYPE           DESCRIPTION ~
     compatible     Doesn't use any special characters.
-    unicode        Simulates icons and arrows using similar unicode glyphs.
+    unicode        Simulates icons and arrows using similar Unicode glyphs.
     fancy          Custom icons and arrows. Requires a patched font.
+
+Example: >
+
+    let g:Powerline_symbols = 'fancy'
+<
+
+Default: "compatible"
 
 Symbols can be inserted into statuslines by using the following variables 
 (just insert the variables as text in your segments):
@@ -141,8 +160,6 @@ Symbols can be inserted into statuslines by using the following variables
     $RO            Inserts a read-only symbol
     $FT            Inserts a filetype symbol
     $LINE          Inserts a line number symbol
-
-Default: "compatible"
 
 ------------------------------------------------------------------------------
 4.3.1 Compatible symbols                        *Powerline-symbols-compatible*
@@ -186,11 +203,39 @@ Example: >
 
     let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 <
+
+------------------------------------------------------------------------------
+4.3.5 Overriding mode names                                   *Powerline_mode*
+
+You can change the names used for modes at the far left by setting some
+variables in your |vimrc|. For example you can change "N" to "NORMAL" with: >
+
+    let g:Powerline_mode_n = 'NORMAL'
+<
+The variables are all named beginning with 'g:Powerline_mode_', as follows:
+
+mode                name    default       note ~
+Normal              n       ' N '         (surrounded by spaces)
+Insert              i       INSERT
+Replace             R       REPLACE       |Replace-mode|
+Visual              v       VISUAL        |Visual-mode|
+Visual linewise     V       V⋅LINE
+Visual blockwise    cv      V⋅BLOCK
+Select              s       SELECT        |Select-mode|
+Select linewise     S       S⋅LINE
+Select blockwise    cs      S⋅BLOCK
+
 -----------------------------------------------------------------------------
 4.4 Powerline_theme                                          *Powerline_theme*
 
 This option defines the theme Powerline uses. The available themes are located 
-in autoload/Powerline/Themes/.
+in autoload/Powerline/Themes/. A theme is a pre-defined set of Powerline 
+segments which make up the statusline.
+
+Example: >
+
+    let g:Powerline_theme = 'skwp'
+<
 
 Default: "default"
 
@@ -199,6 +244,11 @@ Default: "default"
 
 This option defines the colorscheme Powerline uses. The available colorschemes 
 are located in autoload/Powerline/Colorschemes/.
+
+Example: >
+
+    let g:Powerline_colorscheme = 'skwp'
+<
 
 Default: "default"
 
@@ -221,6 +271,11 @@ display the current path and file name:
     relative   Display a relative path, similar to the %f statusline item.
     full       Display the full path, similar to the %F statusline item.
 
+Example: >
+
+    let g:Powerline_stl_path_style = 'full'
+<
+
 Default: "relative"
 
 ==============================================================================
@@ -242,7 +297,7 @@ without ever touching the original source code.
 
 Powerline provides the following functions to alter the default statusline 
 look. These functions should be called from your |vimrc| file or another file 
-which is sourced at vim startup.
+which is sourced at Vim startup.
 
 Note: These functions are currently applied to all statuslines, so if you 
 insert a segment after a segment which is present in many statuslines (e.g.  
@@ -280,7 +335,7 @@ This function replaces {oldsegment} with {newsegment}.
 ------------------------------------------------------------------------------
 6.2 Advanced customization                  *Powerline-advanced-customization*
 
-Because Powerline utilizes vim's autoload functionality, you can easily create 
+Because Powerline utilizes Vim's autoload functionality, you can easily create 
 your own segments, themes, functions and colorschemes without touching the 
 original source code. This is a bit more complex than using the utility 
 functions, but it allows you to do a lot more with your statusline.

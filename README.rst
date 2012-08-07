@@ -31,33 +31,7 @@ instructions.
 Screenshots
 -----------
 
-**Normal mode**
-
-.. image:: http://i.imgur.com/xFmOt.png
-
-**Insert mode**
-
-.. image:: http://i.imgur.com/5vDlB.png
-
-**Command-T buffer** with custom color
-
-.. image:: http://i.imgur.com/fDIhz.png
-
-**Tagbar buffer** with custom color
-
-.. image:: http://i.imgur.com/WZUvj.png
-
-**Symbols when buffer is modified or read-only**
-
-.. image:: http://i.imgur.com/dGJHZ.png
-
-**Split window showing inactive buffer statusline**
-
-.. image:: http://i.imgur.com/z18KU.png
-
-**Normal mode without custom font**
-
-.. image:: http://i.imgur.com/yCybn.png
+.. image:: http://i.imgur.com/MsuIB.png
 
 Troubleshooting
 ---------------
