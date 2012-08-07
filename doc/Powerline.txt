@@ -54,6 +54,13 @@ functional Vim statuslines.
 Powerline is automatically enabled when it's installed, either by unzipping 
 the provided archive or by adding it as a Pathogen/Vundle bundle.
 
+Powerline replaces the standard Vim 'statusline' with a custom statusline made 
+up of Powerline segments.
+
+Powerline ignores any 'statusline' customizations you have defined in your 
+|vimrc|. If you remove Powerline, your 'statusline' customizations are 
+restored.
+
 ==============================================================================
 3. Requirements                                       *Powerline-requirements*
 
@@ -120,6 +127,11 @@ your cache, and restart Vim afterwards: >
 It's possible to disable statusline caching by setting this option to 0. This 
 is mostly useful when developing statuslines.
 
+Example: >
+
+    let g:Powerline_cache_enabled = 0
+<
+
 Default: 1
 
 ------------------------------------------------------------------------------
@@ -133,6 +145,13 @@ are currently three available options: "compatible", "unicode" and "fancy".
     unicode        Simulates icons and arrows using similar Unicode glyphs.
     fancy          Custom icons and arrows. Requires a patched font.
 
+Example: >
+
+    let g:Powerline_symbols = 'fancy'
+<
+
+Default: "compatible"
+
 Symbols can be inserted into statuslines by using the following variables 
 (just insert the variables as text in your segments):
 
@@ -141,8 +160,6 @@ Symbols can be inserted into statuslines by using the following variables
     $RO            Inserts a read-only symbol
     $FT            Inserts a filetype symbol
     $LINE          Inserts a line number symbol
-
-Default: "compatible"
 
 ------------------------------------------------------------------------------
 4.3.1 Compatible symbols                        *Powerline-symbols-compatible*
@@ -190,7 +207,13 @@ Example: >
 4.4 Powerline_theme                                          *Powerline_theme*
 
 This option defines the theme Powerline uses. The available themes are located 
-in autoload/Powerline/Themes/.
+in autoload/Powerline/Themes/. A theme is a pre-defined set of Powerline 
+segments which make up the statusline.
+
+Example: >
+
+    let g:Powerline_theme = 'skwp'
+<
 
 Default: "default"
 
@@ -199,6 +222,11 @@ Default: "default"
 
 This option defines the colorscheme Powerline uses. The available colorschemes 
 are located in autoload/Powerline/Colorschemes/.
+
+Example: >
+
+    let g:Powerline_colorscheme = 'skwp'
+<
 
 Default: "default"
 
@@ -220,6 +248,11 @@ display the current path and file name:
                "long/r/p/f/b/baz.vim".
     relative   Display a relative path, similar to the %f statusline item.
     full       Display the full path, similar to the %F statusline item.
+
+Example: >
+
+    let g:Powerline_stl_path_style = 'full'
+<
 
 Default: "relative"
 
