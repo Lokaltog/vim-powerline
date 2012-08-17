@@ -54,10 +54,10 @@
 			autocmd ColorScheme *
 				\ call Pl#Load()
 
-			autocmd BufEnter,WinEnter,FileType,BufUnload *
+			autocmd BufEnter,WinEnter,FileType,BufUnload,CmdWinEnter *
 				\ call Pl#UpdateStatusline(1)
 
-			autocmd BufLeave,WinLeave *
+			autocmd BufLeave,WinLeave,CmdWinLeave *
 				\ call Pl#UpdateStatusline(0)
 
 			autocmd BufWritePost */autoload/Powerline/Colorschemes/*.vim
