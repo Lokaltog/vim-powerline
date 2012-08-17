@@ -33,7 +33,7 @@ function! Pl#Match#Validate(theme, window) " {{{
 		endif
 
 		for [eval, re] in matches
-			if match(eval(eval), '\v'. re) != -1
+			if match(eval(eval), '\v\C'. re) != -1
 				return 1
 			endif
 		endfor
