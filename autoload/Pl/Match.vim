@@ -19,7 +19,7 @@ function! Pl#Match#Any(...) " {{{
 
 	return ['match', 'any', matches]
 endfunction " }}}
-function! Pl#Match#Validate(theme) " {{{
+function! Pl#Match#Validate(theme, window) " {{{
 	let match = a:theme.matches[1]
 
 	if match == 'none'

@@ -167,16 +167,17 @@
 			\ '\=a:args[submatch(1)]',
 			\ 'g')
 	endfunction " }}}
-	function! Pl#UpdateStatusline(current) " {{{
+	function! Pl#UpdateStatusline(current, ...) " {{{
 		if empty(g:Pl#THEME)
 			" Load statuslines if they aren't loaded yet
 			call Pl#Load()
 		endif
 
-		for i in range(0, len(g:Pl#THEME) - 1)
-			if Pl#Match#Validate(g:Pl#THEME[i])
+		for i in range(len(g:Pl#THEME))
+			if Pl#Match#Validate(g:Pl#THEME[i], a:0 ? a:1 : 0)
 				" Update window-local statusline
-				let &l:statusline = '%!Pl#Statusline('. i .','. a:current .')'
+				call setwinvar(a:0 ? a:1 : 0, '&statusline',
+				            \  '%!Pl#Statusline('. i .','. a:current .')')
 			endif
 		endfor
 	endfunction " }}}
