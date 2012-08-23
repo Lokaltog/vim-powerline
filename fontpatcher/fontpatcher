@@ -22,6 +22,7 @@ from __future__ import division
 import argparse
 import os
 import sys
+import re
 
 try:
 	import fontforge
@@ -42,6 +43,8 @@ parser = argparse.ArgumentParser(description='Font patcher for Powerline. Create
 parser.add_argument('fonts', help='font file to patch', metavar='font', nargs='+')
 parser.add_argument('--no-rename', help='don\'t add " for Powerline" to the font name', default=True, action='store_false', dest='rename')
 parser.add_argument('--symbol-font', help='font file with symbols', metavar='font', dest='symbol_font', default='{0}/PowerlineSymbols.sfd'.format(sys.path[0]))
+parser.add_argument('--fix-mono', help='fixes some mono-fonts which have glyphs of 0 widths', default=False, action='store_true', dest='fixmono')
+parser.add_argument('--fix-win', help='modifies font names such that Windows correctly recognizes font families', default=False, action='store_true', dest='fixwin')
 
 args = parser.parse_args()
 
@@ -78,6 +81,8 @@ for font_path in args.fonts:
 		font.fontname += 'ForPowerline'
 		font.appendSFNTName('English (US)', 'Preferred Family', font.familyname)
 		font.appendSFNTName('English (US)', 'Compatible Full', font.fullname)
+	if args.fixwin:
+		font.fontname = re.sub(r'\W', '', font.familyname)
 
 	# Force the em size to be equal
 	symbols.em = font.em
@@ -222,6 +227,9 @@ for font_path in args.fonts:
 	if extension.lower() not in ['ttf', 'otf']:
 		# Default to OpenType if input is not TrueType/OpenType
 		extension = 'otf'
+	if args.fixmono:
+		for glyph in font.glyphs():
+			if glyph.width == 0: glyph.width = font_dim['width']
 
 	if onlybitmaps:
 		# Generate BDF font
