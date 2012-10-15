@@ -32,9 +32,13 @@
 		unlet! s:key s:value
 	endfor
 
+	if ! exists('g:Powerline_cache_dir')
+		let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/..')
+	endif
+
 	if ! exists('g:Powerline_cache_file')
 		exec 'let g:Powerline_cache_file = '. string(printf('%s/Powerline_%s_%s_%s.cache'
-			\ , simplify(expand('<sfile>:p:h') .'/..')
+			\ , g:Powerline_cache_dir
 			\ , g:Powerline_theme
 			\ , g:Powerline_colorscheme
 			\ , g:Powerline_symbols
