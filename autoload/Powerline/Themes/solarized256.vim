@@ -8,7 +8,7 @@
 "
 " Line info taken out - I know which line number I'm on from the gutter
 "\ , 'lineinfo'
-let g:Powerline#Themes#skwp#theme = Pl#Theme#Create(
+let g:Powerline#Themes#solarized256#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'fugitive:branch'
 		\ , 'fileinfo'
