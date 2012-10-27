@@ -1,3 +1,6 @@
+" Authors:
+"   @stephenmckinney
+"
 let g:Powerline#Themes#skwp16#theme = Pl#Theme#Create(
 	\ Pl#Theme#Buffer(''
 		\ , 'fugitive:branch'

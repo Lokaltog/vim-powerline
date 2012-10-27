@@ -1,3 +1,6 @@
+" Authors:
+"   @stephenmckinney
+"
 " This colorscheme is based on Solarized-dark colors, setting the specific
 " values for the Solarized palette, using the terminal's 16 ansi
 " color values. It combines Solarized with Powerline native colors.
