@@ -75,23 +75,17 @@ let g:Powerline#Colorschemes#skwp16#colorscheme= Pl#Colorscheme#Init([
 	\
 	\ Pl#Hi#Segments(['branch', 'raw', 'filesize'], {
 		\ 'n': ['base03', 'blue'],
-		\ 'N': ['gray5', 'base03'],
-		\ }),
-	\
-	\ Pl#Hi#Segments(['scrollpercent'], {
-		\ 'n': ['gray7', 'gray2'],
-		\ 'N': ['base2', 'base02'],
+		\ 'N': ['base00', 'base03'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo', 'filename', 'filepath'], {
-		\ 'n': ['base2', 'darkestblue', ['bold']],
-		\ 'N': ['base1', 'base02', ['bold']],
+		\ 'n': ['base3', 'darkestblue', ['bold']],
+		\ 'N': ['base0', 'base02', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['fileinfo.filepath'], {
-		\ 'n': ['gray10'],
-		\ 'N': ['gray5'],
-		\ 'i': ['mediumcyan'],
+		\ 'n': ['base2'],
+		\ 'N': ['base00'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['static_str'], {
@@ -107,8 +101,13 @@ let g:Powerline#Colorschemes#skwp16#colorscheme= Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
-		\ 'n': ['gray5', 'gray2'],
-		\ 'i': ['mediumcyan', 'base02'],
+		\ 'n': ['base1', 'base02'],
+		\ 'N': ['base00', 'base03'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['scrollpercent'], {
+		\ 'n': ['base1', 'base02', ['bold']],
+		\ 'N': ['base00', 'base03'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lineinfo'], {
