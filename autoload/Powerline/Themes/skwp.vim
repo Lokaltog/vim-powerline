@@ -1,3 +1,6 @@
+" Authors:
+"   @skwp
+"
 " Disabled:
 " Add the following line into the first theme group to see the highlight
 " group
