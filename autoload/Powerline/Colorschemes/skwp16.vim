@@ -147,8 +147,8 @@ let g:Powerline#Colorschemes#skwp16#colorscheme= Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.name', 'minibufexplorer:static_str.name', 'nerdtree:raw.name', 'tagbar:static_str.name'], {
-		\ 'n': ['gray10', 'darkestblue', ['bold']],
-		\ 'N': ['gray3', 'base02', ['bold']],
+		\ 'n': ['base3', 'darkestblue', ['bold']],
+		\ 'N': ['base01', 'base02', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['lustyexplorer:static_str.buffer', 'tagbar:static_str.buffer'], {
@@ -162,27 +162,27 @@ let g:Powerline#Colorschemes#skwp16#colorscheme= Pl#Colorscheme#Init([
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:focus', 'ctrlp:byfname'], {
-		\ 'n': ['green', 'base03'],
-		\ }),
-	\
-	\ Pl#Hi#Segments(['ctrlp:prev', 'ctrlp:next', 'ctrlp:pwd'], {
 		\ 'n': ['green', 'base02'],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['ctrlp:item'], {
+	\ Pl#Hi#Segments(['ctrlp:prev', 'ctrlp:next'], {
+		\ 'n': ['green', 'base02'],
+		\ }),
+	\
+	\ Pl#Hi#Segments(['ctrlp:item', 'ctrlp:pwd'], {
 		\ 'n': ['base2', 'darkestblue', ['bold']],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:marked'], {
-		\ 'n': ['brightgreen', 'base03', ['bold']],
+		\ 'n': ['green', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:count'], {
-		\ 'n': ['base0', 'base03'],
+		\ 'n': ['base0', 'base02'],
 		\ }),
 	\
 	\ Pl#Hi#Segments(['ctrlp:SPLIT'], {
-		\ 'n': ['white', 'base03'],
+		\ 'n': ['white', 'base02'],
 		\ }),
   \
   \ Pl#Hi#Segments(['status'], {
