@@ -234,7 +234,7 @@ segments which make up the statusline.
 
 Example: >
 
-    let g:Powerline_theme = 'skwp'
+    let g:Powerline_theme = 'solarized256'
 <
 
 Default: "default"
@@ -247,7 +247,7 @@ are located in autoload/Powerline/Colorschemes/.
 
 Example: >
 
-    let g:Powerline_colorscheme = 'skwp'
+    let g:Powerline_colorscheme = 'solarized256'
 <
 
 Default: "default"
