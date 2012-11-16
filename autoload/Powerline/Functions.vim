@@ -9,6 +9,14 @@ function! Powerline#Functions#GetFilepath() " {{{
 	endif
 	let b:Powerline_cwd = cwd
 
+	" Recalculate the filepath when the file changes its full path
+	let filepath = expand('%:p')
+	if exists("b:Powerline_full_filepath") && filepath != b:Powerline_full_filepath
+		unlet! b:Powerline_filepath
+	endif
+	let b:Powerline_full_filepath = filepath
+
+
 	if exists('b:Powerline_filepath')
 		return b:Powerline_filepath
 	endif
