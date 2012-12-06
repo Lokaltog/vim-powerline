@@ -32,9 +32,13 @@
 		unlet! s:key s:value
 	endfor
 
+	if ! exists('g:Powerline_cache_dir')
+		let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/..')
+	endif
+
 	if ! exists('g:Powerline_cache_file')
 		exec 'let g:Powerline_cache_file = '. string(printf('%s/Powerline_%s_%s_%s.cache'
-			\ , simplify(expand('<sfile>:p:h') .'/..')
+			\ , g:Powerline_cache_dir
 			\ , g:Powerline_theme
 			\ , g:Powerline_colorscheme
 			\ , g:Powerline_symbols
@@ -42,7 +46,7 @@
 	endif
 " }}}
 " Autocommands {{{
-	function! s:CreateAutocmds()
+	function! s:Startup()
 		augroup PowerlineMain
 			autocmd!
 
@@ -50,20 +54,25 @@
 			autocmd ColorScheme *
 				\ call Pl#Load()
 
-			autocmd BufEnter,WinEnter,FileType,BufUnload *
+			autocmd BufEnter,WinEnter,FileType,BufUnload,CmdWinEnter *
 				\ call Pl#UpdateStatusline(1)
 
-			autocmd BufLeave,WinLeave *
+			autocmd BufLeave,WinLeave,CmdWinLeave *
 				\ call Pl#UpdateStatusline(0)
 
 			autocmd BufWritePost */autoload/Powerline/Colorschemes/*.vim
 				\ :PowerlineReloadColorscheme
 		augroup END
+
+		let curwindow = winnr()
+		for window in range(1, winnr('$'))
+			call Pl#UpdateStatusline(window == curwindow, window)
+		endfor
 	endfunction
 
 	augroup PowerlineStartup
 		autocmd!
 
-		autocmd VimEnter * call s:CreateAutocmds() | call Pl#UpdateStatusline(1)
+		autocmd VimEnter * call s:Startup()
 	augroup END
 " }}}

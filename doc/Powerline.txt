@@ -21,6 +21,7 @@ CONTENTS                                                  *Powerline-contents*
     4. Configuration ...................... |Powerline-configuration|
        4.1 Powerline_cache_file ........... |Powerline_cache_file|
            4.1.1 Clearing the cache ....... |:PowerlineClearCache|
+           4.1.2 Powerline_cache_dir ...... |Powerline_cache_dir|
        4.2 Powerline_cache_enabled ........ |Powerline_cache_enabled|
        4.3 Powerline_symbols .............. |Powerline_symbols|
            4.3.1 Compatible symbols ....... |Powerline-symbols-compatible|
@@ -110,10 +111,19 @@ so the cache file will be regenerated when you change any settings. This may
 leave several old cache files in your Vim folder, and these may safely be 
 deleted.
 
-Defaults: "<plugin_directory>/Powerline_<theme>_<colorscheme>_<symbols>.cache"
+Defaults: "|Powerline_cache_dir|/Powerline_<theme>_<colorscheme>_<symbols>.cache"
 
 ------------------------------------------------------------------------------
-4.1.1 Clearing the cache                                *:PowerlineClearCache*
+4.1.1 Powerline_cache_dir                                *Powerline_cache_dir*
+
+This is the directory used for |Powerline_cache_file|.
+
+Default: Plugin directory: >
+
+    let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/..')
+<
+------------------------------------------------------------------------------
+4.1.2 Clearing the cache                                *:PowerlineClearCache*
 
 Powerline provides a command to easily clear the cache after changing your 
 settings or updating your theme. Simply run the following command to clear 
@@ -234,7 +244,7 @@ segments which make up the statusline.
 
 Example: >
 
-    let g:Powerline_theme = 'skwp'
+    let g:Powerline_theme = 'solarized256'
 <
 
 Default: "default"
@@ -247,7 +257,7 @@ are located in autoload/Powerline/Colorschemes/.
 
 Example: >
 
-    let g:Powerline_colorscheme = 'skwp'
+    let g:Powerline_colorscheme = 'solarized256'
 <
 
 Default: "default"

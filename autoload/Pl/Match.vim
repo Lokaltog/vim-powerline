@@ -19,7 +19,7 @@ function! Pl#Match#Any(...) " {{{
 
 	return ['match', 'any', matches]
 endfunction " }}}
-function! Pl#Match#Validate(theme) " {{{
+function! Pl#Match#Validate(theme, window) " {{{
 	let match = a:theme.matches[1]
 
 	if match == 'none'
@@ -33,7 +33,7 @@ function! Pl#Match#Validate(theme) " {{{
 		endif
 
 		for [eval, re] in matches
-			if match(eval(eval), '\v'. re) != -1
+			if match(eval(eval), '\v\C'. re) != -1
 				return 1
 			endif
 		endfor
