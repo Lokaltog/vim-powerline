@@ -64,15 +64,15 @@ function! Powerline#Functions#GetMode() " {{{
 	if mode ==# 'v'
 		let mode = get(g:, "Powerline_mode_v", "VISUAL")
 	elseif mode ==# 'V'
-		let mode = get(g:, "Powerline_mode_V", "V⋅LINE")
+		let mode = get(g:, "Powerline_mode_V", "V·LINE")
 	elseif mode ==# ''
-		let mode = get(g:, "Powerline_mode_cv", "V⋅BLOCK")
+		let mode = get(g:, "Powerline_mode_cv", "V·BLOCK")
 	elseif mode ==# 's'
 		let mode = get(g:, "Powerline_mode_s", "SELECT")
 	elseif mode ==# 'S'
-		let mode = get(g:, "Powerline_mode_S", "S⋅LINE")
+		let mode = get(g:, "Powerline_mode_S", "S·LINE")
 	elseif mode ==# ''
-		let mode = get(g:, "Powerline_mode_cs", "S⋅BLOCK")
+		let mode = get(g:, "Powerline_mode_cs", "S·BLOCK")
 	elseif mode =~# '\vi'
 		let mode = get(g:, "Powerline_mode_i", "INSERT")
 	elseif mode =~# '\v(R|Rv)'
