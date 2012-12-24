@@ -12,6 +12,7 @@ let g:Powerline#Themes#solarized16#theme = Pl#Theme#Create(
 		\ , 'sass:status'
 		\ , 'rvm:string'
 		\ , 'filetype'
+		\ , 'curtime'
 		\ , 'scrollpercent'
 		\ , 'paste_indicator'
 	\ ),

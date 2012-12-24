@@ -14,6 +14,7 @@ let g:Powerline#Themes#default#theme = Pl#Theme#Create(
 		\ , 'fileformat'
 		\ , 'fileencoding'
 		\ , 'filetype'
+		\ , 'curtime'
 		\ , 'scrollpercent'
 		\ , 'lineinfo'
 	\ ),
