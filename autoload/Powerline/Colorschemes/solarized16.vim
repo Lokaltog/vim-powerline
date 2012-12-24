@@ -103,7 +103,7 @@ let g:Powerline#Colorschemes#solarized16#colorscheme= Pl#Colorscheme#Init([
 		\ 'i': ['base03', ['bold']],
 		\ }),
 	\
-	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
+	\ Pl#Hi#Segments(['currenttag', 'fullcurrenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'curtime', 'rvm:string', 'rvm:statusline', 'virtualenv:statusline', 'charcode', 'currhigroup'], {
 		\ 'n': ['base1', 'base02'],
 		\ 'N': ['base00', 'base03'],
 		\ }),
