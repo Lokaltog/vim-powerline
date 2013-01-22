@@ -1,17 +1,15 @@
-Powerline for vim
-=================
+`Powerline for vim <https://github.com/Lokaltog/powerline>`_
+============================================================
 
-**The old vim-powerline project is deprecated and is no longer officially 
-supported. It will still be available in its current state in this repo 
-(checkout the develop branch to continue using it), but it is strongly 
-recommended that you migrate to the new project.**
+The old vim-powerline project is deprecated and is no longer officially 
+supported. It has been replaced by `a new, Python based port 
+<https://github.com/Lokaltog/powerline>`_. It is strongly recommended that 
+you migrate to the new project as soon as possible.
 
-This branch will load the `new Powerline plugin`_ for compatibility with vim 
-plugin managers like Pathogen/Vundle.
+Note that this branch no longer contains any compatibility code. The new 
+plugin has built-in support for Vundle, see the docs for details.
 
-**IMPORTANT:** This branch does not contain any plugin code, it's only 
-a "convenience" branch for usage with Pathogen/Vundle! You need to install 
-the `new Powerline plugin`_ as a Python package for this branch to work.  
-Please consult the documentation of the new plugin for more information.
+-----
 
-.. _`new Powerline plugin`: https://github.com/Lokaltog/powerline
+The old project will still be available in its current state in this repo 
+(checkout the develop branch to continue using it).
