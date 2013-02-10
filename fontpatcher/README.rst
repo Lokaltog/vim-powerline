@@ -46,7 +46,7 @@ and arrows").
 Font patching guide
 ===================
 
-There's a `GitHub wiki page`_ dedicated to community-contributed patched 
+There's a `GitHub repository`_ dedicated to community-contributed patched 
 fonts. You may download one of the fonts on that page if you don't want to 
 patch the fonts yourself.
 
@@ -58,7 +58,7 @@ glyphs than the ones provided in the latest version of Powerline. It's
 recommended that you always patch your fonts yourself if you have the 
 required software.
 
-.. _`GitHub wiki page`: https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
+.. _`GitHub repository`: https://github.com/Lokaltog/powerline-fonts
 
 Linux
 -----
