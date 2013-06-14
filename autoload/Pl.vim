@@ -157,6 +157,9 @@
 			let mode = 'n' " Normal (current)
 		endif
 
+		if empty(g:Pl#THEME)
+			return ''
+		endif
 		return g:Pl#THEME[a:statusline].mode_statuslines[mode]
 	endfunction " }}}
 	function! Pl#StatuslineCallback(statusline, args) " {{{
