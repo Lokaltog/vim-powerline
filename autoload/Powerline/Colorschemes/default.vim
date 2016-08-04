@@ -163,4 +163,9 @@ let g:Powerline#Colorschemes#default#colorscheme = Pl#Colorscheme#Init([
 	\ Pl#Hi#Segments(['ctrlp:SPLIT'], {
 		\ 'n': ['white', 'darkestpurple'],
 		\ }),
+	\
+	\ Pl#Hi#Segments(['whitespace:marker'], {
+		\ 'n': ['white', 'brightestred'],
+		\ 'i': ['darkestcyan', 'white'],
+		\ }),
 	\ ])
